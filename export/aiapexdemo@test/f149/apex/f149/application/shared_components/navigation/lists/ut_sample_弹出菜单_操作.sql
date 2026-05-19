@@ -1,0 +1,72 @@
+prompt --application/shared_components/navigation/lists/ut_sample_弹出菜单_操作
+begin
+--   Manifest
+--     LIST: UT - Sample 弹出菜单 (操作)
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>1401937903267120
+,p_default_application_id=>149
+,p_default_id_offset=>59519793195936374
+,p_default_owner=>'MPF'
+);
+wwv_flow_imp_shared.create_list(
+ p_id=>wwv_flow_imp.id(3583000622828399853)
+,p_name=>unistr('UT - Sample \5F39\51FA\83DC\5355 (\64CD\4F5C)')
+,p_list_status=>'PUBLIC'
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(3583000770110399856)
+,p_list_item_display_sequence=>10
+,p_list_item_link_text=>'New'
+,p_list_item_link_target=>'#'
+,p_list_item_icon=>'fa-file-o'
+,p_list_text_01=>'action_a'
+,p_list_text_05=>'Ctrl+Alt+D'
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(3583001226596399857)
+,p_list_item_display_sequence=>20
+,p_list_item_link_text=>'Open'
+,p_list_item_link_target=>'#'
+,p_list_item_icon=>'fa-folder-open-o'
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(3583002408557399858)
+,p_list_item_display_sequence=>50
+,p_list_item_link_text=>'Spreadsheet'
+,p_list_item_link_target=>'#'
+,p_list_item_icon=>'fa-file-excel-o'
+,p_parent_list_item_id=>wwv_flow_imp.id(3583001226596399857)
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(3583002764188399859)
+,p_list_item_display_sequence=>60
+,p_list_item_link_text=>unistr('\56FE\7247')
+,p_list_item_link_target=>'#'
+,p_list_item_icon=>'fa-file-image-o'
+,p_parent_list_item_id=>wwv_flow_imp.id(3583001226596399857)
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(3583001606976399857)
+,p_list_item_display_sequence=>30
+,p_list_item_link_text=>'---'
+,p_list_item_link_target=>'separator'
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(3583001972113399858)
+,p_list_item_display_sequence=>40
+,p_list_item_link_text=>'Exit'
+,p_list_item_link_target=>'#'
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp.component_end;
+end;
+/

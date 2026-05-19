@@ -1,0 +1,88 @@
+{
+  "preferred_entrypoint": "tools/apex_ai.sh",
+  "supported_actions": [
+    "init",
+    "check",
+    "sql-check",
+    "usql-check",
+    "feature-start",
+    "feature-analyze",
+    "feature-confirm",
+    "feature-next",
+    "feature-status",
+    "task-state",
+    "gate",
+    "export-app",
+    "export-page",
+    "import-app",
+    "import-page",
+    "rebuild-test-from-single-sql"
+  ],
+  "default_check_command": "tools/apex_ai.sh check",
+  "tool_requirements": [
+    "bash",
+    "python3",
+    "java",
+    "sql_or_sqlcl"
+  ],
+  "high_frequency_tasks": [
+    "init",
+    "check",
+    "export-page",
+    "import-app",
+    "sql-check"
+  ],
+  "init_post_verification_commands": [
+    "tools/apex_ai.sh check <env_alias> --deep",
+    "tools/apex_ai.sh sql-check <env_alias>"
+  ],
+  "runtime_autofill_keys": [
+    "java_home",
+    "db_sqlcl_bin"
+  ],
+  "path_conventions": {
+    "app_root": "export/<env_alias>/f<APP_ID>",
+    "db_root": "export/<env_alias>/f<APP_ID>/db",
+    "page_docs_root": "export/<env_alias>/f<APP_ID>/docs/pages",
+    "feature_file_pattern": "export/<env_alias>/f<APP_ID>/docs/YYYY-MM-DD-<feature-slug>.md"
+  },
+  "execution_model": {
+    "default_mode": "incremental_feature_slice",
+    "default_target_environment": "development",
+    "page_docs_required_on_page_change": true,
+    "db_source_of_truth": "export/<env_alias>/f<APP_ID>/db",
+    "browser_validation_policy": {
+      "smoke_required": true,
+      "functional_required": true,
+      "minimum_functional_flows": 1
+    },
+    "task_states": [
+      "NEW",
+      "CONFIRM",
+      "IMPLEMENTING",
+      "TESTED",
+      "DONE"
+    ],
+    "completion_state": "DONE",
+    "machine_state_authority": "ai-context.json"
+  },
+  "current_task": {
+    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f138/docs/2026-05-18-permission-scope-role-upgrade.md",
+    "env_alias": "sales-tools@test",
+    "app_id": "138",
+    "status": "DONE",
+    "source_of_truth": "ai-context.json",
+    "proposed_pages": "P120/P121/P124/P130/P131/P133/P149/P201/P221/P222/P223/P224 \u6743\u9650\u903b\u8f91\u5347\u7ea7\uff1a\u7cfb\u7edf\u7ba1\u7406\u5458+\u4e1a\u52a1\u7ba1\u7406\u5458+\u77e5\u8bc6\u5e93\u7ba1\u7406\u5458\uff08STS_SCOPE\uff09",
+    "proposed_db_objects": "STS_FOLDER_LIB\uff08\u65b0\u589e SYSTEM_ID\uff09, STS_SCOPE, STS_SYS_CONFIG, STS_ROLE, STS_USER_ROLE",
+    "confirmed_pages": "P120/P121/P124/P130/P131/P133/P149/P201/P221/P222/P223/P224",
+    "confirmed_db_objects": "STS_FOLDER_LIB, STS_SCOPE, STS_SYS_CONFIG, STS_ROLE, STS_USER_ROLE",
+    "stage_status": {
+      "connectivity": "PASSED",
+      "scope_confirmation": "PASSED",
+      "implementation": "PASSED",
+      "verification": "PASSED",
+      "delivery": "PASSED"
+    },
+    "resume_rule": "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
+  }
+}

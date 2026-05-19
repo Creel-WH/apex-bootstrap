@@ -1,0 +1,6 @@
+{
+  "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=138:133",
+  "label": "p133-file-browser-smoke",
+  "contains_text": "文件管理平台",
+  "skip_builder_login": true
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "APEX Bootstrap"
+  short_description: "Canonical workflow wrapper for apex-bootstrap repository tasks."
+  default_prompt: "Use $apex-bootstrap to choose one primary lane, produce a structured confirmation, and wait for approval before entering any executable envelope."
+
+policy:
+  allow_implicit_invocation: true

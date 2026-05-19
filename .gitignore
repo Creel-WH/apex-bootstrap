@@ -1,0 +1,34 @@
+.DS_Store
+.local/
+dist/
+tmp/
+node_modules/
+*.log
+*.tmp
+
+# Local database configuration
+.env
+.conn.json
+.omx/
+.playwright-mcp/
+
+# Wallets and credentials
+wallet/
+*.wallet
+*.sso
+*.p12
+*.pem
+*.key
+export/*/f*/apex/f*/workspace/credentials/
+export/*/f*/apex/f*/application/deployment/install/
+export/*/f*/apex/f*/application/shared_components/files/supporting_objects_*.sql
+
+# Editors
+.idea/
+.vscode/
+
+# Local worktrees
+.worktrees/
+.omx/
+.playwright-cli/
+export/*/f*/apex/f*/.filtered_install.sql
