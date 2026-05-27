@@ -67,15 +67,15 @@
     "machine_state_authority": "ai-context.json"
   },
   "current_task": {
-    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f138/docs/2026-05-18-permission-scope-role-upgrade.md",
+    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f300/docs/2026-05-27-p300-enter-file-platform.md",
     "env_alias": "sales-tools@test",
-    "app_id": "138",
+    "app_id": "300",
     "status": "DONE",
     "source_of_truth": "ai-context.json",
-    "proposed_pages": "P120/P121/P124/P130/P131/P133/P149/P201/P221/P222/P223/P224 \u6743\u9650\u903b\u8f91\u5347\u7ea7\uff1a\u7cfb\u7edf\u7ba1\u7406\u5458+\u4e1a\u52a1\u7ba1\u7406\u5458+\u77e5\u8bc6\u5e93\u7ba1\u7406\u5458\uff08STS_SCOPE\uff09",
-    "proposed_db_objects": "STS_FOLDER_LIB\uff08\u65b0\u589e SYSTEM_ID\uff09, STS_SCOPE, STS_SYS_CONFIG, STS_ROLE, STS_USER_ROLE",
-    "confirmed_pages": "P120/P121/P124/P130/P131/P133/P149/P201/P221/P222/P223/P224",
-    "confirmed_db_objects": "STS_FOLDER_LIB, STS_SCOPE, STS_SYS_CONFIG, STS_ROLE, STS_USER_ROLE",
+    "proposed_pages": "APP300 P300; APP138 P9999",
+    "proposed_db_objects": "None",
+    "confirmed_pages": "APP300 P300; APP138 P9999",
+    "confirmed_db_objects": "None",
     "stage_status": {
       "connectivity": "PASSED",
       "scope_confirmation": "PASSED",

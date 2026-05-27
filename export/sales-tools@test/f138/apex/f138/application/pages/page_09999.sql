@@ -528,6 +528,26 @@ wwv_flow_imp_page.create_page_item(
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'use_defaults', 'Y')).to_clob
 );
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(13099990000000000001)
+,p_name=>'P9999_HANDOFF_USER'
+,p_item_sequence=>110
+,p_item_plug_id=>wwv_flow_imp.id(9793732941630686838)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'N')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(13099990000000000002)
+,p_name=>'P9999_HANDOFF_SYSTEM_ID'
+,p_item_sequence=>120
+,p_item_plug_id=>wwv_flow_imp.id(9793732941630686838)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'N')).to_clob
+);
 wwv_flow_imp_page.create_page_computation(
  p_id=>wwv_flow_imp.id(6552727937962956210)
 ,p_computation_sequence=>10
@@ -697,6 +717,72 @@ unistr('                showLoginError(''\626B\7801\767B\5F55\5931\8D25\FF0C\5F5
 '}',
 '',
 ''))
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(13099990000000000003)
+,p_process_sequence=>1
+,p_process_point=>'BEFORE_HEADER'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'P300_HANDOFF_LOGIN'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'declare',
+'    v_job_number varchar2(100) := upper(:P9999_HANDOFF_USER);',
+'    v_system_id  number;',
+'    v_count      number;',
+'    v_err_msg    varchar2(2000);',
+'begin',
+'    v_system_id := to_number(:P9999_HANDOFF_SYSTEM_ID);',
+'',
+'    select count(*)',
+'      into v_count',
+'      from sts_system',
+'     where system_id = v_system_id',
+'       and nvl(del_flag, 0) = 0',
+'       and nvl(is_enable, 1) = 1;',
+'',
+'    if v_count = 0 then',
+'        return;',
+'    end if;',
+'',
+'    select count(*)',
+'      into v_count',
+'      from sts_user u',
+'     where u.del_flag = 0',
+'       and u.is_leave = 0',
+'       and u.is_enable = 1',
+'       and u.tenant_id = 3',
+'       and u.job_number = v_job_number',
+'       and exists (',
+'             select 1',
+'               from sts_user_role ur',
+'              where ur.user_id = u.ext_user_id',
+'                and ur.del_flag = 0',
+'                and ur.is_enable = 1',
+'                and ur.tenant_id = 3',
+'           );',
+'',
+'    if v_count = 0 then',
+'        return;',
+'    end if;',
+'',
+'    apex_util.set_session_state(''P9999_USERNAME'', v_job_number);',
+'    apex_util.set_session_state(''SYSTEM_ID'', v_system_id);',
+'',
+'    apex_custom_auth.post_login(',
+'        p_uname      => v_job_number,',
+'        p_session_id => :APP_SESSION,',
+'        p_app_page   => :APP_ID || '':133''',
+'    );',
+'exception',
+'    when others then',
+'        v_err_msg := sqlerrm || chr(13) || dbms_utility.format_error_backtrace;',
+'        ja_write_log(''P'' || :APP_PAGE_ID || '':'' || :APP_PAGE_ALIAS, ''ERROR'', ''P300 handoff login failed: '' || v_err_msg, -1, -1);',
+'end;'))
+,p_process_clob_language=>'PLSQL'
+,p_process_when=>':REQUEST = ''P300_HANDOFF'' and :P9999_HANDOFF_USER is not null and :P9999_HANDOFF_SYSTEM_ID is not null'
+,p_process_when_type=>'EXPRESSION'
+,p_process_when2=>'PLSQL'
+,p_internal_uid=>13099990000000000003
 );
 wwv_flow_imp_page.create_page_process(
  p_id=>wwv_flow_imp.id(9793736835825686855)

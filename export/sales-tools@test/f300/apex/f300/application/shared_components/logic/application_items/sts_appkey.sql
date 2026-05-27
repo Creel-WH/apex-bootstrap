@@ -1,0 +1,23 @@
+prompt --application/shared_components/logic/application_items/sts_appkey
+begin
+--   Manifest
+--     APPLICATION ITEM: STS_APPKEY
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>2200408020639491
+,p_default_application_id=>300
+,p_default_id_offset=>31969957811146237
+,p_default_owner=>'JASOLAR'
+);
+wwv_flow_imp_shared.create_flow_item(
+ p_id=>wwv_flow_imp.id(8644768274609411933)
+,p_name=>'STS_APPKEY'
+,p_protection_level=>'I'
+,p_escape_on_http_output=>'N'
+,p_version_scn=>6719031925210
+);
+wwv_flow_imp.component_end;
+end;
+/
