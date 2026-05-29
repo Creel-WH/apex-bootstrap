@@ -1,0 +1,8 @@
+{
+  "application": "f130",
+  "environment": "jing-bao@test",
+  "schema": "jing_bao",
+  "apex_app_id": "130",
+  "export_dir": "export/jing-bao@test/f130/apex",
+  "config_source": ".conn.json#jing-bao@test"
+}

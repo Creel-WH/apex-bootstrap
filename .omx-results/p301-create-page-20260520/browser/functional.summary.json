@@ -1,0 +1,7 @@
+{
+  "status": "success",
+  "action": "functional",
+  "env_alias": "sales-tools@test",
+  "app_id": "300",
+  "notes": "Validated P300 redirect to P301, native create-page submit, return to P300, report row appearance, and cleanup delete flow."
+}

@@ -67,15 +67,15 @@
     "machine_state_authority": "ai-context.json"
   },
   "current_task": {
-    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f300/docs/2026-05-27-p300-enter-file-platform.md",
+    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f100131/docs/2026-05-29-sts-file-sort-default-db.md",
     "env_alias": "sales-tools@test",
-    "app_id": "300",
+    "app_id": "100131",
     "status": "DONE",
     "source_of_truth": "ai-context.json",
-    "proposed_pages": "APP300 P300; APP138 P9999",
-    "proposed_db_objects": "None",
-    "confirmed_pages": "APP300 P300; APP138 P9999",
-    "confirmed_db_objects": "None",
+    "proposed_pages": "None; database-only slice",
+    "proposed_db_objects": "STS_FILE.SORT_NUM default/backfill plus TRG_STS_FILE_SORT_NUM",
+    "confirmed_pages": "None; database-only slice",
+    "confirmed_db_objects": "STS_FILE.SORT_NUM default/backfill plus TRG_STS_FILE_SORT_NUM",
     "stage_status": {
       "connectivity": "PASSED",
       "scope_confirmation": "PASSED",
@@ -84,5 +84,10 @@
       "delivery": "PASSED"
     },
     "resume_rule": "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
-  }
+  },
+  "supported_envs": [
+    "sales-tools@test",
+    "sales-tools@prod",
+    "file-management-platform@test"
+  ]
 }

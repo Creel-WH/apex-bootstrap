@@ -1,8 +1,0 @@
-{
-  "application": "f138",
-  "environment": "sales-tools@test",
-  "schema": "JASOLAR",
-  "apex_app_id": "138",
-  "export_dir": "export/sales-tools@test/f138/apex",
-  "config_source": ".conn.json#sales-tools@test"
-}

@@ -1,8 +1,0 @@
-{
-  "application": "f300",
-  "environment": "sales-tools@test",
-  "schema": "JASOLAR",
-  "apex_app_id": "300",
-  "export_dir": "export/sales-tools@test/f300/apex",
-  "config_source": ".conn.json#sales-tools@test"
-}

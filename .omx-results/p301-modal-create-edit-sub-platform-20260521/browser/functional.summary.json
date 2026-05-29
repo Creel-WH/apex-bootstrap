@@ -1,0 +1,7 @@
+{
+  "status": "success",
+  "action": "functional",
+  "env_alias": "sales-tools@test",
+  "app_id": "300",
+  "notes": "Validated P300 create/edit modal flow, immediate parent refresh after dialog close, edit prefill, and cleanup delete on temporary rows."
+}

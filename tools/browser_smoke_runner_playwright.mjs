@@ -216,7 +216,8 @@ try {
     });
 
     if (spec.workspace) {
-      await page.locator('#F4550_P1_COMPANY').fill(spec.workspace);
+      const companyField = page.locator("#F4550_P1_COMPANY");
+      try { await companyField.waitFor({ state: "visible", timeout: 3000 }); await companyField.fill(spec.workspace); } catch (_) { /* company field optional */ }
     }
     if (spec.username) {
       await page.locator('#F4550_P1_USERNAME').fill(spec.username);

@@ -1,0 +1,191 @@
+prompt --application/shared_components/globalization/messages
+begin
+--   Manifest
+--     MESSAGES: 130
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>20731578202767968
+,p_default_application_id=>130
+,p_default_id_offset=>28880731091649549
+,p_default_owner=>'JING_BAO'
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176826654638688110)
+,p_name=>'PAELI_POPUP_HEADER_SORT_ASC_TITLE'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\5347\5E8F')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176826912373689214)
+,p_name=>'PAELI_POPUP_HEADER_SORT_DESC_TITLE'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\964D\5E8F')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176825210299666983)
+,p_name=>'PAELI_POPUP_PAGINATION_OF'
+,p_message_language=>'zh-cn'
+,p_message_text=>'/'
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176843238216766130)
+,p_name=>'PAELI_POPUP_PASTE_BTN_APPLY_TEXT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\5E94\7528')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176842394563754694)
+,p_name=>'PAELI_POPUP_PASTE_BTN_BACK_TEXT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\8FD4\56DE')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176842573409756038)
+,p_name=>'PAELI_POPUP_PASTE_BTN_CLEAR_TEXT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6E05\9664')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176829314654724634)
+,p_name=>'PAELI_POPUP_PASTE_BTN_PARSE_TEXT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\786E\8BA4')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176842784670757667)
+,p_name=>'PAELI_POPUP_PASTE_BTN_SELECT_TEXT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\9009\62E9')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176841244760746250)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_MAXLENGTH_NOTSET'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6CA1\6709\8BBE\7F6E')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176832670592738330)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_MAX_LENGTH'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6700\5927\957F\5EA6')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176833078677741980)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_PASTED_COUNT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\7C98\8D34\503C\7684\603B\6570')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176832931241740599)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_PASTED_LENGHT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\7C98\8D34\503C\7684\603B\957F\5EA6\FF0C\5305\62EC\5206\9694\7B26')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176841414261747598)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_SHOW_LIST_ANCHOR'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\FF08\663E\793A\5217\8868\FF09')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176842203941750917)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6982\62EC')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176841991709749844)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_TH_VALUES_IN'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\51C6\5907\5E94\7528\7684\503C')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176841608870748790)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_TH_VALUES_OUT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\8D85\51FA\6700\5927\957F\5EA6\9650\5236\7684\503C')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176840353456743473)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_VALUES_EXCEEDING_LIMIT'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\8D85\8FC7\6700\5927\957F\5EA6\7684\7C98\8D34\503C\6570%0')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176840458004744974)
+,p_name=>'PAELI_POPUP_PASTE_SUMMARY_VALUES_TO_BE_APPLIED'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\8981\5E94\7528\7684\7C98\8D34\503C\6570%0')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176829077933719657)
+,p_name=>'PAELI_POPUP_PASTE_TEXTAREA_PLACEHOLDER'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\503C\5FC5\987B\7528\6362\884C\7B26\5206\9694')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176826501899686649)
+,p_name=>'PAELI_PROMPT_MENU_CLEAR_TITLE'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6E05\9664\6240\6709\9009\4E2D\7684\503C')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176827352038692416)
+,p_name=>'PAELI_PROMPT_MENU_EXPAND_TITLE'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\663E\793A\6216\9690\85CF\6240\6709\6807\7B7E')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176824560827661685)
+,p_name=>'PAELI_PROMPT_MENU_PASTE_TITLE'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\7C98\8D34\503C')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176824811855663229)
+,p_name=>'PAELI_PROMPT_MENU_POPUP_TITLE'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6253\5F00\5F39\51FA\6846')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176832283774731771)
+,p_name=>'PAELI_PROMPT_MENU_SORT_TITLE'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6392\5E8F')
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_message(
+ p_id=>wwv_flow_imp.id(2176828231121706414)
+,p_name=>'PAELI_PROMPT_TEXT_NO_DATA_FOUND'
+,p_message_language=>'zh-cn'
+,p_message_text=>unistr('\6CA1\6709\627E\5230\6570\636E')
+,p_version_scn=>1
+);
+wwv_flow_imp.component_end;
+end;
+/

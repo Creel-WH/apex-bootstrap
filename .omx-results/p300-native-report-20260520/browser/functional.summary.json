@@ -1,0 +1,7 @@
+{
+  "status": "success",
+  "action": "functional",
+  "env_alias": "sales-tools@test",
+  "app_id": "300",
+  "notes": "Validated hidden sidebar, native report rendering, search filter, and create/delete round-trip on /ords/uatapex23 runtime path."
+}

@@ -43,6 +43,7 @@ build_import_override_sql() {
   local source_app_id="$1"
   local target_app_id="$2"
   local target_app_alias="${APEX_IMPORT_APP_ALIAS:-}"
+  local force_generate_offset="${APEX_IMPORT_FORCE_GENERATE_OFFSET:-0}"
   local escaped_target_app_alias=""
 
   escaped_target_app_alias="${target_app_alias//\'/\'\'}"
@@ -64,6 +65,13 @@ EOF
     fi
     cat <<EOF
   apex_application_install.set_auto_install_sup_obj(true);
+EOF
+    if [[ "${force_generate_offset}" == "1" ]]; then
+      cat <<EOF
+  apex_application_install.generate_offset;
+EOF
+    fi
+    cat <<EOF
 end;
 /
 EOF

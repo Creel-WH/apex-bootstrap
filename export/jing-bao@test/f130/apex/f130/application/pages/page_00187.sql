@@ -1,0 +1,147 @@
+prompt --application/pages/page_00187
+begin
+--   Manifest
+--     PAGE: 00187
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>20731578202767968
+,p_default_application_id=>130
+,p_default_id_offset=>28880731091649549
+,p_default_owner=>'JING_BAO'
+);
+wwv_flow_imp_page.create_page(
+ p_id=>187
+,p_name=>unistr('\6676\8C79\5DE5\5355\91CF\603B\8868')
+,p_alias=>unistr('\6676\8C79\5DE5\5355\91CF\603B\8868')
+,p_step_title=>unistr('\6676\8C79\5DE5\5355\91CF\603B\8868')
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'04'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(2150911787540877711)
+,p_plug_name=>unistr('\9762\5305\5C51')
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(2286693857423554758)
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(2286629353441554723)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>wwv_flow_imp.id(2286748345485554784)
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(2150912341595877711)
+,p_plug_name=>unistr('\6676\8C79\5DE5\5355\91CF\603B\8868')
+,p_region_template_options=>'#DEFAULT#:js-showMaximizeButton:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_imp.id(2286684482431554755)
+,p_plug_display_sequence=>10
+,p_location=>null
+,p_plug_source_type=>'NATIVE_JET_CHART'
+);
+wwv_flow_imp_page.create_jet_chart(
+ p_id=>wwv_flow_imp.id(2150912801242877711)
+,p_region_id=>wwv_flow_imp.id(2150912341595877711)
+,p_chart_type=>'bar'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_orientation=>'vertical'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_value_position=>'auto'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_show_row=>true
+,p_show_start=>true
+,p_show_end=>true
+,p_show_progress=>true
+,p_show_baseline=>true
+,p_legend_rendered=>'off'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+,p_horizontal_grid=>'auto'
+,p_vertical_grid=>'auto'
+,p_gauge_orientation=>'circular'
+,p_gauge_indicator_size=>1
+,p_gauge_plot_area=>'on'
+,p_show_gauge_value=>true
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(2150914511682877710)
+,p_chart_id=>wwv_flow_imp.id(2150912801242877711)
+,p_seq=>10
+,p_name=>unistr('\7CFB\5217 1')
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT to_char(A.CREATION_DATE,''yyyy-mm'') YD,COUNT(*) COUNTS FROM TENANT_EVENT A',
+'INNER JOIN FND_FAB B ON A.FAB_ID = B.FAB_ID',
+'WHERE A.TENANT_ID = :USERTENANT ',
+'AND A.BASE_DEPT_ID =:BASE_DEPT_ID',
+'GROUP BY  to_char(A.CREATION_DATE,''yyyy-mm'') ',
+'ORDER BY to_char(A.CREATION_DATE,''yyyy-mm'');'))
+,p_items_value_column_name=>'COUNTS'
+,p_group_short_desc_column_name=>'YD'
+,p_items_label_column_name=>'YD'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'PERCENT'
+,p_threshold_display=>'onIndicator'
+,p_link_target=>'f?p=&APP_ID.:188:&SESSION.::&DEBUG.:188:P188_DATE:&YD.'
+,p_link_target_type=>'REDIRECT_PAGE'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(2150913908589877710)
+,p_chart_id=>wwv_flow_imp.id(2150912801242877711)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_format_type=>'decimal'
+,p_decimal_places=>0
+,p_format_scaling=>'none'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'auto'
+,p_minor_tick_rendered=>'auto'
+,p_tick_label_rendered=>'on'
+,p_zoom_order_seconds=>false
+,p_zoom_order_minutes=>false
+,p_zoom_order_hours=>false
+,p_zoom_order_days=>true
+,p_zoom_order_weeks=>true
+,p_zoom_order_months=>true
+,p_zoom_order_quarters=>false
+,p_zoom_order_years=>false
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(2150913313350877710)
+,p_chart_id=>wwv_flow_imp.id(2150912801242877711)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'auto'
+,p_minor_tick_rendered=>'auto'
+,p_tick_label_rendered=>'on'
+,p_zoom_order_seconds=>false
+,p_zoom_order_minutes=>false
+,p_zoom_order_hours=>false
+,p_zoom_order_days=>true
+,p_zoom_order_weeks=>true
+,p_zoom_order_months=>true
+,p_zoom_order_quarters=>true
+,p_zoom_order_years=>false
+);
+wwv_flow_imp.component_end;
+end;
+/

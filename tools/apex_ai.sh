@@ -25,6 +25,7 @@ Usage:
   tools/apex_ai.sh import-app <source_env_alias> [source_app_id] [target_env_alias] [target_app_id]
   tools/apex_ai.sh import-page <env_alias> [source_app_id] <page_id> [target_app_id] [target_page_id]
   tools/apex_ai.sh rebuild-test-from-single-sql <source_app_id> <target_app_id>
+  tools/apex_ai.sh app-version <list|show|set|tag> [...]
 EOF
 }
 
@@ -3154,6 +3155,10 @@ run_usql_check_action() {
   emit_records 'usql-check' "${json_mode}" "${record}"
 }
 
+run_app_version_action() {
+  "${SCRIPT_DIR}/app_version.sh" "$@"
+}
+
 main() {
   local action="${1:-}"
 
@@ -3216,6 +3221,9 @@ main() {
       ;;
     rebuild-test-from-single-sql)
       run_rebuild_test_from_single_sql_action "$@"
+      ;;
+    app-version)
+      run_app_version_action "$@"
       ;;
     -h|--help)
       apex_ai_usage

@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "env_alias": "sales-tools@test",
+  "app_id": "300",
+  "executed_gate_actions": ["browser-functional"],
+  "gate_runs": [
+    {
+      "gate": "browser-functional",
+      "status": "success"
+    }
+  ]
+}

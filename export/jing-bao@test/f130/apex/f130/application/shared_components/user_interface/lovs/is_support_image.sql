@@ -1,0 +1,35 @@
+prompt --application/shared_components/user_interface/lovs/is_support_image
+begin
+--   Manifest
+--     IS_SUPPORT_IMAGE
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>20731578202767968
+,p_default_application_id=>130
+,p_default_id_offset=>28880731091649549
+,p_default_owner=>'JING_BAO'
+);
+wwv_flow_imp_shared.create_list_of_values(
+ p_id=>wwv_flow_imp.id(221627055922627542)
+,p_lov_name=>'IS_SUPPORT_IMAGE'
+,p_lov_query=>'.'||wwv_flow_imp.id(221627055922627542)||'.'
+,p_location=>'STATIC'
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(221627320083627544)
+,p_lov_disp_sequence=>1
+,p_lov_disp_value=>unistr('\652F\6301')
+,p_lov_return_value=>'1'
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(221627792519627545)
+,p_lov_disp_sequence=>2
+,p_lov_disp_value=>unistr('\4E0D\652F\6301')
+,p_lov_return_value=>'0'
+);
+wwv_flow_imp.component_end;
+end;
+/

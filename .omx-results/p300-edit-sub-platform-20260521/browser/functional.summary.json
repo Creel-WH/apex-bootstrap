@@ -1,0 +1,7 @@
+{
+  "status": "success",
+  "action": "functional",
+  "env_alias": "sales-tools@test",
+  "app_id": "300",
+  "notes": "Validated P300 edit entry, P301 edit-mode preload, multi-admin save, reopen verification, and data revert."
+}

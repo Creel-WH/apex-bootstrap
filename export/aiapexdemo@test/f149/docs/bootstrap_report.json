@@ -1,8 +1,0 @@
-{
-  "application": "f149",
-  "environment": "aiapexdemo@test",
-  "schema": "mpf",
-  "apex_app_id": "149",
-  "export_dir": "export/aiapexdemo@test/f149/apex",
-  "config_source": ".conn.json#aiapexdemo@test"
-}

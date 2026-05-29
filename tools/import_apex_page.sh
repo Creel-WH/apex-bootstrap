@@ -67,6 +67,7 @@ build_page_import_override_sql() {
   cat <<EOF
 begin
   apex_application_install.set_application_id(${target_app_id});
+  wwv_flow.g_flow_id := ${target_app_id};
 EOF
 
   if [[ "${source_app_id}" != "${target_app_id}" ]]; then
@@ -217,6 +218,7 @@ main() {
     build_page_import_override_sql "${source_app_id}" "${target_app_id}" "${page_id}" "${target_page_id}"
 
     printf '@%s\n' "${set_env_script_for_sqlcl}"
+    build_page_import_override_sql "${source_app_id}" "${target_app_id}" "${page_id}" "${target_page_id}"
 
     if [[ "${page_id}" == "${target_page_id}" && -f "${delete_script}" ]]; then
       printf '@%s\n' "${delete_script_for_sqlcl}"
