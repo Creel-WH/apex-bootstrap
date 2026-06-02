@@ -514,7 +514,7 @@ unistr('//   console.log("\65B0\89C6\53E3\5C3A\5BF8:", window.innerWidth, window
 'if (uploadBtn.length) {',
 '    uploadBtn.wrap(''<div id="upload_btn_wrapper"></div>'');',
 '    var wrapper = $(''#upload_btn_wrapper'');',
-q'~    wrapper.append('<div id="upload_dropdown" style="display:none"><a onclick="triggerFileUpload()">上传文件</a><a onclick="triggerFolderUpload()">上传文件夹</a></div>');~',
+q'~    wrapper.append('<div id="upload_dropdown" style="display:none"><a onclick="triggerFileUpload()">上传</a><a onclick="triggerFolderUpload()">上传夹</a></div>');~',
 '    uploadBtn.off(''click'').on(''click'', function (e) {',
 '        e.stopPropagation();',
 '        triggerFileUpload();',
@@ -2291,7 +2291,7 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_action_sequence=>20
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
-,p_attribute_01=>'triggerFileUpload();'
+,p_attribute_01=>'toggleUploadDropdown();'
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(3341719811303712317)
