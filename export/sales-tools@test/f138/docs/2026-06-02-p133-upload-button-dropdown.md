@@ -75,6 +75,8 @@
   - `export/sales-tools@test/f138/docs/pages/P133.md`
 
 
+- Import page 133 into sales-tools@test/f138: failure
+- Import app sales-tools@test/f138 to sales-tools@test/f138: success
 ## Current Status
 - Status: TESTED
 - Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PENDING, delivery=PENDING
@@ -88,3 +90,31 @@
 - JS: toggleUploadDropdown, uploadFolderContents, doUploadFiles, handleDragDropItems, traverseEntries, setupDragDrop
 - PL/SQL: P133_SAVE_UPLOAD (x06 support), P133_FOLDER_UPLOAD (new)
 - Drag-drop supports both files and folders
+
+## Current Status
+- Status: TESTED
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PENDING, delivery=PENDING
+- Open Issues: None
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: TESTED
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PENDING, delivery=PENDING
+- Open Issues: None
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PENDING, delivery=FAILED
+- Open Issues: delivery
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PENDING, delivery=IN_PROGRESS
+- Open Issues: None
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json

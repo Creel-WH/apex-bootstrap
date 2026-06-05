@@ -1,93 +1,93 @@
-{
-  "preferred_entrypoint": "tools/apex_ai.sh",
-  "supported_actions": [
-    "init",
-    "check",
-    "sql-check",
-    "usql-check",
-    "feature-start",
-    "feature-analyze",
-    "feature-confirm",
-    "feature-next",
-    "feature-status",
-    "task-state",
-    "gate",
-    "export-app",
-    "export-page",
-    "import-app",
-    "import-page",
-    "rebuild-test-from-single-sql"
-  ],
-  "default_check_command": "tools/apex_ai.sh check",
-  "tool_requirements": [
-    "bash",
-    "python3",
-    "java",
-    "sql_or_sqlcl"
-  ],
-  "high_frequency_tasks": [
-    "init",
-    "check",
-    "export-page",
-    "import-app",
-    "sql-check"
-  ],
-  "init_post_verification_commands": [
-    "tools/apex_ai.sh check <env_alias> --deep",
-    "tools/apex_ai.sh sql-check <env_alias>"
-  ],
-  "runtime_autofill_keys": [
-    "java_home",
-    "db_sqlcl_bin"
-  ],
-  "path_conventions": {
-    "app_root": "export/<env_alias>/f<APP_ID>",
-    "db_root": "export/<env_alias>/f<APP_ID>/db",
-    "page_docs_root": "export/<env_alias>/f<APP_ID>/docs/pages",
-    "feature_file_pattern": "export/<env_alias>/f<APP_ID>/docs/YYYY-MM-DD-<feature-slug>.md"
-  },
-  "execution_model": {
-    "default_mode": "incremental_feature_slice",
-    "default_target_environment": "development",
-    "page_docs_required_on_page_change": true,
-    "db_source_of_truth": "export/<env_alias>/f<APP_ID>/db",
-    "browser_validation_policy": {
-      "smoke_required": true,
-      "functional_required": true,
-      "minimum_functional_flows": 1
-    },
-    "task_states": [
-      "NEW",
-      "CONFIRM",
-      "IMPLEMENTING",
-      "TESTED",
-      "DONE"
-    ],
-    "completion_state": "DONE",
-    "machine_state_authority": "ai-context.json"
-  },
-  "current_task": {
-    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f100131/docs/2026-05-29-sts-file-sort-default-db.md",
-    "env_alias": "sales-tools@test",
-    "app_id": "100131",
-    "status": "DONE",
-    "source_of_truth": "ai-context.json",
-    "proposed_pages": "None; database-only slice",
-    "proposed_db_objects": "STS_FILE.SORT_NUM default/backfill plus TRG_STS_FILE_SORT_NUM",
-    "confirmed_pages": "None; database-only slice",
-    "confirmed_db_objects": "STS_FILE.SORT_NUM default/backfill plus TRG_STS_FILE_SORT_NUM",
-    "stage_status": {
-      "connectivity": "PASSED",
-      "scope_confirmation": "PASSED",
-      "implementation": "PASSED",
-      "verification": "PASSED",
-      "delivery": "PASSED"
-    },
-    "resume_rule": "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
-  },
-  "supported_envs": [
-    "sales-tools@test",
-    "sales-tools@prod",
-    "file-management-platform@test"
-  ]
+﻿{
+    "preferred_entrypoint":  "tools/apex_ai.sh",
+    "supported_actions":  [
+                              "init",
+                              "check",
+                              "sql-check",
+                              "usql-check",
+                              "feature-start",
+                              "feature-analyze",
+                              "feature-confirm",
+                              "feature-next",
+                              "feature-status",
+                              "task-state",
+                              "gate",
+                              "export-app",
+                              "export-page",
+                              "import-app",
+                              "import-page",
+                              "rebuild-test-from-single-sql"
+                          ],
+    "default_check_command":  "tools/apex_ai.sh check",
+    "tool_requirements":  [
+                              "bash",
+                              "python3",
+                              "java",
+                              "sql_or_sqlcl"
+                          ],
+    "high_frequency_tasks":  [
+                                 "init",
+                                 "check",
+                                 "export-page",
+                                 "import-app",
+                                 "sql-check"
+                             ],
+    "init_post_verification_commands":  [
+                                            "tools/apex_ai.sh check \u003cenv_alias\u003e --deep",
+                                            "tools/apex_ai.sh sql-check \u003cenv_alias\u003e"
+                                        ],
+    "runtime_autofill_keys":  [
+                                  "java_home",
+                                  "db_sqlcl_bin"
+                              ],
+    "path_conventions":  {
+                             "app_root":  "export/\u003cenv_alias\u003e/f\u003cAPP_ID\u003e",
+                             "db_root":  "export/\u003cenv_alias\u003e/f\u003cAPP_ID\u003e/db",
+                             "page_docs_root":  "export/\u003cenv_alias\u003e/f\u003cAPP_ID\u003e/docs/pages",
+                             "feature_file_pattern":  "export/\u003cenv_alias\u003e/f\u003cAPP_ID\u003e/docs/YYYY-MM-DD-\u003cfeature-slug\u003e.md"
+                         },
+    "execution_model":  {
+                            "default_mode":  "incremental_feature_slice",
+                            "default_target_environment":  "development",
+                            "page_docs_required_on_page_change":  true,
+                            "db_source_of_truth":  "export/\u003cenv_alias\u003e/f\u003cAPP_ID\u003e/db",
+                            "browser_validation_policy":  {
+                                                              "smoke_required":  true,
+                                                              "functional_required":  true,
+                                                              "minimum_functional_flows":  1
+                                                          },
+                            "task_states":  [
+                                                "NEW",
+                                                "CONFIRM",
+                                                "IMPLEMENTING",
+                                                "TESTED",
+                                                "DONE"
+                                            ],
+                            "completion_state":  "DONE",
+                            "machine_state_authority":  "ai-context.json"
+                        },
+    "current_task":  {
+                         "feature_file":  "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f138/docs/2026-06-05-f138-permission-sync-and-feedback-content-restore.md",
+                         "env_alias":  "sales-tools@test",
+                         "app_id":  "138",
+                         "status":  "DONE",
+                         "source_of_truth":  "ai-context.json",
+                         "proposed_pages":  "P123,P138,P139,P201,P202,P203,P124,P225,P2,P204,P133",
+                         "proposed_db_objects":  "STS_SCOPE,STS_USER_ROLE,STS_FEEDBACK,STS_FILE",
+                         "confirmed_pages":  "P123,P138,P139,P201,P202,P203,P124,P225,P2,P204,P133",
+                         "confirmed_db_objects":  "STS_SCOPE,STS_USER_ROLE,STS_FEEDBACK,STS_FILE",
+                         "stage_status":  {
+                                              "connectivity":  "PASSED",
+                                              "scope_confirmation":  "PASSED",
+                                              "implementation":  "PASSED",
+                                              "verification":  "PASSED",
+                                              "delivery":  "PASSED"
+                                          },
+                         "resume_rule":  "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
+                     },
+    "supported_envs":  [
+                           "sales-tools@test",
+                           "sales-tools@prod",
+                           "file-management-platform@test"
+                       ]
 }
