@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plugin(
- p_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_plugin_type=>'REGION TYPE'
 ,p_name=>'COM.FOS.IMAGE_SLIDER'
 ,p_display_name=>'FOS - Image Slider'
@@ -435,8 +435,8 @@ wwv_flow_imp_shared.create_plugin(
 ,p_files_version=>4262
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(8634755430335302357)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9169459165006373502)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -450,24 +450,24 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'<p>Set the type of the image source column.</p>'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(8634755771796313362)
-,p_plugin_attribute_id=>wwv_flow_imp.id(8634755430335302357)
+ p_id=>wwv_flow_imp.id(9169459506467384507)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9169459165006373502)
 ,p_display_sequence=>10
 ,p_display_value=>'URL'
 ,p_return_value=>'url'
 ,p_help_text=>'The images will be loaded using the provided URL.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(8634756133548314042)
-,p_plugin_attribute_id=>wwv_flow_imp.id(8634755430335302357)
+ p_id=>wwv_flow_imp.id(9169459868219385187)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9169459165006373502)
 ,p_display_sequence=>20
 ,p_display_value=>'BLOB'
 ,p_return_value=>'blob'
 ,p_help_text=>'The images will be loaded from a BLOB column.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(8465456202001010693)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9000159936672081838)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -477,15 +477,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_column_data_types=>'VARCHAR2:NUMBER'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(8634755430335302357)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9169459165006373502)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'blob'
 ,p_help_text=>'<p>The column which stores the Primary Key values.</p>'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(8634756508659319248)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9169460243330390393)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -495,15 +495,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_column_data_types=>'BLOB'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(8634755430335302357)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9169459165006373502)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'blob'
 ,p_help_text=>'<p>The column with the BLOB value.</p>'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(8465456478719014762)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9000160213390085907)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>40
@@ -513,15 +513,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_column_data_types=>'VARCHAR2'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(8634755430335302357)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9169459165006373502)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'blob'
 ,p_help_text=>'<p>The column which stores the MIME Type.</p>'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(8465456752360017560)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9000160487031088705)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>5
 ,p_display_sequence=>50
@@ -531,15 +531,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_column_data_types=>'VARCHAR2'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(8634755430335302357)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9169459165006373502)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'blob'
 ,p_help_text=>'<p>The column which stores the filename.</p>'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222249297965535824)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756953032636606969)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>6
 ,p_display_sequence=>60
@@ -549,15 +549,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_column_data_types=>'VARCHAR2'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(8634755430335302357)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9169459165006373502)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'url'
 ,p_help_text=>'The name of the column where the URL''s of the images are stored.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222252419327535825)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756956153998606970)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>7
 ,p_display_sequence=>70
@@ -571,24 +571,24 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'The direction of transition of the slides. The positions of the navigation buttons (if enabled) will be adjusted based on the direction.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222252759016535826)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222252419327535825)
+ p_id=>wwv_flow_imp.id(9756956493687606971)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756956153998606970)
 ,p_display_sequence=>10
 ,p_display_value=>'Horizontal'
 ,p_return_value=>'horizontal'
 ,p_help_text=>'The content can be scrolled sideways, to the left or to the right.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222253309254535826)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222252419327535825)
+ p_id=>wwv_flow_imp.id(9756957043925606971)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756956153998606970)
 ,p_display_sequence=>20
 ,p_display_value=>'Vertical'
 ,p_return_value=>'vertical'
 ,p_help_text=>'The content can be scrolled up or down.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222259726326535829)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756963460997606974)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>8
 ,p_display_sequence=>80
@@ -602,32 +602,32 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'Sets the size of the images.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222260035234535829)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222259726326535829)
+ p_id=>wwv_flow_imp.id(9756963769905606974)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756963460997606974)
 ,p_display_sequence=>10
 ,p_display_value=>'Cover'
 ,p_return_value=>'cover'
 ,p_help_text=>'Stretches the image to fully fill all the available space of the slide, i.e. it won''t leave any blank space. This setting may cause the images to be partially "cut-off" due to different aspect-ratios.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222261097236535829)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222259726326535829)
+ p_id=>wwv_flow_imp.id(9756964831907606974)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756963460997606974)
 ,p_display_sequence=>20
 ,p_display_value=>'Contain'
 ,p_return_value=>'contain'
 ,p_help_text=>'Fits the complete image into the slide, preserving the aspect-ratio of the image. This may cause blank space next to or above and below the image.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222260630875535829)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222259726326535829)
+ p_id=>wwv_flow_imp.id(9756964365546606974)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756963460997606974)
 ,p_display_sequence=>30
 ,p_display_value=>'Custom'
 ,p_return_value=>'custom'
 ,p_help_text=>'The width of the image will be scaled to the provided percentage (height will be adjusted proportionally) and centered in the slide.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222261609511535829)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756965344182606974)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>9
 ,p_display_sequence=>90
@@ -638,15 +638,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_default_value=>'100'
 ,p_unit=>'%'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(9222259726326535829)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9756963460997606974)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'custom'
 ,p_help_text=>'The width of the displayed images in percent relative to its container (slide). The height becomes ''auto''.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222253797922535826)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756957532593606971)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>10
 ,p_display_sequence=>100
@@ -659,80 +659,80 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'A list of options you can apply on the region.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222254713683535826)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756958448354606971)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>10
 ,p_display_value=>'Pagination'
 ,p_return_value=>'pagination'
 ,p_help_text=>'Displays a clickable bullet for every slide at the bottom of the slider. The active slide''s bullet is highlighted.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222255145052535827)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756958879723606972)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>20
 ,p_display_value=>'Autoplay'
 ,p_return_value=>'autoplay'
 ,p_help_text=>'Automatically changes slides in regular intervals.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222255713165535827)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756959447836606972)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>30
 ,p_display_value=>'Description Box'
 ,p_return_value=>'description-box'
 ,p_help_text=>'Displays a content box for each slide to display additional textual information.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222256220485535827)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756959955156606972)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>40
 ,p_display_value=>'Navigation'
 ,p_return_value=>'navigation'
 ,p_help_text=>'Displays previous and next buttons on the sides (for horizontal) or on the top and bottom (for vertical) of the slider.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222256712730535827)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756960447401606972)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>50
 ,p_display_value=>'Loop'
 ,p_return_value=>'loop'
 ,p_help_text=>'Loops the slides of the slider, i.e. after the last slide the first one transitions in and vice-versa.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222257712453535828)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756961447124606973)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>60
 ,p_display_value=>'Display Thumbnails'
 ,p_return_value=>'display-thumbnails'
 ,p_help_text=>'Displays thumbnails of the images under the main slider.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222258203182535828)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756961937853606973)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>70
 ,p_display_value=>'Fullscreen Support'
 ,p_return_value=>'fullscreen-support'
 ,p_help_text=>'Shows a button in the corner of the slider which switches the slider to or off fullscreen mode.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222258642595535828)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756962377266606973)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>80
 ,p_display_value=>'Navigation Hide On Click'
 ,p_return_value=>'navigation-hide-on-click'
 ,p_help_text=>'Hides/shows the navigation buttons when clicking on the container.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222259158082535828)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+ p_id=>wwv_flow_imp.id(9756962892753606973)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_display_sequence=>90
 ,p_display_value=>'Pagination Hide On Click'
 ,p_return_value=>'pagination-hide-on-click'
 ,p_help_text=>'Hides/shows the pagination when clicking on the container.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222249661621535824)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756953396292606969)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>11
 ,p_display_sequence=>110
@@ -743,15 +743,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_default_value=>'10'
 ,p_unit=>'second(s)'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(9222253797922535826)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9756957532593606971)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'IN_LIST'
 ,p_depending_on_expression=>'autoplay'
 ,p_help_text=>'The number of seconds between slide changes.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222250122642535824)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756953857313606969)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>12
 ,p_display_sequence=>120
@@ -764,8 +764,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'The number of images displayed in the visible area (slides visible at the same time on slider''s container).'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9222250493078535824)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756954227749606969)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>13
 ,p_display_sequence=>130
@@ -775,7 +775,7 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_default_value=>'slide'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(9222250122642535824)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9756953857313606969)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'1'
@@ -787,40 +787,40 @@ wwv_flow_imp_shared.create_plugin_attribute(
 'If you have 2 or more images per slide: <i>slide</i> and <i>coverflow</i> are supported.'))
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222250926657535825)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222250493078535824)
+ p_id=>wwv_flow_imp.id(9756954661328606970)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756954227749606969)
 ,p_display_sequence=>10
 ,p_display_value=>'Coverflow'
 ,p_return_value=>'coverflow'
 ,p_help_text=>'The transition of the slides happens with a <i>Coverflow</i> effect.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222251381684535825)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222250493078535824)
+ p_id=>wwv_flow_imp.id(9756955116355606970)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756954227749606969)
 ,p_display_sequence=>20
 ,p_display_value=>'Cube'
 ,p_return_value=>'cube'
 ,p_help_text=>'The transition of the slides happens with a <i>Cube</i> effect.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9222251925083535825)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222250493078535824)
+ p_id=>wwv_flow_imp.id(9756955659754606970)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756954227749606969)
 ,p_display_sequence=>30
 ,p_display_value=>'Flip'
 ,p_return_value=>'flip'
 ,p_help_text=>'The transition of the slides happens with a <i>Flip</i> effect.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9093694129490302910)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9222250493078535824)
+ p_id=>wwv_flow_imp.id(9628397864161374055)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9756954227749606969)
 ,p_display_sequence=>40
 ,p_display_value=>'Slide'
 ,p_return_value=>'slide'
 ,p_help_text=>'The transition of the slides happens with a <i>Slide</i> effect.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9093697147074296175)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9628400881745367320)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>14
 ,p_display_sequence=>140
@@ -830,7 +830,7 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_default_value=>'slide'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(9222250122642535824)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(9756953857313606969)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'NOT_EQUALS'
 ,p_depending_on_expression=>'1'
@@ -842,24 +842,24 @@ wwv_flow_imp_shared.create_plugin_attribute(
 'If you have 2 or more images per slide: <i>slide</i> and <i>coverflow</i> are supported.'))
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9093699837651295378)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9093697147074296175)
+ p_id=>wwv_flow_imp.id(9628403572322366523)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9628400881745367320)
 ,p_display_sequence=>10
 ,p_display_value=>'Slide'
 ,p_return_value=>'slide'
 ,p_help_text=>'The transition of the slides happens with a <i>Slide<i> effect.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9093702519860283780)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9093697147074296175)
+ p_id=>wwv_flow_imp.id(9628406254531354925)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9628400881745367320)
 ,p_display_sequence=>20
 ,p_display_value=>'Coverflow'
 ,p_return_value=>'coverflow'
 ,p_help_text=>'The transition of the slides happens with a <i>Coverflow<i> effect.'
 );
 wwv_flow_imp_shared.create_plugin_std_attribute(
- p_id=>wwv_flow_imp.id(8791366783987310187)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9326070518658381332)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_name=>'INIT_JAVASCRIPT_CODE'
 ,p_is_required=>false
 ,p_depending_on_has_to_exist=>true
@@ -885,8 +885,8 @@ wwv_flow_imp_shared.create_plugin_std_attribute(
 ,p_help_text=>'You can use this attribute to define a function that will allow you to change/override the plugin settings. This gives you added flexibility of controlling the settings from a single Javascript function defined in a "Static Application File".'
 );
 wwv_flow_imp_shared.create_plugin_std_attribute(
- p_id=>wwv_flow_imp.id(9099566905537875642)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9634270640208946787)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_name=>'SOURCE_SQL'
 ,p_depending_on_has_to_exist=>true
 ,p_examples=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -912,26 +912,26 @@ wwv_flow_imp_shared.create_plugin_std_attribute(
 '</p>'))
 );
 wwv_flow_imp_shared.create_plugin_event(
- p_id=>wwv_flow_imp.id(9093720441376770162)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9628424176047841307)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_name=>'fos-imageslider-fullscreen-enter'
 ,p_display_name=>'FOS - Image Slider - Fullscreen Enter'
 );
 wwv_flow_imp_shared.create_plugin_event(
- p_id=>wwv_flow_imp.id(9093720860777770161)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9628424595448841306)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_name=>'fos-imageslider-fullscreen-exit'
 ,p_display_name=>'FOS - Image Slider - Fullscreen Exit'
 );
 wwv_flow_imp_shared.create_plugin_event(
- p_id=>wwv_flow_imp.id(9222264855917535833)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756968590588606978)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_name=>'fos-imageslider-slide-change'
 ,p_display_name=>'FOS - Image Slider - Slide Change'
 );
 wwv_flow_imp_shared.create_plugin_event(
- p_id=>wwv_flow_imp.id(8520070081119735389)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9054773815790806534)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_name=>'fos-imageslider-slide-click'
 ,p_display_name=>'FOS - Image Slider - Slide Click'
 );
@@ -972,8 +972,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222268920089535837)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756972654760606982)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'css/style.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -1027,8 +1027,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222269268947535837)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756973003618606982)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'css/style.css.map'
 ,p_mime_type=>'application/json'
 ,p_file_charset=>'utf-8'
@@ -1064,8 +1064,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222269649837535838)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756973384508606983)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'css/style.min.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -1178,8 +1178,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222270098833535838)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756973833504606983)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'js/script.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -1238,8 +1238,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222270454729535838)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756974189400606983)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'js/script.js.map'
 ,p_mime_type=>'application/json'
 ,p_file_charset=>'utf-8'
@@ -1284,8 +1284,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222270840938535838)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756974575609606983)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'js/script.min.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -1460,8 +1460,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222271260744535839)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756974995415606984)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'libraries/swiper-bundle.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -1673,8 +1673,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222271667776535839)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756975402447606984)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'libraries/swiper-bundle.css.map'
 ,p_mime_type=>'application/json'
 ,p_file_charset=>'utf-8'
@@ -4859,8 +4859,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222272071310535839)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756975805981606984)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'libraries/swiper-bundle.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -6742,8 +6742,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222272506259535840)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756976240930606985)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'libraries/swiper-bundle.js.map'
 ,p_mime_type=>'application/json'
 ,p_file_charset=>'utf-8'
@@ -6893,8 +6893,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222272883126535840)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756976617797606985)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'libraries/swiper-bundle.min.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -8328,8 +8328,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9222273329699535841)
-,p_plugin_id=>wwv_flow_imp.id(9334956681058660106)
+ p_id=>wwv_flow_imp.id(9756977064370606986)
+,p_plugin_id=>wwv_flow_imp.id(9869660415729731251)
 ,p_file_name=>'libraries/swiper-bundle.min.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'

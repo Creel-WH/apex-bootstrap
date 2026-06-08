@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_flow_item(
- p_id=>wwv_flow_imp.id(9793748801530035339)
+ p_id=>wwv_flow_imp.id(9795748801530035339)
 ,p_name=>'STS_JY_API_URL'
 ,p_protection_level=>'I'
 ,p_escape_on_http_output=>'N'

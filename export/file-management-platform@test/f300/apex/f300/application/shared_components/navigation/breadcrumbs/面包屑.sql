@@ -1,7 +1,7 @@
-prompt --application/shared_components/navigation/breadcrumbs/面包屑
+prompt --application/shared_components/navigation/breadcrumbs/面包�?
 begin
 --   Manifest
---     MENU: 面包屑
+--     MENU: 面包�?
 --   Manifest End
 wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
@@ -12,11 +12,11 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_menu(
- p_id=>wwv_flow_imp.id(9793439067225686436)
+ p_id=>wwv_flow_imp.id(9795439067225686436)
 ,p_name=>unistr('\9762\5305\5C51')
 );
 wwv_flow_imp_shared.create_menu_option(
- p_id=>wwv_flow_imp.id(13030002000000000003)
+ p_id=>wwv_flow_imp.id(13032002000000000003)
 ,p_short_name=>unistr('\5206\5E73\53F0\7BA1\7406\540E\53F0')
 ,p_link=>'f?p=&APP_ID.:300:&APP_SESSION.::&DEBUG.:::'
 ,p_page_id=>300

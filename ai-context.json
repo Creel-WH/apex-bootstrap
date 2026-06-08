@@ -1,4 +1,4 @@
-﻿{
+{
     "preferred_entrypoint":  "tools/apex_ai.sh",
     "supported_actions":  [
                               "init",
@@ -67,15 +67,15 @@
                             "machine_state_authority":  "ai-context.json"
                         },
     "current_task":  {
-                         "feature_file":  "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f138/docs/2026-06-05-f138-permission-sync-and-feedback-content-restore.md",
+                         "feature_file":  "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f138/docs/2026-06-05-p133-drag-sort-no-update-audit.md",
                          "env_alias":  "sales-tools@test",
                          "app_id":  "138",
                          "status":  "DONE",
                          "source_of_truth":  "ai-context.json",
-                         "proposed_pages":  "P123,P138,P139,P201,P202,P203,P124,P225,P2,P204,P133",
-                         "proposed_db_objects":  "STS_SCOPE,STS_USER_ROLE,STS_FEEDBACK,STS_FILE",
-                         "confirmed_pages":  "P123,P138,P139,P201,P202,P203,P124,P225,P2,P204,P133",
-                         "confirmed_db_objects":  "STS_SCOPE,STS_USER_ROLE,STS_FEEDBACK,STS_FILE",
+                         "proposed_pages":  "P133",
+                         "proposed_db_objects":  "STS_FILE",
+                         "confirmed_pages":  "P133",
+                         "confirmed_db_objects":  "STS_FILE",
                          "stage_status":  {
                                               "connectivity":  "PASSED",
                                               "scope_confirmation":  "PASSED",

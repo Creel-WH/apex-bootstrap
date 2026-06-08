@@ -22,22 +22,22 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(5287570669876089689)
+ p_id=>wwv_flow_imp.id(5822274404547160834)
 ,p_plug_name=>unistr('\9762\5305\5C51')
 ,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
 ,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(9714917122084168580)
+,p_plug_template=>wwv_flow_imp.id(10249620856755239725)
 ,p_plug_display_sequence=>100
 ,p_plug_display_point=>'REGION_POSITION_01'
-,p_menu_id=>wwv_flow_imp.id(9714801479957168508)
+,p_menu_id=>wwv_flow_imp.id(10249505214628239653)
 ,p_plug_source_type=>'NATIVE_BREADCRUMB'
-,p_menu_template_id=>wwv_flow_imp.id(9714979557657168625)
+,p_menu_template_id=>wwv_flow_imp.id(10249683292328239770)
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(7044476450427376991)
+ p_id=>wwv_flow_imp.id(7579180185098448136)
 ,p_plug_name=>unistr('\4FE1\606F')
 ,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
-,p_plug_template=>wwv_flow_imp.id(9714917122084168580)
+,p_plug_template=>wwv_flow_imp.id(10249620856755239725)
 ,p_plug_display_sequence=>90
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 unistr('<h1><strong>\901A\7528\9879\76EE\7BA1\7406\5E73\53F0-\64CD\4F5C\624B\518C</strong></h1>'),

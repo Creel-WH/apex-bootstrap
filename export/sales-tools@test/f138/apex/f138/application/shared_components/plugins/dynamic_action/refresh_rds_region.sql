@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plugin(
- p_id=>wwv_flow_imp.id(9023760508798666959)
+ p_id=>wwv_flow_imp.id(9558464243469738104)
 ,p_plugin_type=>'DYNAMIC ACTION'
 ,p_name=>'REFRESH.RDS.REGION'
 ,p_display_name=>'Refresh Region Display Selector Region'
@@ -42,8 +42,8 @@ wwv_flow_imp_shared.create_plugin(
 ,p_files_version=>10
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9023760767999672799)
-,p_plugin_id=>wwv_flow_imp.id(9023760508798666959)
+ p_id=>wwv_flow_imp.id(9558464502670743944)
+,p_plugin_id=>wwv_flow_imp.id(9558464243469738104)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -70,8 +70,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(7752749872531257847)
-,p_plugin_id=>wwv_flow_imp.id(9023760508798666959)
+ p_id=>wwv_flow_imp.id(8287453607202328992)
+,p_plugin_id=>wwv_flow_imp.id(9558464243469738104)
 ,p_file_name=>'refreshRegionDisplaySelectorRegion.min.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_charset=>'utf-8'
@@ -95,8 +95,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9023761116817677068)
-,p_plugin_id=>wwv_flow_imp.id(9023760508798666959)
+ p_id=>wwv_flow_imp.id(9558464851488748213)
+,p_plugin_id=>wwv_flow_imp.id(9558464243469738104)
 ,p_file_name=>'refreshRegionDisplaySelectorRegion.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_charset=>'utf-8'

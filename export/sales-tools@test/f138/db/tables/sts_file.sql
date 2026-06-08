@@ -37,3 +37,4 @@
   USING INDEX  ENABLE,                                                                                                                                                                                             
 	 CONSTRAINT "STS_FILE_NEED_SYNC_CK" CHECK (need_sync in (0, 1)) ENABLE                                                                                                                                            
    ) ;                                                                                                                                                                                                             
+

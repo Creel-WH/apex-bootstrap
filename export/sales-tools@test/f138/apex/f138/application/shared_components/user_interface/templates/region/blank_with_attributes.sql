@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plug_template(
- p_id=>wwv_flow_imp.id(9714838117168168554)
+ p_id=>wwv_flow_imp.id(10249541851839239699)
 ,p_layout=>'TABLE'
 ,p_template=>'<div id="#REGION_STATIC_ID#" class="#REGION_CSS_CLASSES#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>#PREVIOUS##BODY##SUB_REGIONS##NEXT#</div>'
 ,p_page_plug_template_name=>'Blank with Attributes'
@@ -25,8 +25,8 @@ wwv_flow_imp_shared.create_plug_template(
 ,p_translate_this_template=>'N'
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714838432642168554)
-,p_plug_template_id=>wwv_flow_imp.id(9714838117168168554)
+ p_id=>wwv_flow_imp.id(10249542167313239699)
+,p_plug_template_id=>wwv_flow_imp.id(10249541851839239699)
 ,p_name=>'Region Body'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>true
@@ -36,8 +36,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714838750244168554)
-,p_plug_template_id=>wwv_flow_imp.id(9714838117168168554)
+ p_id=>wwv_flow_imp.id(10249542484915239699)
+,p_plug_template_id=>wwv_flow_imp.id(10249541851839239699)
 ,p_name=>'Next'
 ,p_placeholder=>'NEXT'
 ,p_has_grid_support=>false
@@ -47,8 +47,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714839053654168554)
-,p_plug_template_id=>wwv_flow_imp.id(9714838117168168554)
+ p_id=>wwv_flow_imp.id(10249542788325239699)
+,p_plug_template_id=>wwv_flow_imp.id(10249541851839239699)
 ,p_name=>'Previous'
 ,p_placeholder=>'PREVIOUS'
 ,p_has_grid_support=>false
@@ -58,8 +58,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714839353949168554)
-,p_plug_template_id=>wwv_flow_imp.id(9714838117168168554)
+ p_id=>wwv_flow_imp.id(10249543088620239699)
+,p_plug_template_id=>wwv_flow_imp.id(10249541851839239699)
 ,p_name=>'Sub Regions'
 ,p_placeholder=>'SUB_REGIONS'
 ,p_has_grid_support=>true

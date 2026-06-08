@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_flow_item(
- p_id=>wwv_flow_imp.id(9715111872597532312)
+ p_id=>wwv_flow_imp.id(10249815607268603457)
 ,p_name=>'BPOINT_BUTTON_URL'
 ,p_protection_level=>'I'
 ,p_escape_on_http_output=>'N'

@@ -12,13 +12,13 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_list(
- p_id=>wwv_flow_imp.id(7059040956164912400)
+ p_id=>wwv_flow_imp.id(7593744690835983545)
 ,p_name=>unistr('\6587\4EF6\5E93')
 ,p_list_status=>'PUBLIC'
 ,p_version_scn=>1
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(7059041109929912415)
+ p_id=>wwv_flow_imp.id(7593744844600983560)
 ,p_list_item_display_sequence=>10
 ,p_list_item_link_text=>unistr('\6587\4EF6\5E93')
 ,p_list_item_link_target=>'f?p=&APP_ID.:130:&SESSION.::&DEBUG.::::'

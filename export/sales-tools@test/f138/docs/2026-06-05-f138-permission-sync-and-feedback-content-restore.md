@@ -83,6 +83,13 @@
   - `APEX_240200.WWV_FLOW_IMP_PAGE`
 - 结论：`P202/P204` 当前是 APEX 页面导入器边界问题，不是 `import-page` 包装问题。
 
+## 2026-06-05 补充修复
+- 后续已定位到根因为 `P202/P204` 动态动作 `NATIVE_EXECUTE_PLSQL_CODE` 的 `p_attribute_01` 超过 `4000`。
+- 已在功能切片 `export/sales-tools@test/f138/docs/2026-06-05-f138-p202-p204-importer-fix.md` 中完成压缩修复。
+- 当前结论已更新为：
+  - `P202/P204` 在 `sales-tools@test` 单页导入成功
+  - `sales-tools@prod` 通过 APEX Builder 复用 `138` 导入成功
+
 ## 验证结果
 
 ### SQL 验证

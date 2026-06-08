@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plug_template(
- p_id=>wwv_flow_imp.id(9714897020901168574)
+ p_id=>wwv_flow_imp.id(10249600755572239719)
 ,p_layout=>'TABLE'
 ,p_template=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '<div class="t-ItemContainer #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>',
@@ -30,8 +30,8 @@ wwv_flow_imp_shared.create_plug_template(
 ,p_translate_this_template=>'N'
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9018431435937873010)
-,p_plug_template_id=>wwv_flow_imp.id(9714897020901168574)
+ p_id=>wwv_flow_imp.id(9553135170608944155)
+,p_plug_template_id=>wwv_flow_imp.id(10249600755572239719)
 ,p_name=>'Sub Regions'
 ,p_placeholder=>'SUB_REGIONS'
 ,p_has_grid_support=>true
@@ -41,8 +41,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714897331601168574)
-,p_plug_template_id=>wwv_flow_imp.id(9714897020901168574)
+ p_id=>wwv_flow_imp.id(10249601066272239719)
+,p_plug_template_id=>wwv_flow_imp.id(10249600755572239719)
 ,p_name=>'Item'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>false
@@ -52,8 +52,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714897663979168574)
-,p_plug_template_id=>wwv_flow_imp.id(9714897020901168574)
+ p_id=>wwv_flow_imp.id(10249601398650239719)
+,p_plug_template_id=>wwv_flow_imp.id(10249600755572239719)
 ,p_name=>'Button End'
 ,p_placeholder=>'BUTTON_END'
 ,p_has_grid_support=>false
@@ -63,8 +63,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714897960839168574)
-,p_plug_template_id=>wwv_flow_imp.id(9714897020901168574)
+ p_id=>wwv_flow_imp.id(10249601695510239719)
+,p_plug_template_id=>wwv_flow_imp.id(10249600755572239719)
 ,p_name=>'Button Start'
 ,p_placeholder=>'BUTTON_START'
 ,p_has_grid_support=>false

@@ -1,0 +1,108 @@
+DECLARE
+  v_count NUMBER;
+BEGIN
+  SELECT COUNT(*)
+    INTO v_count
+    FROM user_tab_columns
+   WHERE table_name = 'STS_FILE'
+     AND column_name = 'ROOT_FOLDER_ID';
+
+  IF v_count = 0 THEN
+    EXECUTE IMMEDIATE 'ALTER TABLE STS_FILE ADD (ROOT_FOLDER_ID NUMBER(20,0))';
+  END IF;
+
+  SELECT COUNT(*)
+    INTO v_count
+    FROM user_tab_columns
+   WHERE table_name = 'STS_FILE'
+     AND column_name = 'NEED_SYNC';
+
+  IF v_count = 0 THEN
+    EXECUTE IMMEDIATE 'ALTER TABLE STS_FILE ADD (NEED_SYNC NUMBER(1,0) DEFAULT 0 NOT NULL)';
+  END IF;
+
+  SELECT COUNT(*)
+    INTO v_count
+    FROM user_constraints
+   WHERE table_name = 'STS_FILE'
+     AND constraint_name = 'STS_FILE_NEED_SYNC_CK';
+
+  IF v_count = 0 THEN
+    EXECUTE IMMEDIATE 'ALTER TABLE STS_FILE ADD CONSTRAINT STS_FILE_NEED_SYNC_CK CHECK (NEED_SYNC IN (0, 1))';
+  END IF;
+
+  SELECT COUNT(*)
+    INTO v_count
+    FROM user_tab_columns
+   WHERE table_name = 'STS_FILE'
+     AND column_name = 'SORT_NUM';
+
+  IF v_count = 0 THEN
+    EXECUTE IMMEDIATE 'ALTER TABLE STS_FILE ADD (SORT_NUM NUMBER(10,0) DEFAULT 1)';
+  END IF;
+END;
+/
+
+UPDATE STS_FILE
+   SET NEED_SYNC = 0
+ WHERE NEED_SYNC IS NULL;
+/
+
+UPDATE STS_FILE
+   SET SORT_NUM = 1
+ WHERE SORT_NUM IS NULL;
+/
+
+CREATE OR REPLACE EDITIONABLE TRIGGER "TRG_STS_FILE_SORT_NUM"
+FOR INSERT ON "STS_FILE"
+COMPOUND TRIGGER
+  BEFORE EACH ROW IS
+  BEGIN
+    IF :NEW.SORT_NUM IS NULL OR :NEW.SORT_NUM = 1 THEN
+      :NEW.SORT_NUM := -1;
+    END IF;
+  END BEFORE EACH ROW;
+
+  AFTER STATEMENT IS
+  BEGIN
+    MERGE INTO STS_FILE T
+    USING (
+      WITH N AS (
+        SELECT ROWID RID,
+               TENANT_ID,
+               NVL(ROOT_FOLDER_ID, 0) ROOT_GROUP_ID,
+               NVL(PARENT_FOLDER_ID, 0) PARENT_GROUP_ID,
+               ROW_NUMBER() OVER (
+                 PARTITION BY TENANT_ID, NVL(ROOT_FOLDER_ID, 0), NVL(PARENT_FOLDER_ID, 0)
+                 ORDER BY NVL(CREATION_DATE, DATE '1970-01-01'), FILE_ID
+               ) RN
+          FROM STS_FILE
+         WHERE SORT_NUM = -1
+           AND NVL(DEL_FLAG, 0) = 0
+      ),
+      M AS (
+        SELECT TENANT_ID,
+               NVL(ROOT_FOLDER_ID, 0) ROOT_GROUP_ID,
+               NVL(PARENT_FOLDER_ID, 0) PARENT_GROUP_ID,
+               NVL(MAX(SORT_NUM), 0) MAX_SORT
+          FROM STS_FILE
+         WHERE SORT_NUM <> -1
+           AND NVL(DEL_FLAG, 0) = 0
+         GROUP BY TENANT_ID, NVL(ROOT_FOLDER_ID, 0), NVL(PARENT_FOLDER_ID, 0)
+      )
+      SELECT N.RID,
+             NVL(M.MAX_SORT, 0) + N.RN NEW_SORT
+        FROM N
+        LEFT JOIN M
+          ON M.TENANT_ID = N.TENANT_ID
+         AND M.ROOT_GROUP_ID = N.ROOT_GROUP_ID
+         AND M.PARENT_GROUP_ID = N.PARENT_GROUP_ID
+    ) S
+    ON (T.ROWID = S.RID)
+    WHEN MATCHED THEN
+      UPDATE SET T.SORT_NUM = S.NEW_SORT;
+  END AFTER STATEMENT;
+END;
+/
+ALTER TRIGGER "TRG_STS_FILE_SORT_NUM" ENABLE;
+/

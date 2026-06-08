@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plugin(
- p_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_plugin_type=>'REGION TYPE'
 ,p_name=>'APEX.FANCYTREE.SELECT'
 ,p_display_name=>'APEX FancyTree Select'
@@ -112,8 +112,8 @@ wwv_flow_imp_shared.create_plugin(
 ,p_files_version=>3215
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(155008170871308710238)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(155542874605979781383)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -252,8 +252,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 '</pre>'))
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(159266876745509775161)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(159801580480180846306)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -265,8 +265,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'Set a textfield item that is used to search in tree'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(159273937267727117802)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(159808641002398188947)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -279,8 +279,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'This message is shown when any error is occured. Please check Browser console for debug information when this text is shown.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(136697927925575272717)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(137232631660246343862)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>21
@@ -292,8 +292,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'Set Item which value is active node id'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(78141401271930765892)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(78676105006601837037)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>5
 ,p_display_sequence=>50
@@ -312,8 +312,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 '<li>Version that is given by following function is different to last version that was set to client</li>'))
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(78211090954568084122)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(78745794689239155267)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>6
 ,p_display_sequence=>60
@@ -323,7 +323,7 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_default_value=>'RETURN ''V1'';'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(78141401271930765892)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(78676105006601837037)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'Y'
@@ -335,8 +335,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ||'is returned by this function.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(59975192816067150436)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(60509896550738221581)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>7
 ,p_display_sequence=>22
@@ -348,8 +348,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'Set Item where expanded Nodes are saved.'
 );
 wwv_flow_imp_shared.create_plugin_std_attribute(
- p_id=>wwv_flow_imp.id(155008171600669710257)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(155542875335340781402)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_name=>'SOURCE_SQL'
 ,p_default_value=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT ',
@@ -465,8 +465,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(168578703983442075263)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(169113407718113146408)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_file_name=>'LICENSE'
 ,p_mime_type=>'application/octet-stream'
 ,p_file_charset=>'utf-8'
@@ -503,8 +503,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(168578704325136075266)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(169113408059807146411)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_file_name=>'LICENSE4LIBS'
 ,p_mime_type=>'application/octet-stream'
 ,p_file_charset=>'utf-8'
@@ -622,8 +622,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(168578705322602076463)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(169113409057273147608)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_file_name=>'fancytree.pkgd.min.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -3465,8 +3465,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(168578705589451076464)
-,p_plugin_id=>wwv_flow_imp.id(155008170714400710224)
+ p_id=>wwv_flow_imp.id(169113409324122147609)
+,p_plugin_id=>wwv_flow_imp.id(155542874449071781369)
 ,p_file_name=>'fancytree.pkgd.min.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_charset=>'utf-8'

@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_template(
- p_id=>wwv_flow_imp.id(9714810624711168538)
+ p_id=>wwv_flow_imp.id(10249514359382239683)
 ,p_theme_id=>42
 ,p_name=>'Login'
 ,p_internal_name=>'LOGIN'
@@ -138,8 +138,8 @@ wwv_flow_imp_shared.create_template(
 ,p_reference_id=>2099711150063350616
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714810953741168538)
-,p_page_template_id=>wwv_flow_imp.id(9714810624711168538)
+ p_id=>wwv_flow_imp.id(10249514688412239683)
+,p_page_template_id=>wwv_flow_imp.id(10249514359382239683)
 ,p_name=>'Background Image'
 ,p_placeholder=>'BACKGROUND_IMAGE'
 ,p_has_grid_support=>false
@@ -150,8 +150,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_max_fixed_grid_columns=>12
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714811281944168538)
-,p_page_template_id=>wwv_flow_imp.id(9714810624711168538)
+ p_id=>wwv_flow_imp.id(10249515016615239683)
+,p_page_template_id=>wwv_flow_imp.id(10249514359382239683)
 ,p_name=>'Content Body'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>true
@@ -162,8 +162,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_max_fixed_grid_columns=>12
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714811584665168539)
-,p_page_template_id=>wwv_flow_imp.id(9714810624711168538)
+ p_id=>wwv_flow_imp.id(10249515319336239684)
+,p_page_template_id=>wwv_flow_imp.id(10249514359382239683)
 ,p_name=>'Body Header'
 ,p_placeholder=>'REGION_POSITION_01'
 ,p_has_grid_support=>false
@@ -173,8 +173,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714811859269168539)
-,p_page_template_id=>wwv_flow_imp.id(9714810624711168538)
+ p_id=>wwv_flow_imp.id(10249515593940239684)
+,p_page_template_id=>wwv_flow_imp.id(10249514359382239683)
 ,p_name=>'Body Footer'
 ,p_placeholder=>'REGION_POSITION_02'
 ,p_has_grid_support=>false

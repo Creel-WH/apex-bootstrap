@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plug_template(
- p_id=>wwv_flow_imp.id(9714839572953168554)
+ p_id=>wwv_flow_imp.id(10249543307624239699)
 ,p_layout=>'TABLE'
 ,p_template=>'<div id="#REGION_STATIC_ID#" class="#REGION_CSS_CLASSES#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>#PREVIOUS##BODY##SUB_REGIONS##NEXT#</div>'
 ,p_page_plug_template_name=>'Blank with Attributes (No Grid)'
@@ -25,8 +25,8 @@ wwv_flow_imp_shared.create_plug_template(
 ,p_translate_this_template=>'N'
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714839835154168555)
-,p_plug_template_id=>wwv_flow_imp.id(9714839572953168554)
+ p_id=>wwv_flow_imp.id(10249543569825239700)
+,p_plug_template_id=>wwv_flow_imp.id(10249543307624239699)
 ,p_name=>'Region Body'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>false
@@ -36,8 +36,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714840143958168555)
-,p_plug_template_id=>wwv_flow_imp.id(9714839572953168554)
+ p_id=>wwv_flow_imp.id(10249543878629239700)
+,p_plug_template_id=>wwv_flow_imp.id(10249543307624239699)
 ,p_name=>'Next'
 ,p_placeholder=>'NEXT'
 ,p_has_grid_support=>false
@@ -47,8 +47,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714840428316168555)
-,p_plug_template_id=>wwv_flow_imp.id(9714839572953168554)
+ p_id=>wwv_flow_imp.id(10249544162987239700)
+,p_plug_template_id=>wwv_flow_imp.id(10249543307624239699)
 ,p_name=>'Previous'
 ,p_placeholder=>'PREVIOUS'
 ,p_has_grid_support=>false
@@ -58,8 +58,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9714840758631168555)
-,p_plug_template_id=>wwv_flow_imp.id(9714839572953168554)
+ p_id=>wwv_flow_imp.id(10249544493302239700)
+,p_plug_template_id=>wwv_flow_imp.id(10249543307624239699)
 ,p_name=>'Sub Regions'
 ,p_placeholder=>'SUB_REGIONS'
 ,p_has_grid_support=>false

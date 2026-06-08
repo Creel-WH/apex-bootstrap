@@ -1,0 +1,8 @@
+{
+  "application": "f230",
+  "environment": "dingtalk-workbench@prod",
+  "schema": "JA_WORKBENCH",
+  "apex_app_id": "230",
+  "export_dir": "export/dingtalk-workbench@prod/f230/apex",
+  "config_source": "conn.json#dingtalk-workbench@prod"
+}

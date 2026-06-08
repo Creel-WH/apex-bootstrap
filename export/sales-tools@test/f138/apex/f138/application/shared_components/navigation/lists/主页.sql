@@ -12,13 +12,13 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_list(
- p_id=>wwv_flow_imp.id(3698147775059401557)
+ p_id=>wwv_flow_imp.id(4232851509730472702)
 ,p_name=>unistr('\4E3B\9875')
 ,p_list_status=>'PUBLIC'
 ,p_version_scn=>1
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3698147964072401557)
+ p_id=>wwv_flow_imp.id(4232851698743472702)
 ,p_list_item_display_sequence=>10
 ,p_list_item_link_text=>unistr('\6587\4EF6\5E93')
 ,p_list_item_link_target=>'f?p=&APP_ID.:130:&SESSION.::&DEBUG.::::'
@@ -28,7 +28,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3698148441765401557)
+ p_id=>wwv_flow_imp.id(4232852176436472702)
 ,p_list_item_display_sequence=>20
 ,p_list_item_link_text=>unistr('\66F4\65B0\53CD\9988')
 ,p_list_item_link_target=>'f?p=&APP_ID.:200:&SESSION.::&DEBUG.::::'
@@ -38,7 +38,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3269188313901856684)
+ p_id=>wwv_flow_imp.id(3803892048572927829)
 ,p_list_item_display_sequence=>30
 ,p_list_item_link_text=>unistr('\6570\636E\5206\6790')
 ,p_list_item_link_target=>'f?p=&APP_ID.:150:&SESSION.::&DEBUG.::::'
@@ -48,7 +48,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3698148848004401557)
+ p_id=>wwv_flow_imp.id(4232852582675472702)
 ,p_list_item_display_sequence=>99
 ,p_list_item_link_text=>unistr('\7CFB\7EDF\8BBE\7F6E')
 ,p_list_item_link_target=>'f?p=&APP_ID.:220:&SESSION.::&DEBUG.::::'

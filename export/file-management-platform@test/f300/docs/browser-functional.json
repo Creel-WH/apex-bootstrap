@@ -1,0 +1,39 @@
+{
+  "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=300:300",
+  "label": "f300-p300-functional",
+  "skip_builder_login": true,
+  "steps": [
+    {
+      "action": "fill",
+      "selector": "#P9999_USERNAME",
+      "value": "{apex_builder_username}"
+    },
+    {
+      "action": "fill",
+      "selector": "#P9999_PASSWORD",
+      "value": "{apex_builder_password}"
+    },
+    {
+      "action": "apex_submit",
+      "request": "LOGIN"
+    },
+    {
+      "action": "wait_for_text",
+      "text": "分平台列表"
+    }
+  ],
+  "assertions": [
+    {
+      "type": "text_visible",
+      "text": "销售工具集"
+    },
+    {
+      "type": "text_visible",
+      "text": "PLT-001"
+    },
+    {
+      "type": "selector_visible",
+      "selector": "#report_table_p300-report tbody tr"
+    }
+  ]
+}

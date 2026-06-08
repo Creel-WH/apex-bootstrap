@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_flow_item(
- p_id=>wwv_flow_imp.id(3699907009787224046)
+ p_id=>wwv_flow_imp.id(4234610744458295191)
 ,p_name=>'ROLE_CODE'
 ,p_protection_level=>'I'
 ,p_item_comment=>unistr('\7528\4E8E\5224\65AD\6743\9650\7684ROLE_CODE --by wxx')
