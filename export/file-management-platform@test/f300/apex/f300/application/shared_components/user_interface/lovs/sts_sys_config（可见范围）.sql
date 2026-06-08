@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(3777976135446677372)
+ p_id=>wwv_flow_imp.id(3779976135446677372)
 ,p_lov_name=>unistr('STS_SYS_CONFIG\FF08\53EF\89C1\8303\56F4\FF09')
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select CONFIG_NAME,CONFIG_CODE',

@@ -17,7 +17,7 @@ wwv_flow_imp_page.create_page(
 ,p_alias=>'SUB_PLATFORM_ADMIN'
 ,p_step_title=>unistr('\5206\5E73\53F0\7BA1\7406\540E\53F0')
 ,p_autocomplete_on_off=>'OFF'
-,p_group_id=>wwv_flow_imp.id(9761788194092138495)
+,p_group_id=>wwv_flow_imp.id(9763788194092138495)
 ,p_javascript_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'function p300RefreshReport() {',
 '    var region = apex.region("p300-report");',
@@ -273,23 +273,23 @@ unistr('        title: "\7EF4\62A4\5206\5E73\53F0",'),
 ,p_page_component_map=>'03'
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(12998031042188853764)
+ p_id=>wwv_flow_imp.id(13000031042188853764)
 ,p_plug_name=>unistr('\9762\5305\5C51')
 ,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
 ,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(9761584751541540271)
+,p_plug_template=>wwv_flow_imp.id(9763584751541540271)
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'REGION_POSITION_01'
-,p_menu_id=>wwv_flow_imp.id(9761469109414540199)
+,p_menu_id=>wwv_flow_imp.id(9795439067225686436)
 ,p_plug_source_type=>'NATIVE_BREADCRUMB'
-,p_menu_template_id=>wwv_flow_imp.id(9761647187114540316)
+,p_menu_template_id=>wwv_flow_imp.id(9763647187114540316)
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(12998031042188853765)
+ p_id=>wwv_flow_imp.id(13000031042188853765)
 ,p_plug_name=>unistr('\5206\5E73\53F0\5217\8868')
 ,p_region_template_options=>'#DEFAULT#'
 ,p_escape_on_http_output=>'Y'
-,p_plug_template=>wwv_flow_imp.id(9761562566439540264)
+,p_plug_template=>wwv_flow_imp.id(9763562566439540264)
 ,p_plug_display_sequence=>20
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '<div id="p300-app" class="p300-wrap">',
@@ -305,127 +305,102 @@ unistr('    <input id="p300-keyword" class="p300-search" type="text" placeholder
   'expand_shortcuts', 'N',
   'output_as', 'HTML')).to_clob
 );
-wwv_flow_imp_page.create_report_region(
- p_id=>wwv_flow_imp.id(12998031042188853769)
-,p_name=>unistr('\5206\5E73\53F0\62A5\8868')
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(13000031042188853769)
+,p_plug_name=>unistr('\5206\5E73\53F0\62A5\8868')
 ,p_region_name=>'p300-report'
-,p_template=>wwv_flow_imp.id(9761562566439540264)
-,p_display_sequence=>30
+,p_plug_template=>wwv_flow_imp.id(9763562566439540264)
+,p_plug_display_sequence=>30
 ,p_region_css_classes=>'p300-table-wrap p300-report-region'
 ,p_region_template_options=>'#DEFAULT#:t-Region--hideHeader:t-Region--noPadding'
 ,p_component_template_options=>'#DEFAULT#:t-Report--stretch:t-Report--staticRowColors:t-Report--rowHighlight:t-Report--horizontalBorders:t-Report--hideNoPagination'
-,p_source_type=>'NATIVE_SQL_REPORT'
-,p_query_type=>'SQL'
-,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'select ''PLT-'' || lpad(to_char(s.system_id), 3, ''0'') as system_code,',
-'       s.system_name,',
-'       nvl((',
-'            select listagg(''<span class="p300-admin-tag">'' || apex_escape.html(x.admin_name) || ''</span>'', '''') within group (order by x.admin_name)',
-'              from (select distinct nvl(bu.name, sc.range_id) as admin_name',
-'                      from sts_scope sc',
-'                      left join basic_user bu',
-'                        on bu.tenant_id = to_number(nvl(nullif(v(''USER_TENANT''), ''''), ''0''))',
-'                       and bu.del_flag = 0',
-'                       and (sc.range_id = nvl(bu.union_id, to_char(bu.user_id))',
-'                            or sc.range_id = to_char(bu.user_id))',
-'                     where sc.reference_type = ''SYSTEM''',
-'                       and sc.permissions_type = ''MANAGE''',
-'                       and sc.range_type = ''USER''',
-'                       and sc.reference_id = s.system_id',
-'                   ) x',
-'       ), ''<span class="p300-admin-text">-</span>'') as admin_html,',
-'       to_char(nvl(s.creation_date, sysdate), ''yyyy-mm-dd'') as creation_date,',
-'       ''<div class="p300-op-cell"><button type="button" class="p300-op p300-op-enter" data-act="enter" data-id="'' || s.system_id || ''" data-url="'' || apex_escape.html_attribute(apex_util.prepare_url(p_url => ''f?p=138:9999:0:P300_HANDOFF:'' || v(''DEBUG'
-||unistr(''') || '':9999:P9999_HANDOFF_USER,P9999_HANDOFF_SYSTEM_ID:'' || nvl(v(''USER_JOB_NUMBER''), v(''APP_USER'')) || '','' || s.system_id, p_checksum_type => ''PUBLIC_BOOKMARK'')) || ''"><span class="fa fa-external-link" aria-hidden="true"></span><span>\8FDB\5165</span></but')
-||'ton><button type="button" class="p300-op p300-op-edit" data-act="edit" data-url="'' || apex_escape.html_attribute(apex_page.get_url(p_page => 301, p_items => ''P301_SYSTEM_ID'', p_values => s.system_id)) || ''"><span class="fa fa-pencil" aria-hidden="tru'
-||unistr('e"></span><span>\7F16\8F91</span></button><button type="button" class="p300-op p300-op-delete" data-act="delete" data-id="'' || s.system_id || ''"><span class="fa fa-trash-o" aria-hidden="true"></span><span>\5220\9664</span></button></div>'' as operation_html'),
-'  from sts_system s',
-' where nvl(s.del_flag, 0) = 0',
-'   and nvl(s.is_enable, 1) = 1',
-' order by s.system_id'))
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'declare',
+'    l_row_count number := 0;',
+'',
+'    procedure p(p_text in varchar2) is',
+'    begin',
+'        sys.htp.p(p_text);',
+'    end;',
+'begin',
+'    p(''<div class="p300-table-wrap p300-report-region">'');',
+'    p(''<table id="report_table_p300-report" class="t-Report-report" role="table">'');',
+'    p(''<thead><tr>'' ||',
+'      ''<th class="t-Report-colHead" scope="col">'' || unistr(''\5E73\53F0\7F16\53F7'') || ''</th>'' ||',
+'      ''<th class="t-Report-colHead" scope="col">'' || unistr(''\5E73\53F0\540D\79F0'') || ''</th>'' ||',
+'      ''<th class="t-Report-colHead" scope="col">'' || unistr(''\4E1A\52A1\7BA1\7406\5458'') || ''</th>'' ||',
+'      ''<th class="t-Report-colHead" scope="col">'' || unistr(''\521B\5EFA\65F6\95F4'') || ''</th>'' ||',
+'      ''<th class="t-Report-colHead" scope="col">'' || unistr(''\64CD\4F5C'') || ''</th></tr></thead><tbody>'');',
+'',
+'    for r in (',
+'        select ''PLT-'' || lpad(to_char(s.system_id), 3, ''0'') as system_code,',
+'               s.system_name,',
+'               nvl((',
+'                    select listagg(''<span class="p300-admin-tag">'' || apex_escape.html(x.admin_name) || ''</span>'', '''') within group (order by x.admin_name)',
+'                      from (select distinct nvl(bu.name, sc.range_id) as admin_name',
+'                              from sts_scope sc',
+'                              left join basic_user bu',
+'                                on bu.tenant_id = to_number(nvl(nullif(v(''USER_TENANT''), ''''), ''0''))',
+'                               and bu.del_flag = 0',
+'                               and (sc.range_id = nvl(bu.union_id, to_char(bu.user_id))',
+'                                    or sc.range_id = to_char(bu.user_id))',
+'                             where sc.reference_type = ''SYSTEM''',
+'                               and sc.permissions_type = ''MANAGE''',
+'                               and sc.range_type = ''USER''',
+'                               and sc.reference_id = s.system_id',
+'                           ) x',
+'               ), ''<span class="p300-admin-text">-</span>'') as admin_html,',
+'               to_char(nvl(s.creation_date, sysdate), ''yyyy-mm-dd'') as creation_date,',
+'               ''<div class="p300-op-cell"><button type="button" class="p300-op p300-op-enter" data-act="enter" data-id="'' || s.system_id || ''" data-url="'' || apex_escape.html_attribute(apex_util.prepare_url(p_url => ''f?p=299:9999:0:P300_HANDOFF:'' || v(''DEBUG'') || '':9999:P9999_HANDOFF_USER,P9999_HANDOFF_SYSTEM_ID:'' || nvl(v(''USER_JOB_NUMBER''), v(''APP_USER'')) || '','' || s.system_id, p_checksum_type => ''PUBLIC_BOOKMARK'')) || ''"><span class="fa fa-external-link" aria-hidden="true"></span><span>'' || unistr(''\8FDB\5165'') || ''</span></button>'' ||',
+'               ''<button type="button" class="p300-op p300-op-edit" data-act="edit" data-url="'' || apex_escape.html_attribute(apex_page.get_url(p_page => 301, p_items => ''P301_SYSTEM_ID'', p_values => s.system_id)) || ''"><span class="fa fa-pencil" aria-hidden="true"></span><span>'' || unistr(''\7F16\8F91'') || ''</span></button>'' ||',
+'               ''<button type="button" class="p300-op p300-op-delete" data-act="delete" data-id="'' || s.system_id || ''"><span class="fa fa-trash-o" aria-hidden="true"></span><span>'' || unistr(''\5220\9664'') || ''</span></button></div>'' as operation_html',
+'          from sts_system s',
+'         where nvl(s.del_flag, 0) = 0',
+'           and nvl(s.is_enable, 1) = 1',
+'         order by s.system_id',
+'    ) loop',
+'        l_row_count := l_row_count + 1;',
+'        p(''<tr>'' ||',
+'          ''<td class="t-Report-cell">'' || apex_escape.html(r.system_code) || ''</td>'' ||',
+'          ''<td class="t-Report-cell">'' || apex_escape.html(r.system_name) || ''</td>'' ||',
+'          ''<td class="t-Report-cell">'' || r.admin_html || ''</td>'' ||',
+'          ''<td class="t-Report-cell">'' || apex_escape.html(r.creation_date) || ''</td>'' ||',
+'          ''<td class="t-Report-cell">'' || r.operation_html || ''</td></tr>'');',
+'    end loop;',
+'',
+'    if l_row_count = 0 then',
+'        p(''<tr><td class="t-Report-cell p300-admin-text" colspan="5">'' || unistr(''\6682\65E0\6570\636E'') || ''</td></tr>'');',
+'    end if;',
+'',
+'    p(''</tbody></table>'');',
+'    p(''</div>'');',
+'end;'))
 ,p_ajax_enabled=>'Y'
-,p_lazy_loading=>false
-,p_query_row_template=>wwv_flow_imp.id(9761604386050540282)
-,p_query_num_rows=>20
-,p_query_options=>'DERIVED_REPORT_COLUMNS'
-,p_query_no_data_found=>unistr('\6682\65E0\6570\636E')
-,p_query_num_rows_type=>'ROWS_X_TO_Y'
-,p_pagination_display_position=>'BOTTOM_RIGHT'
-,p_csv_output=>'N'
-,p_prn_output=>'N'
-,p_sort_null=>'L'
-,p_plug_query_strip_html=>'N'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(12998031042188853770)
-,p_query_column_id=>1
-,p_column_alias=>'SYSTEM_CODE'
-,p_column_display_sequence=>20
-,p_column_heading=>unistr('\5E73\53F0\7F16\53F7')
-,p_heading_alignment=>'LEFT'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(12998031042188853771)
-,p_query_column_id=>2
-,p_column_alias=>'SYSTEM_NAME'
-,p_column_display_sequence=>30
-,p_column_heading=>unistr('\5E73\53F0\540D\79F0')
-,p_heading_alignment=>'LEFT'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(12998031042188853772)
-,p_query_column_id=>3
-,p_column_alias=>'ADMIN_HTML'
-,p_column_display_sequence=>40
-,p_column_heading=>unistr('\4E1A\52A1\7BA1\7406\5458')
-,p_column_html_expression=>'#ADMIN_HTML!RAW#'
-,p_heading_alignment=>'LEFT'
-,p_include_in_export=>'N'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(12998031042188853773)
-,p_query_column_id=>4
-,p_column_alias=>'CREATION_DATE'
-,p_column_display_sequence=>50
-,p_column_heading=>unistr('\521B\5EFA\65F6\95F4')
-,p_heading_alignment=>'LEFT'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(12998031042188853774)
-,p_query_column_id=>5
-,p_column_alias=>'OPERATION_HTML'
-,p_column_display_sequence=>60
-,p_column_heading=>unistr('\64CD\4F5C')
-,p_column_html_expression=>'#OPERATION_HTML!RAW#'
-,p_heading_alignment=>'LEFT'
-,p_include_in_export=>'N'
+,p_plug_source_type=>'NATIVE_PLSQL'
 );
 wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(12998031042188853775)
+ p_id=>wwv_flow_imp.id(13000031042188853775)
 ,p_name=>unistr('\5206\5E73\53F0\5BF9\8BDD\6846\5173\95ED\540E\5237\65B0')
 ,p_event_sequence=>10
 ,p_triggering_element_type=>'REGION'
-,p_triggering_region_id=>wwv_flow_imp.id(12998031042188853769)
+,p_triggering_region_id=>wwv_flow_imp.id(13000031042188853769)
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'apexafterclosedialog'
 );
 wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(12998031042188853776)
-,p_event_id=>wwv_flow_imp.id(12998031042188853775)
+ p_id=>wwv_flow_imp.id(13000031042188853776)
+,p_event_id=>wwv_flow_imp.id(13000031042188853775)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_REFRESH'
 ,p_affected_elements_type=>'REGION'
-,p_affected_region_id=>wwv_flow_imp.id(12998031042188853769)
+,p_affected_region_id=>wwv_flow_imp.id(13000031042188853769)
 ,p_attribute_01=>'N'
 );
 wwv_flow_imp_page.create_page_process(
- p_id=>wwv_flow_imp.id(12998031042188853768)
+ p_id=>wwv_flow_imp.id(13000031042188853768)
 ,p_process_sequence=>30
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'

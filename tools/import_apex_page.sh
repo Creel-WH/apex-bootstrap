@@ -46,6 +46,15 @@ apex_app_exists() {
   [[ "${result}" =~ ^[0-9]+$ ]] && [[ "${result}" -gt 0 ]]
 }
 
+apex_page_exists() {
+  local app_id="$1"
+  local page_id="$2"
+  local result
+
+  result="$(printf 'set heading off feedback off verify off pages 0\nselect count(*) from apex_application_pages where application_id = %s and page_id = %s;\n' "${app_id}" "${page_id}" | run_sqlcl | tr -d '[:space:]')"
+  [[ "${result}" =~ ^[0-9]+$ ]] && [[ "${result}" -gt 0 ]]
+}
+
 resolve_page_import_dir() {
   local apex_export_dir="$1"
   local app_code="$2"
@@ -196,6 +205,15 @@ main() {
     return 1
   }
 
+  # Pre-import: snap target page existence
+  local target_page_existed_before="no"
+  if apex_page_exists "${target_app_id}" "${target_page_id}"; then
+    target_page_existed_before="yes"
+    printf '[pre-import] Page %s exists in app %s, will be replaced.\n' "${target_page_id}" "${target_app_id}"
+  else
+    printf '[pre-import] Page %s does NOT exist in app %s, will be created.\n' "${target_page_id}" "${target_app_id}"
+  fi
+
   printf -v page_num '%05d' "${page_id}"
   export_dir="$(resolve_page_import_dir "${APEX_EXPORT_DIR}" "${APP_CODE}")"
   set_env_script="${export_dir}/set_environment.sql"
@@ -238,10 +256,23 @@ EOF
 
     printf '@%s\n@%s\n' "${page_script_for_sqlcl}" "${end_env_script_for_sqlcl}"
   } | run_sqlcl; then
+    # Post-import: verify page actually exists
+    if apex_page_exists "${target_app_id}" "${target_page_id}"; then
+      printf '[post-import] Verified page %s exists in app %s.\n' "${target_page_id}" "${target_app_id}"
+    else
+      printf '[post-import] ERROR: Page %s NOT found in app %s after import!\n' "${target_page_id}" "${target_app_id}" >&2
+      record_import_page_evidence "failure" "${target_label}" "Post-import verification failed: page not found" "${command_text}"
+      return 1
+    fi
     record_import_page_evidence "success" "${target_label}" "" "${command_text}"
     return 0
   fi
 
+  # Import pipeline failed; check if page was deleted but not recreated
+  if [[ "${target_page_existed_before}" == "yes" ]] && ! apex_page_exists "${target_app_id}" "${target_page_id}"; then
+    printf '[post-import] CRITICAL: Page %s was deleted but NOT recreated in app %s!\n' "${target_page_id}" "${target_app_id}" >&2
+    printf '[post-import] Restore from backup or re-run with a verified page SQL file.\n' >&2
+  fi
   record_import_page_evidence "failure" "${target_label}" "APEX page import failed" "${command_text}"
   return 1
 }

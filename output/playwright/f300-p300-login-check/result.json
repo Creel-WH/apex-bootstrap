@@ -1,0 +1,11 @@
+{
+  "status": "failure",
+  "message": "locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('销售工具集').first() to be visible\u001b[22m\n",
+  "attachments": [
+    "D:\\ja-projects\\apex\\apex-bootstrap\\output\\playwright\\f300-p300-login-check\\failure.png",
+    "D:\\ja-projects\\apex\\apex-bootstrap\\output\\playwright\\f300-p300-login-check\\console.json"
+  ],
+  "navigation": [],
+  "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=300:300:20207786762265:::::",
+  "title": "分平台管理后台"
+}

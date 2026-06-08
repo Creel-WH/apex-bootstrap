@@ -57,6 +57,7 @@ begin
     when others then null;
   end;
   apex_application_install.set_application_id(${source_app_id});
+  wwv_flow.g_flow_id := ${source_app_id};
 EOF
     if [[ -n "${target_app_alias}" ]]; then
       cat <<EOF
@@ -84,6 +85,7 @@ begin
     when others then null;
   end;
   apex_application_install.set_application_id(${target_app_id});
+  wwv_flow.g_flow_id := ${target_app_id};
 EOF
     if [[ -n "${target_app_alias}" ]]; then
       cat <<EOF
@@ -116,14 +118,22 @@ build_filtered_install_script() {
 
   python3 - <<'PY' "$source_install" "$filtered_install"
 from pathlib import Path
+import os
 import sys
 
 source = Path(sys.argv[1])
 target = Path(sys.argv[2])
+skip_end_environment = os.environ.get("APEX_IMPORT_SKIP_END_ENVIRONMENT") == "1"
 lines = source.read_text().splitlines()
 filtered = []
 for line in lines:
     if line.strip() == '@@application/delete_application.sql':
+        continue
+    if line.strip() == '@@application/set_environment.sql':
+        continue
+    if line.strip() == '@@application/plugin_settings.sql':
+        continue
+    if skip_end_environment and line.strip() == '@@application/end_environment.sql':
         continue
     if line.strip().startswith('@@application/shared_components/files/supporting_objects_'):
         continue
@@ -450,6 +460,8 @@ main() {
   local target_label=""
   local original_args=("$@")
   local filtered_install_script_for_sqlcl=""
+  local set_environment_script=""
+  local set_environment_script_for_sqlcl=""
 
   if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
     usage
@@ -530,7 +542,14 @@ main() {
     return 1
   fi
   install_dir="$(dirname "${install_script}")"
+  set_environment_script="${install_dir}/application/set_environment.sql"
+  [[ -f "${set_environment_script}" ]] || {
+    printf 'Missing APEX set environment script: %s\n' "${set_environment_script}" >&2
+    record_import_app_evidence "failure" "${target_label}" "Missing APEX set environment script" "${command_text}"
+    return 1
+  }
   filtered_install_script="${install_dir}/.filtered_install.sql"
+  set_environment_script_for_sqlcl="$(sqlcl_script_path "${set_environment_script}")"
   filtered_install_script_for_sqlcl="$(sqlcl_script_path "${filtered_install_script}")"
   post_import_sync_script="$(mktemp "${TMPDIR:-/tmp}/import_apex_app_db_sync.XXXXXX")"
   trap 'rm -f "${filtered_install_script:-}" "${post_import_sync_script:-}"' EXIT
@@ -549,9 +568,13 @@ main() {
     "${target_app_code}"
   if ! {
     build_workspace_init_sql "${APEX_WORKSPACE}"
+    printf '@%s\n' "${set_environment_script_for_sqlcl}"
     build_import_override_sql "${source_app_id}" "${target_app_id}"
     printf 'set define off\n'
     printf '@%s\n' "${filtered_install_script_for_sqlcl}"
+    if [[ "${APEX_IMPORT_SKIP_END_ENVIRONMENT:-0}" == "1" ]]; then
+      printf 'commit;\n'
+    fi
   } | run_sqlcl; then
     record_import_app_evidence "failure" "${target_label}" "APEX app import failed" "${command_text}"
     return 1
