@@ -12,20 +12,20 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list(
- p_id=>wwv_flow_imp.id(1880744288968626164)
+ p_id=>wwv_flow_imp.id(1953866837445206707)
 ,p_name=>unistr('\8D44\6599\5185\5BB9-\65B0\589E')
 ,p_list_status=>'PUBLIC'
 ,p_version_scn=>1
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(1880744554675626166)
+ p_id=>wwv_flow_imp.id(1953867103152206709)
 ,p_list_item_display_sequence=>10
 ,p_list_item_link_text=>unistr('\81EA\5B9A\4E49\94FE\63A5')
 ,p_list_item_link_target=>'f?p=&APP_ID.:271:&SESSION.::&DEBUG.::P271_KNOWLEDGE_ID:&P269_KNOWLEDGE_ID.:'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(1880744868003626167)
+ p_id=>wwv_flow_imp.id(1953867416480206710)
 ,p_list_item_display_sequence=>20
 ,p_list_item_link_text=>unistr('\4E0A\4F20\672C\5730\6587\4EF6')
 ,p_list_item_link_target=>'f?p=&APP_ID.:272:&SESSION.::&DEBUG.::P272_KNOWLEDGE_ID:&P269_KNOWLEDGE_ID.:'

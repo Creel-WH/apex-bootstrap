@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_plug_template(
- p_id=>wwv_flow_imp.id(2286656267443554745)
+ p_id=>wwv_flow_imp.id(2359778815920135288)
 ,p_layout=>'TABLE'
 ,p_template=>'<div id="#REGION_STATIC_ID#" #REGION_ATTRIBUTES# class="#REGION_CSS_CLASSES#">#PREVIOUS##BODY##SUB_REGIONS##NEXT#</div>'
 ,p_page_plug_template_name=>'Blank with Attributes (No Grid)'
@@ -25,8 +25,8 @@ wwv_flow_imp_shared.create_plug_template(
 ,p_translate_this_template=>'N'
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(2148683923660006154)
-,p_plug_template_id=>wwv_flow_imp.id(2286656267443554745)
+ p_id=>wwv_flow_imp.id(2221806472136586697)
+,p_plug_template_id=>wwv_flow_imp.id(2359778815920135288)
 ,p_name=>'Next'
 ,p_placeholder=>'NEXT'
 ,p_has_grid_support=>false
@@ -36,8 +36,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(2148684006681006154)
-,p_plug_template_id=>wwv_flow_imp.id(2286656267443554745)
+ p_id=>wwv_flow_imp.id(2221806555157586697)
+,p_plug_template_id=>wwv_flow_imp.id(2359778815920135288)
 ,p_name=>'Previous'
 ,p_placeholder=>'PREVIOUS'
 ,p_has_grid_support=>false
@@ -47,8 +47,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(2155653425245938603)
-,p_plug_template_id=>wwv_flow_imp.id(2286656267443554745)
+ p_id=>wwv_flow_imp.id(2228775973722519146)
+,p_plug_template_id=>wwv_flow_imp.id(2359778815920135288)
 ,p_name=>'Body'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>false
@@ -58,8 +58,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(2155653900724938604)
-,p_plug_template_id=>wwv_flow_imp.id(2286656267443554745)
+ p_id=>wwv_flow_imp.id(2228776449201519147)
+,p_plug_template_id=>wwv_flow_imp.id(2359778815920135288)
 ,p_name=>'Sub Regions'
 ,p_placeholder=>'SUB_REGIONS'
 ,p_has_grid_support=>false

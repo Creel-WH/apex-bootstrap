@@ -22,17 +22,17 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'04'
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(2151397904993932163)
+ p_id=>wwv_flow_imp.id(2224520453470512706)
 ,p_plug_name=>unistr('\5468\5DE5\5355\660E\7EC6')
 ,p_region_template_options=>'#DEFAULT#:js-showMaximizeButton:t-Region--scrollBody'
-,p_plug_template=>wwv_flow_imp.id(2286684482431554755)
+,p_plug_template=>wwv_flow_imp.id(2359807030908135298)
 ,p_plug_display_sequence=>10
 ,p_location=>null
 ,p_plug_source_type=>'NATIVE_JET_CHART'
 );
 wwv_flow_imp_page.create_jet_chart(
- p_id=>wwv_flow_imp.id(2151398275145932163)
-,p_region_id=>wwv_flow_imp.id(2151397904993932163)
+ p_id=>wwv_flow_imp.id(2224520823622512706)
+,p_region_id=>wwv_flow_imp.id(2224520453470512706)
 ,p_chart_type=>'bar'
 ,p_height=>'400'
 ,p_animation_on_display=>'auto'
@@ -67,8 +67,8 @@ wwv_flow_imp_page.create_jet_chart(
 ,p_show_gauge_value=>true
 );
 wwv_flow_imp_page.create_jet_chart_series(
- p_id=>wwv_flow_imp.id(2151400041100932162)
-,p_chart_id=>wwv_flow_imp.id(2151398275145932163)
+ p_id=>wwv_flow_imp.id(2224522589577512705)
+,p_chart_id=>wwv_flow_imp.id(2224520823622512706)
 ,p_seq=>10
 ,p_name=>unistr('\7CFB\5217 1')
 ,p_data_source_type=>'SQL'
@@ -87,8 +87,8 @@ wwv_flow_imp_page.create_jet_chart_series(
 ,p_threshold_display=>'onIndicator'
 );
 wwv_flow_imp_page.create_jet_chart_axis(
- p_id=>wwv_flow_imp.id(2151399393587932163)
-,p_chart_id=>wwv_flow_imp.id(2151398275145932163)
+ p_id=>wwv_flow_imp.id(2224521942064512706)
+,p_chart_id=>wwv_flow_imp.id(2224520823622512706)
 ,p_axis=>'y'
 ,p_is_rendered=>'on'
 ,p_format_type=>'decimal'
@@ -109,8 +109,8 @@ wwv_flow_imp_page.create_jet_chart_axis(
 ,p_zoom_order_years=>false
 );
 wwv_flow_imp_page.create_jet_chart_axis(
- p_id=>wwv_flow_imp.id(2151398792126932163)
-,p_chart_id=>wwv_flow_imp.id(2151398275145932163)
+ p_id=>wwv_flow_imp.id(2224521340603512706)
+,p_chart_id=>wwv_flow_imp.id(2224520823622512706)
 ,p_axis=>'x'
 ,p_is_rendered=>'on'
 ,p_baseline_scaling=>'zero'
@@ -127,7 +127,7 @@ wwv_flow_imp_page.create_jet_chart_axis(
 ,p_zoom_order_years=>false
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(2167359492077924298)
+ p_id=>wwv_flow_imp.id(2240482040554504841)
 ,p_name=>'P190_TENANTID'
 ,p_item_sequence=>20
 ,p_display_as=>'NATIVE_HIDDEN'
@@ -135,7 +135,7 @@ wwv_flow_imp_page.create_page_item(
   'value_protected', 'Y')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(2167359637794924299)
+ p_id=>wwv_flow_imp.id(2240482186271504842)
 ,p_name=>'P190_FAB'
 ,p_item_sequence=>30
 ,p_display_as=>'NATIVE_HIDDEN'
@@ -143,7 +143,7 @@ wwv_flow_imp_page.create_page_item(
   'value_protected', 'Y')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(2167359642207924300)
+ p_id=>wwv_flow_imp.id(2240482190684504843)
 ,p_name=>'P190_WEEK'
 ,p_item_sequence=>40
 ,p_display_as=>'NATIVE_HIDDEN'
@@ -151,7 +151,7 @@ wwv_flow_imp_page.create_page_item(
   'value_protected', 'Y')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(2167359806788924301)
+ p_id=>wwv_flow_imp.id(2240482355265504844)
 ,p_name=>'P190_MONTH'
 ,p_item_sequence=>50
 ,p_display_as=>'NATIVE_HIDDEN'

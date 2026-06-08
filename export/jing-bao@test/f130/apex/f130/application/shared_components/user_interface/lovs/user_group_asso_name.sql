@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(2236544450538321221)
+ p_id=>wwv_flow_imp.id(2309666999014901764)
 ,p_lov_name=>'USER_GROUP_ASSO_NAME'
 ,p_lov_query=>'select value, key from apex_user_group_code where link is not null'
 ,p_source_type=>'SQL'

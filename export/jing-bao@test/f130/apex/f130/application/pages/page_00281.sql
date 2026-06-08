@@ -22,19 +22,19 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'17'
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(368500096010699866)
+ p_id=>wwv_flow_imp.id(441622644487280409)
 ,p_plug_name=>unistr('\9762\5305\5C51')
 ,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
 ,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(2286693857423554758)
+,p_plug_template=>wwv_flow_imp.id(2359816405900135301)
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'REGION_POSITION_01'
-,p_menu_id=>wwv_flow_imp.id(2286629353441554723)
+,p_menu_id=>wwv_flow_imp.id(2359751901918135266)
 ,p_plug_source_type=>'NATIVE_BREADCRUMB'
-,p_menu_template_id=>wwv_flow_imp.id(2286748345485554784)
+,p_menu_template_id=>wwv_flow_imp.id(2359870893962135327)
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(355012301264895127)
+ p_id=>wwv_flow_imp.id(428134849741475670)
 ,p_name=>'P281_JUMP_URL'
 ,p_item_sequence=>70
 ,p_item_default=>' select CODE_VALUE  from JA_SYSTEM_DICT where DICT_CODE=''JINGBAO_PERMISSION_LOGIN_URL'';'
@@ -44,7 +44,7 @@ wwv_flow_imp_page.create_page_item(
   'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(355012420887895128)
+ p_id=>wwv_flow_imp.id(428134969364475671)
 ,p_name=>unistr('\65B0\5EFA')
 ,p_event_sequence=>10
 ,p_bind_type=>'bind'
@@ -52,8 +52,8 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_bind_event_type=>'ready'
 );
 wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(355012473089895129)
-,p_event_id=>wwv_flow_imp.id(355012420887895128)
+ p_id=>wwv_flow_imp.id(428135021566475672)
+,p_event_id=>wwv_flow_imp.id(428134969364475671)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'N'

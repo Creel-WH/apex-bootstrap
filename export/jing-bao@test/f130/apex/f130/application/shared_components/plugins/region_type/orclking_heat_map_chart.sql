@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_plugin(
- p_id=>wwv_flow_imp.id(2451622703686951711)
+ p_id=>wwv_flow_imp.id(2524745252163532254)
 ,p_plugin_type=>'REGION TYPE'
 ,p_name=>'ORCLKING.HEAT.MAP.CHART'
 ,p_display_name=>'Heat Map Chart'
@@ -138,8 +138,8 @@ wwv_flow_imp_shared.create_plugin(
 ,p_about_url=>'http://github.com/tkarkuvelraja/heat_map_chart_apex_plugin'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2451623157846945449)
-,p_plugin_id=>wwv_flow_imp.id(2451622703686951711)
+ p_id=>wwv_flow_imp.id(2524745706323525992)
+,p_plugin_id=>wwv_flow_imp.id(2524745252163532254)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -152,8 +152,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_translatable=>false
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2451623459871942777)
-,p_plugin_id=>wwv_flow_imp.id(2451622703686951711)
+ p_id=>wwv_flow_imp.id(2524746008348523320)
+,p_plugin_id=>wwv_flow_imp.id(2524745252163532254)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -166,8 +166,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_translatable=>false
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2451623804907940053)
-,p_plugin_id=>wwv_flow_imp.id(2451622703686951711)
+ p_id=>wwv_flow_imp.id(2524746353384520596)
+,p_plugin_id=>wwv_flow_imp.id(2524745252163532254)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -180,8 +180,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_translatable=>false
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2244610415569262194)
-,p_plugin_id=>wwv_flow_imp.id(2451622703686951711)
+ p_id=>wwv_flow_imp.id(2317732964045842737)
+,p_plugin_id=>wwv_flow_imp.id(2524745252163532254)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>40
@@ -192,8 +192,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_translatable=>false
 );
 wwv_flow_imp_shared.create_plugin_std_attribute(
- p_id=>wwv_flow_imp.id(2451622940633951535)
-,p_plugin_id=>wwv_flow_imp.id(2451622703686951711)
+ p_id=>wwv_flow_imp.id(2524745489110532078)
+,p_plugin_id=>wwv_flow_imp.id(2524745252163532254)
 ,p_name=>'SOURCE_SQL'
 );
 end;

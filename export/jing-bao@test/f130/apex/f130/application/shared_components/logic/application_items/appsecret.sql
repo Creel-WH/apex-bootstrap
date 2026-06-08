@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_flow_item(
- p_id=>wwv_flow_imp.id(2154565299278925049)
+ p_id=>wwv_flow_imp.id(2227687847755505592)
 ,p_name=>'APPSECRET'
 ,p_protection_level=>'I'
 ,p_version_scn=>1

@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(2236844005566726174)
+ p_id=>wwv_flow_imp.id(2309966554043306717)
 ,p_lov_name=>'MAP_AREA_NAME'
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select name, area_id',

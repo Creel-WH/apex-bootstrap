@@ -12,20 +12,20 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(2242997277151765856)
+ p_id=>wwv_flow_imp.id(2316119825628346399)
 ,p_lov_name=>'YES_NO_LOV'
-,p_lov_query=>'.'||wwv_flow_imp.id(2242997277151765856)||'.'
+,p_lov_query=>'.'||wwv_flow_imp.id(2316119825628346399)||'.'
 ,p_location=>'STATIC'
 ,p_version_scn=>1
 );
 wwv_flow_imp_shared.create_static_lov_data(
- p_id=>wwv_flow_imp.id(2242997611184765858)
+ p_id=>wwv_flow_imp.id(2316120159661346401)
 ,p_lov_disp_sequence=>1
 ,p_lov_disp_value=>unistr('\662F')
 ,p_lov_return_value=>'1'
 );
 wwv_flow_imp_shared.create_static_lov_data(
- p_id=>wwv_flow_imp.id(2242997970055765859)
+ p_id=>wwv_flow_imp.id(2316120518532346402)
 ,p_lov_disp_sequence=>2
 ,p_lov_disp_value=>unistr('\5426')
 ,p_lov_return_value=>'0'

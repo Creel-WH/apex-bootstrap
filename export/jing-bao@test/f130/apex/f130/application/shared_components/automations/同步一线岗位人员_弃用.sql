@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_automation(
- p_id=>wwv_flow_imp.id(2160764649206551026)
+ p_id=>wwv_flow_imp.id(2233887197683131569)
 ,p_name=>unistr('\540C\6B65\4E00\7EBF\5C97\4F4D\4EBA\5458--\5F03\7528')
 ,p_static_id=>unistr('\540C\6B65\4E00\7EBF\5C97\4F4D\4EBA\5458')
 ,p_trigger_type=>'POLLING'
@@ -30,8 +30,8 @@ wwv_flow_imp_shared.create_automation(
 ,p_error_handling_type=>'IGNORE'
 );
 wwv_flow_imp_shared.create_automation_action(
- p_id=>wwv_flow_imp.id(2160764947993551029)
-,p_automation_id=>wwv_flow_imp.id(2160764649206551026)
+ p_id=>wwv_flow_imp.id(2233887496470131572)
+,p_automation_id=>wwv_flow_imp.id(2233887197683131569)
 ,p_name=>unistr('\65B0\5EFA\64CD\4F5C')
 ,p_execution_sequence=>10
 ,p_action_type=>'NATIVE_PLSQL'
