@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_flow_item(
- p_id=>wwv_flow_imp.id(1152027799595294372)
+ p_id=>wwv_flow_imp.id(1123147068503644823)
 ,p_name=>'BPOINT_BUTTON_URL'
 ,p_protection_level=>'I'
 ,p_escape_on_http_output=>'N'

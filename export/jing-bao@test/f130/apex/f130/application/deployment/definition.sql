@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_install(
- p_id=>wwv_flow_imp.id(295479657574630045)
+ p_id=>wwv_flow_imp.id(266598926482980496)
 );
 wwv_flow_imp.component_end;
 end;

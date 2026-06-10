@@ -32,7 +32,7 @@ wwv_imp_workspace.create_flow(
 ,p_direction_right_to_left=>'N'
 ,p_flow_image_prefix => nvl(wwv_flow_application_install.get_image_prefix,'')
 ,p_documentation_banner=>'Application created from create application wizard 2021.03.09.'
-,p_authentication_id=>wwv_flow_imp.id(915522491275835005)
+,p_authentication_id=>wwv_flow_imp.id(886641760184185456)
 ,p_application_tab_set=>1
 ,p_logo_type=>'T'
 ,p_logo_text=>unistr('\6676\8C79\540E\53F0\7BA1\7406\7CFB\7EDF')
@@ -59,7 +59,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_02=>'JINGBAO'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>39
-,p_version_scn=>6805509355583
+,p_version_scn=>6805511500269
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'N'

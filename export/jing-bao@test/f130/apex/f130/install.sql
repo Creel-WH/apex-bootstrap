@@ -108,6 +108,7 @@ prompt --install
 @@application/shared_components/user_interface/templates/page/login.sql
 @@application/shared_components/user_interface/templates/page/minimal_no_navigation.sql
 @@application/shared_components/user_interface/templates/page/standard.sql
+@@application/shared_components/user_interface/templates/button/html_button_legacy_apex_5_migration.sql
 @@application/shared_components/user_interface/templates/button/icon.sql
 @@application/shared_components/user_interface/templates/button/text.sql
 @@application/shared_components/user_interface/templates/button/text_with_icon.sql

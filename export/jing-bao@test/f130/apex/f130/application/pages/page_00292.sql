@@ -24,7 +24,7 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(629290660717101420)
+ p_id=>wwv_flow_imp.id(600409929625451871)
 ,p_name=>'P292_BASE_DEPT_ID'
 ,p_item_sequence=>70
 ,p_display_as=>'NATIVE_RADIOGROUP'
@@ -40,7 +40,7 @@ wwv_flow_imp_page.create_page_item(
 ''))
 ,p_colspan=>3
 ,p_grid_column=>6
-,p_field_template=>wwv_flow_imp.id(2359868381483135324)
+,p_field_template=>wwv_flow_imp.id(2330987650391485775)
 ,p_item_template_options=>'#DEFAULT#'
 ,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -48,7 +48,7 @@ wwv_flow_imp_page.create_page_item(
   'page_action_on_selection', 'NONE')).to_clob
 );
 wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(629290762135101421)
+ p_id=>wwv_flow_imp.id(600410031043451872)
 ,p_name=>unistr('\5207\6362\7EC4\7EC7')
 ,p_event_sequence=>10
 ,p_triggering_element_type=>'ITEM'
@@ -58,8 +58,8 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_bind_event_type=>'change'
 );
 wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(629290820909101422)
-,p_event_id=>wwv_flow_imp.id(629290762135101421)
+ p_id=>wwv_flow_imp.id(600410089817451873)
+,p_event_id=>wwv_flow_imp.id(600410031043451872)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'N'
@@ -76,8 +76,8 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_wait_for_result=>'Y'
 );
 wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(629290882250101423)
-,p_event_id=>wwv_flow_imp.id(629290762135101421)
+ p_id=>wwv_flow_imp.id(600410151158451874)
+,p_event_id=>wwv_flow_imp.id(600410031043451872)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>20
 ,p_execute_on_page_init=>'N'

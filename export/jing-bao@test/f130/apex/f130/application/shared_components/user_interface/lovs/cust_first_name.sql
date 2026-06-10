@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(2246220232836246302)
+ p_id=>wwv_flow_imp.id(2217339501744596753)
 ,p_lov_name=>'CUST.FIRST_NAME'
 ,p_source_type=>'TABLE'
 ,p_location=>'LOCAL'
