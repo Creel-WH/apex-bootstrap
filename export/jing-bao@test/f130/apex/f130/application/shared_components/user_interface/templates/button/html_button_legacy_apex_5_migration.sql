@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_button_templates(
- p_id=>wwv_flow_imp.id(48558489109740033)
+ p_id=>wwv_flow_imp.id(19677758018090484)
 ,p_template_name=>'HTML button (legacy - APEX 5 migration)'
 ,p_internal_name=>'HTML_BUTTON_LEGACY_APEX_5_MIGRATION'
 ,p_template=>' <input type="button" value="#LABEL#" onclick="#JAVASCRIPT#" id="#BUTTON_ID#" class="#BUTTON_CSS_CLASSES#" #BUTTON_ATTRIBUTES#/>'

@@ -21,38 +21,38 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'06'
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(2274896397000542270)
+ p_id=>wwv_flow_imp.id(2246015665908892721)
 ,p_plug_name=>unistr('\57FA\7840\6863\6848')
 ,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
 ,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(2330926299816485749)
+,p_plug_template=>wwv_flow_imp.id(2302045568724836200)
 ,p_plug_display_sequence=>10
 ,p_include_in_reg_disp_sel_yn=>'Y'
 ,p_plug_display_point=>'REGION_POSITION_01'
-,p_menu_id=>wwv_flow_imp.id(2330871170826485717)
+,p_menu_id=>wwv_flow_imp.id(2301990439734836168)
 ,p_plug_source_type=>'NATIVE_BREADCRUMB'
-,p_menu_template_id=>wwv_flow_imp.id(2330990162870485778)
+,p_menu_template_id=>wwv_flow_imp.id(2302109431778836229)
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(2274897150892542277)
+ p_id=>wwv_flow_imp.id(2246016419800892728)
 ,p_plug_name=>unistr('\6863\6848\5217\8868')
 ,p_region_template_options=>'#DEFAULT#'
 ,p_component_template_options=>'#DEFAULT#:u-colors:t-Cards--basic:t-Cards--3cols:t-Cards--desc-3ln:t-Cards--animColorFill'
-,p_plug_template=>wwv_flow_imp.id(2330897845030485739)
+,p_plug_template=>wwv_flow_imp.id(2302017113938836190)
 ,p_plug_display_sequence=>10
 ,p_include_in_reg_disp_sel_yn=>'Y'
-,p_list_id=>wwv_flow_imp.id(2274958399399093617)
+,p_list_id=>wwv_flow_imp.id(2246077668307444068)
 ,p_plug_source_type=>'NATIVE_LIST'
-,p_list_template_id=>wwv_flow_imp.id(2330978170199485771)
+,p_list_template_id=>wwv_flow_imp.id(2302097439107836222)
 );
 wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(2274896572043542272)
+ p_id=>wwv_flow_imp.id(2246015840951892723)
 ,p_button_sequence=>10
-,p_button_plug_id=>wwv_flow_imp.id(2274896397000542270)
+,p_button_plug_id=>wwv_flow_imp.id(2246015665908892721)
 ,p_button_name=>'Prev'
 ,p_button_action=>'REDIRECT_PAGE'
 ,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(2330988065388485776)
+,p_button_template_id=>wwv_flow_imp.id(2302107334296836227)
 ,p_button_image_alt=>'Prev'
 ,p_button_position=>'NEXT'
 ,p_button_alignment=>'RIGHT'
@@ -61,13 +61,13 @@ wwv_flow_imp_page.create_page_button(
 ,p_icon_css_classes=>'fa-angle-left'
 );
 wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(2274896546489542271)
+ p_id=>wwv_flow_imp.id(2246015815397892722)
 ,p_button_sequence=>20
-,p_button_plug_id=>wwv_flow_imp.id(2274896397000542270)
+,p_button_plug_id=>wwv_flow_imp.id(2246015665908892721)
 ,p_button_name=>'Next'
 ,p_button_action=>'REDIRECT_PAGE'
 ,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(2330988065388485776)
+,p_button_template_id=>wwv_flow_imp.id(2302107334296836227)
 ,p_button_image_alt=>'Next'
 ,p_button_position=>'NEXT'
 ,p_button_alignment=>'RIGHT'
@@ -76,7 +76,7 @@ wwv_flow_imp_page.create_page_button(
 ,p_icon_css_classes=>'fa-angle-right'
 );
 wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(2195144898793505379)
+ p_id=>wwv_flow_imp.id(2166264167701855830)
 ,p_name=>unistr('\65B0\5EFA')
 ,p_event_sequence=>10
 ,p_bind_type=>'bind'
@@ -84,8 +84,8 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_bind_event_type=>'ready'
 );
 wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(2195145026674505380)
-,p_event_id=>wwv_flow_imp.id(2195144898793505379)
+ p_id=>wwv_flow_imp.id(2166264295582855831)
+,p_event_id=>wwv_flow_imp.id(2166264167701855830)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'N'

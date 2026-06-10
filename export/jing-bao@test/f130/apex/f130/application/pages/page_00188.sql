@@ -22,17 +22,17 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'04'
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(2195159633896675818)
+ p_id=>wwv_flow_imp.id(2166278902805026269)
 ,p_plug_name=>unistr('\5DE5\5355\6C47\603B\8868')
 ,p_region_template_options=>'#DEFAULT#:js-showMaximizeButton:t-Region--scrollBody'
-,p_plug_template=>wwv_flow_imp.id(2330926299816485749)
+,p_plug_template=>wwv_flow_imp.id(2302045568724836200)
 ,p_plug_display_sequence=>10
 ,p_location=>null
 ,p_plug_source_type=>'NATIVE_JET_CHART'
 );
 wwv_flow_imp_page.create_jet_chart(
- p_id=>wwv_flow_imp.id(2195159984964675818)
-,p_region_id=>wwv_flow_imp.id(2195159633896675818)
+ p_id=>wwv_flow_imp.id(2166279253873026269)
+,p_region_id=>wwv_flow_imp.id(2166278902805026269)
 ,p_chart_type=>'bar'
 ,p_height=>'400'
 ,p_animation_on_display=>'auto'
@@ -67,8 +67,8 @@ wwv_flow_imp_page.create_jet_chart(
 ,p_show_gauge_value=>true
 );
 wwv_flow_imp_page.create_jet_chart_series(
- p_id=>wwv_flow_imp.id(2195161751987675817)
-,p_chart_id=>wwv_flow_imp.id(2195159984964675818)
+ p_id=>wwv_flow_imp.id(2166281020896026268)
+,p_chart_id=>wwv_flow_imp.id(2166279253873026269)
 ,p_seq=>10
 ,p_name=>unistr('\7CFB\5217 1')
 ,p_data_source_type=>'SQL'
@@ -89,8 +89,8 @@ wwv_flow_imp_page.create_jet_chart_series(
 ,p_link_target_type=>'REDIRECT_PAGE'
 );
 wwv_flow_imp_page.create_jet_chart_axis(
- p_id=>wwv_flow_imp.id(2195160459686675818)
-,p_chart_id=>wwv_flow_imp.id(2195159984964675818)
+ p_id=>wwv_flow_imp.id(2166279728595026269)
+,p_chart_id=>wwv_flow_imp.id(2166279253873026269)
 ,p_axis=>'x'
 ,p_is_rendered=>'on'
 ,p_baseline_scaling=>'zero'
@@ -107,8 +107,8 @@ wwv_flow_imp_page.create_jet_chart_axis(
 ,p_zoom_order_years=>false
 );
 wwv_flow_imp_page.create_jet_chart_axis(
- p_id=>wwv_flow_imp.id(2195161155251675818)
-,p_chart_id=>wwv_flow_imp.id(2195159984964675818)
+ p_id=>wwv_flow_imp.id(2166280424160026269)
+,p_chart_id=>wwv_flow_imp.id(2166279253873026269)
 ,p_axis=>'y'
 ,p_is_rendered=>'on'
 ,p_format_type=>'decimal'
@@ -129,7 +129,7 @@ wwv_flow_imp_page.create_jet_chart_axis(
 ,p_zoom_order_years=>false
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(2211601002165855289)
+ p_id=>wwv_flow_imp.id(2182720271074205740)
 ,p_name=>'P188_DATE'
 ,p_item_sequence=>20
 ,p_display_as=>'NATIVE_HIDDEN'

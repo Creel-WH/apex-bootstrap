@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_data_profile(
- p_id=>wwv_flow_imp.id(2204970632619019283)
+ p_id=>wwv_flow_imp.id(2176089901527369734)
 ,p_name=>'data_upload_test'
 ,p_format=>'XLSX'
 ,p_encoding=>'utf-8'
@@ -20,8 +20,8 @@ wwv_flow_imp_shared.create_data_profile(
 ,p_has_header_row=>true
 );
 wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(2204970901899019312)
-,p_data_profile_id=>wwv_flow_imp.id(2204970632619019283)
+ p_id=>wwv_flow_imp.id(2176090170807369763)
+,p_data_profile_id=>wwv_flow_imp.id(2176089901527369734)
 ,p_name=>'COLUMN1'
 ,p_sequence=>1
 ,p_column_type=>'DATA'
@@ -32,8 +32,8 @@ wwv_flow_imp_shared.create_data_profile_col(
 ,p_selector=>unistr('\65F6\95F4')
 );
 wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(2204971237340019313)
-,p_data_profile_id=>wwv_flow_imp.id(2204970632619019283)
+ p_id=>wwv_flow_imp.id(2176090506248369764)
+,p_data_profile_id=>wwv_flow_imp.id(2176089901527369734)
 ,p_name=>'COLUMN2'
 ,p_sequence=>2
 ,p_column_type=>'DATA'
@@ -44,8 +44,8 @@ wwv_flow_imp_shared.create_data_profile_col(
 ,p_selector=>unistr('\7EC4\4EF6\4E00\5382\4EA7\51FA')
 );
 wwv_flow_imp_shared.create_data_profile_col(
- p_id=>wwv_flow_imp.id(2204971467665019313)
-,p_data_profile_id=>wwv_flow_imp.id(2204970632619019283)
+ p_id=>wwv_flow_imp.id(2176090736573369764)
+,p_data_profile_id=>wwv_flow_imp.id(2176089901527369734)
 ,p_name=>'COLUMN3'
 ,p_sequence=>3
 ,p_column_type=>'DATA'
@@ -56,12 +56,12 @@ wwv_flow_imp_shared.create_data_profile_col(
 ,p_selector=>unistr('\7EC4\4EF6\4E8C\5382\4EA7\51FA')
 );
 wwv_flow_imp_shared.create_load_table(
- p_id=>wwv_flow_imp.id(2204971686540019313)
+ p_id=>wwv_flow_imp.id(2176090955448369764)
 ,p_name=>'data_upload_test'
 ,p_static_id=>'data_upload_test'
 ,p_target_type=>'TABLE'
 ,p_table_name=>'SY_FILE_TEST'
-,p_data_profile_id=>wwv_flow_imp.id(2204970632619019283)
+,p_data_profile_id=>wwv_flow_imp.id(2176089901527369734)
 ,p_loading_method=>'APPEND'
 ,p_commit_interval=>200
 ,p_error_handling=>'ABORT'

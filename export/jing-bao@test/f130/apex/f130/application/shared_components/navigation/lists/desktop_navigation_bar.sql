@@ -12,13 +12,13 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list(
- p_id=>wwv_flow_imp.id(2331011179863485799)
+ p_id=>wwv_flow_imp.id(2302130448771836250)
 ,p_name=>'Desktop Navigation Bar'
 ,p_list_status=>'PUBLIC'
 ,p_version_scn=>1
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(2331022882219485850)
+ p_id=>wwv_flow_imp.id(2302142151127836301)
 ,p_list_item_display_sequence=>10
 ,p_list_item_link_text=>'&USERNAME.'
 ,p_list_item_link_target=>'#'
@@ -27,57 +27,57 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(2331023360144485851)
+ p_id=>wwv_flow_imp.id(2302142629052836302)
 ,p_list_item_display_sequence=>20
 ,p_list_item_link_text=>'---'
 ,p_list_item_link_target=>'separator'
-,p_parent_list_item_id=>wwv_flow_imp.id(2331022882219485850)
+,p_parent_list_item_id=>wwv_flow_imp.id(2302142151127836301)
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(2196732666645366098)
+ p_id=>wwv_flow_imp.id(2167851935553716549)
 ,p_list_item_display_sequence=>29
 ,p_list_item_link_text=>unistr('\5BC6\7801\4FEE\6539')
 ,p_list_item_link_target=>'f?p=&APP_ID.:110:&SESSION.::&DEBUG.::::'
 ,p_list_item_icon=>'fa-address-card'
-,p_parent_list_item_id=>wwv_flow_imp.id(2331022882219485850)
+,p_parent_list_item_id=>wwv_flow_imp.id(2302142151127836301)
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(604718816042223968)
+ p_id=>wwv_flow_imp.id(575838084950574419)
 ,p_list_item_display_sequence=>30
 ,p_list_item_link_text=>unistr('\5207\6362\7EC4\7EC7 (&ORG_NAME.)')
 ,p_list_item_link_target=>'f?p=&APP_ID.:292:&SESSION.::&DEBUG.::::'
 ,p_list_item_icon=>'fa-users-alt'
-,p_parent_list_item_id=>wwv_flow_imp.id(2331022882219485850)
+,p_parent_list_item_id=>wwv_flow_imp.id(2302142151127836301)
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(2194584117045732970)
+ p_id=>wwv_flow_imp.id(2165703385954083421)
 ,p_list_item_display_sequence=>40
 ,p_list_item_link_text=>unistr('\6587\4EF6\4E0A\4F20')
 ,p_list_item_link_target=>'f?p=&APP_ID.:146:&SESSION.::&DEBUG.::::'
 ,p_list_item_icon=>'fa-cloud-arrow-up'
-,p_parent_list_item_id=>wwv_flow_imp.id(2331022882219485850)
-,p_security_scheme=>wwv_flow_imp.id(2198147815701137702)
+,p_parent_list_item_id=>wwv_flow_imp.id(2302142151127836301)
+,p_security_scheme=>wwv_flow_imp.id(2169267084609488153)
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(2607356574364886215)
+ p_id=>wwv_flow_imp.id(2578475843273236666)
 ,p_list_item_display_sequence=>45
 ,p_list_item_link_text=>unistr('\6211\8981\53CD\9988')
 ,p_list_item_link_target=>'https://xt2qmu.aliwork.com/s/jing_feedback'
 ,p_list_item_icon=>'fa-commenting-o'
-,p_parent_list_item_id=>wwv_flow_imp.id(2331022882219485850)
+,p_parent_list_item_id=>wwv_flow_imp.id(2302142151127836301)
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(2331023778152485851)
+ p_id=>wwv_flow_imp.id(2302143047060836302)
 ,p_list_item_display_sequence=>65
 ,p_list_item_link_text=>unistr('\6CE8\9500')
 ,p_list_item_link_target=>'&LOGOUT_URL.'
 ,p_list_item_icon=>'fa-sign-out'
-,p_parent_list_item_id=>wwv_flow_imp.id(2331022882219485850)
+,p_parent_list_item_id=>wwv_flow_imp.id(2302142151127836301)
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp.component_end;

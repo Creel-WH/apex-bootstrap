@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(2204854714657323459)
+ p_id=>wwv_flow_imp.id(2175973983565673910)
 ,p_lov_name=>'EVENT_CATEGORY_LOV'
 ,p_lov_query=>'select name,code from tenant_event_category WHERE TENANT_ID = :USERTENANT and BASE_DEPT_ID = :ORG_ID'
 ,p_source_type=>'SQL'

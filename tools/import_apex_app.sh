@@ -443,6 +443,23 @@ build_post_import_code_sync_script() {
   fi
 }
 
+should_skip_post_import_code_sync() {
+  local source_env_name="$1"
+  local source_app_id="$2"
+  local target_env_name="$3"
+  local target_app_id="$4"
+
+  if [[ "${APEX_IMPORT_SKIP_DB_SYNC:-0}" == "1" ]]; then
+    return 0
+  fi
+
+  if [[ "${source_env_name}" == "${target_env_name}" && "${source_app_id}" == "${target_app_id}" ]]; then
+    return 0
+  fi
+
+  return 1
+}
+
 main() {
   local source_env_name=""
   local target_env_name=""
@@ -580,7 +597,13 @@ main() {
     return 1
   fi
 
-  if [[ -s "${post_import_sync_script}" ]]; then
+  if should_skip_post_import_code_sync "${source_env_name}" "${source_app_id}" "${target_env_name}" "${target_app_id}"; then
+    printf 'Skipping post-import DB source sync for %s/%s -> %s/%s\n' \
+      "${source_env_name}" \
+      "${source_app_code}" \
+      "${target_env_name}" \
+      "${target_app_code}"
+  elif [[ -s "${post_import_sync_script}" ]]; then
     printf 'Recompiling application DB source from %s/db into %s/%s\n' \
       "${source_env_name}" \
       "${target_env_name}" \
