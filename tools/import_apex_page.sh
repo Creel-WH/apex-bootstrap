@@ -55,6 +55,18 @@ apex_page_exists() {
   [[ "${result}" =~ ^[0-9]+$ ]] && [[ "${result}" -gt 0 ]]
 }
 
+build_workspace_init_sql() {
+  local workspace_name="$1"
+
+  cat <<EOF
+begin
+  apex_application_install.set_workspace_id(apex_util.find_security_group_id(p_workspace => '${workspace_name}'));
+  apex_util.set_security_group_id(apex_util.find_security_group_id(p_workspace => '${workspace_name}'));
+end;
+/
+EOF
+}
+
 resolve_page_import_dir() {
   local apex_export_dir="$1"
   local app_code="$2"
@@ -233,6 +245,7 @@ main() {
   delete_script_for_sqlcl="$(sqlcl_script_path "${delete_script}")"
 
   if {
+    build_workspace_init_sql "${APEX_WORKSPACE}"
     build_page_import_override_sql "${source_app_id}" "${target_app_id}" "${page_id}" "${target_page_id}"
 
     printf '@%s\n' "${set_env_script_for_sqlcl}"

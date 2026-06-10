@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_authentication(
- p_id=>wwv_flow_imp.id(842399942799254462)
+ p_id=>wwv_flow_imp.id(857761029092535907)
 ,p_name=>'login_auth'
 ,p_scheme_type=>'NATIVE_CUSTOM'
 ,p_attribute_03=>'LOGIN_AUTHENTICATION_JINGBAO'

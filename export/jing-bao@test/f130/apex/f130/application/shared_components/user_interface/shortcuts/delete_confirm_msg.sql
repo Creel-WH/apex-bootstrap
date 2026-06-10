@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_shortcut(
- p_id=>wwv_flow_imp.id(2286772626996554825)
+ p_id=>wwv_flow_imp.id(2302133713289836270)
 ,p_shortcut_name=>'DELETE_CONFIRM_MSG'
 ,p_shortcut_type=>'TEXT_ESCAPE_JS'
 ,p_version_scn=>1

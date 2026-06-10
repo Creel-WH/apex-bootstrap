@@ -58,5 +58,5 @@ end;
                                                                                                          
                                                                                                          
 /                                                                                                        
-ALTER TRIGGER "TRIGER_PHENOMENON_INSERT" ENABLE;                                              
+ALTER TRIGGER "TRIGER_PHENOMENON_INSERT" DISABLE;                                             
 

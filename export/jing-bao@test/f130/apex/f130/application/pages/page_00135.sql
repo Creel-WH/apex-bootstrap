@@ -21,16 +21,16 @@ wwv_flow_imp_page.create_page(
 ,p_page_component_map=>'11'
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(2159026738991477874)
+ p_id=>wwv_flow_imp.id(2174387825284759319)
 ,p_plug_name=>unistr('\9762\5305\5C51')
 ,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
 ,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(2286693857423554758)
+,p_plug_template=>wwv_flow_imp.id(2302054943716836203)
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'REGION_POSITION_01'
-,p_menu_id=>wwv_flow_imp.id(2286629353441554723)
+,p_menu_id=>wwv_flow_imp.id(2301990439734836168)
 ,p_plug_source_type=>'NATIVE_BREADCRUMB'
-,p_menu_template_id=>wwv_flow_imp.id(2286748345485554784)
+,p_menu_template_id=>wwv_flow_imp.id(2302109431778836229)
 );
 wwv_flow_imp.component_end;
 end;

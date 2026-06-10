@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_flow_item(
- p_id=>wwv_flow_imp.id(224546956696834177)
+ p_id=>wwv_flow_imp.id(239908042990115622)
 ,p_name=>'RELEASE_TEXT'
 ,p_protection_level=>'I'
 ,p_item_comment=>unistr('RELEASE_TEXT\FF1A\53D1\5E03\7684\7248\672C\53F7')

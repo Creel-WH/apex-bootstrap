@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_plugin(
- p_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_plugin_type=>'DYNAMIC ACTION'
 ,p_name=>'COM.ORACLE.APEX.TIMER'
 ,p_display_name=>'Timer'
@@ -71,8 +71,8 @@ wwv_flow_imp_shared.create_plugin(
 ,p_files_version=>2
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2231178201533791099)
-,p_plugin_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246539287827072544)
+,p_plugin_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -86,22 +86,22 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ||'the timer so that you are able to identify it when you remove it.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(2231178624503791099)
-,p_plugin_attribute_id=>wwv_flow_imp.id(2231178201533791099)
+ p_id=>wwv_flow_imp.id(2246539710797072544)
+,p_plugin_attribute_id=>wwv_flow_imp.id(2246539287827072544)
 ,p_display_sequence=>10
 ,p_display_value=>'Add Timer'
 ,p_return_value=>'add'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(2231179125857791099)
-,p_plugin_attribute_id=>wwv_flow_imp.id(2231178201533791099)
+ p_id=>wwv_flow_imp.id(2246540212151072544)
+,p_plugin_attribute_id=>wwv_flow_imp.id(2246539287827072544)
 ,p_display_sequence=>20
 ,p_display_value=>'Remove Timer'
 ,p_return_value=>'remove'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2231179561002791099)
-,p_plugin_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246540647296072544)
+,p_plugin_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -111,15 +111,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_display_length=>20
 ,p_max_length=>20
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(2231178201533791099)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(2246539287827072544)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'add'
 ,p_help_text=>'If you want to remove a timer with the "Remove Timer" action you have to specify a name for the timer when you create it. If you just want to create a timer you don''t have to specify a timer name.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2231179986254791099)
-,p_plugin_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246541072548072544)
+,p_plugin_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -129,15 +129,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_display_length=>20
 ,p_max_length=>20
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(2231178201533791099)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(2246539287827072544)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'remove'
 ,p_help_text=>'Name of the timer you want to remove. Use the same name you used when you created the timer.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2231180427647791099)
-,p_plugin_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246541513941072544)
+,p_plugin_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>40
@@ -147,15 +147,15 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_display_length=>10
 ,p_max_length=>10
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(2231178201533791099)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(2246539287827072544)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'add'
 ,p_help_text=>'Specify the number of milliseconds after which the timer should expire. There are 1000 milliseconds in one second.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(2231180765911791100)
-,p_plugin_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246541852205072545)
+,p_plugin_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>5
 ,p_display_sequence=>50
@@ -164,7 +164,7 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_is_required=>true
 ,p_default_value=>'infinite'
 ,p_is_translatable=>false
-,p_depending_on_attribute_id=>wwv_flow_imp.id(2231178201533791099)
+,p_depending_on_attribute_id=>wwv_flow_imp.id(2246539287827072544)
 ,p_depending_on_has_to_exist=>true
 ,p_depending_on_condition_type=>'EQUALS'
 ,p_depending_on_expression=>'add'
@@ -172,22 +172,22 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'Specify how often the timer should fire. The timer can be fired just <strong>once</strong> or <strong>infinite</strong> until you remove it with the "Remove Timer" action.'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(2231181185071791100)
-,p_plugin_attribute_id=>wwv_flow_imp.id(2231180765911791100)
+ p_id=>wwv_flow_imp.id(2246542271365072545)
+,p_plugin_attribute_id=>wwv_flow_imp.id(2246541852205072545)
 ,p_display_sequence=>10
 ,p_display_value=>'Once'
 ,p_return_value=>'once'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(2231181671393791100)
-,p_plugin_attribute_id=>wwv_flow_imp.id(2231180765911791100)
+ p_id=>wwv_flow_imp.id(2246542757687072545)
+,p_plugin_attribute_id=>wwv_flow_imp.id(2246541852205072545)
 ,p_display_sequence=>20
 ,p_display_value=>'Infinite'
 ,p_return_value=>'infinite'
 );
 wwv_flow_imp_shared.create_plugin_event(
- p_id=>wwv_flow_imp.id(2231183360990791102)
-,p_plugin_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246544447284072547)
+,p_plugin_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_name=>'timer_expired'
 ,p_display_name=>'Timer Expired'
 );
@@ -207,8 +207,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(2231183819107791102)
-,p_plugin_id=>wwv_flow_imp.id(2231177848583791099)
+ p_id=>wwv_flow_imp.id(2246544905401072547)
+,p_plugin_id=>wwv_flow_imp.id(2246538934877072544)
 ,p_file_name=>'com_oracle_apex_timer.min.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_content=>wwv_flow_imp.varchar2_to_blob(wwv_flow_imp.g_varchar2_table)

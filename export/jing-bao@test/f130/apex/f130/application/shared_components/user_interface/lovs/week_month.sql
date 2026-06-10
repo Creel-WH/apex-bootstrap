@@ -12,20 +12,20 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(2338149297356430603)
+ p_id=>wwv_flow_imp.id(2353510383649712048)
 ,p_lov_name=>'WEEK_MONTH'
-,p_lov_query=>'.'||wwv_flow_imp.id(2338149297356430603)||'.'
+,p_lov_query=>'.'||wwv_flow_imp.id(2353510383649712048)||'.'
 ,p_location=>'STATIC'
 ,p_version_scn=>1
 );
 wwv_flow_imp_shared.create_static_lov_data(
- p_id=>wwv_flow_imp.id(2338149735078430601)
+ p_id=>wwv_flow_imp.id(2353510821371712046)
 ,p_lov_disp_sequence=>1
 ,p_lov_disp_value=>unistr('\5468')
 ,p_lov_return_value=>'yyyy-iw'
 );
 wwv_flow_imp_shared.create_static_lov_data(
- p_id=>wwv_flow_imp.id(2338150133642430600)
+ p_id=>wwv_flow_imp.id(2353511219935712045)
 ,p_lov_disp_sequence=>2
 ,p_lov_disp_value=>unistr('\6708')
 ,p_lov_return_value=>'yyyy-mm'

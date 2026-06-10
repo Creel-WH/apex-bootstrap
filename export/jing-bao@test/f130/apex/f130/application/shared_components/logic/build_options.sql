@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_build_option(
- p_id=>wwv_flow_imp.id(2130883247292644920)
+ p_id=>wwv_flow_imp.id(2146244333585926365)
 ,p_build_option_name=>unistr('\529F\80FD: \914D\7F6E\9009\9879')
 ,p_build_option_status=>'INCLUDE'
 ,p_version_scn=>1

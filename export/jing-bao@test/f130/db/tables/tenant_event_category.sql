@@ -8,7 +8,7 @@
 	"REMARK" NVARCHAR2(512),                                                                                                                                                                                            
 	"TENANT_ID" NUMBER(20,0) DEFAULT 3 NOT NULL ENABLE,                                                                                                                                                                 
 	"NAME" NVARCHAR2(128) NOT NULL ENABLE,                                                                                                                                                                              
-	"CODE" VARCHAR2(32) NOT NULL ENABLE,                                                                                                                                                                                
+	"CODE" VARCHAR2(64) NOT NULL ENABLE,                                                                                                                                                                                
 	"NODE_LEVEL" NUMBER DEFAULT 1 NOT NULL ENABLE,                                                                                                                                                                      
 	"DEL_FLAG" NUMBER DEFAULT 0 NOT NULL ENABLE,                                                                                                                                                                        
 	"PARENT_CODE" NVARCHAR2(50) DEFAULT '0',                                                                                                                                                                            

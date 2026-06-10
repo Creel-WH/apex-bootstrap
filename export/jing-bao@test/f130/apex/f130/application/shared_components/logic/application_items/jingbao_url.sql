@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_flow_item(
- p_id=>wwv_flow_imp.id(2170846696817107290)
+ p_id=>wwv_flow_imp.id(2186207783110388735)
 ,p_name=>'JINGBAO_URL'
 ,p_protection_level=>'I'
 ,p_escape_on_http_output=>'N'

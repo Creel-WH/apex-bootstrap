@@ -20,7 +20,7 @@
 - 不因排序动作错误更新无关业务字段。
 
 ## 当前分析
-- `P133` 已存在前端拖拽脚本、拖拽样式和 on-demand 进程 `SAVE_FILE_CHILD_ORDER`。
+- `P133` 已存在前端拖拽脚本、拖拽样式和 on-demand 过程 `SAVE_FILE_CHILD_ORDER`。
 - `P130` 使用顶层文件库 IG，不是 `P133` 的子目录列表，因此保存逻辑需要按 `FILE_LEVEL = 1` 适配。
 - `P130` 页面文档原本缺失，本次已补建 `docs/pages/P130.md`。
 
@@ -28,15 +28,15 @@
 - `export/sales-tools@test/f138/apex/f138/application/pages/page_00130.sql`
 - `export/sales-tools@test/f138/docs/pages/P130.md`
 - `tests/test_f138_p130_drag_sort.sh`
-- 复用数据库对象: `STS_FILE`
+- 复用数据库对象 `STS_FILE`
 
 ## 已实施
 - 为 `P130` IG 查询补入 `SORT_NUM`，并让列表默认按 `NVL(SORT_NUM, 999999), FILE_ID` 排序。
-- 参考 `P133` 增加顶层文件库拖拽排序前端脚本、样式和 `SAVE_FILE_LIBRARY_ORDER` on-demand 进程。
+- 参考 `P133` 增加顶层文件库拖拽排序前端脚本、样式和 `SAVE_FILE_LIBRARY_ORDER` on-demand 过程。
 - 补建 `P130` 页面文档，记录页面用途与拖拽排序行为。
 
 ## 验证思路
-1. 结构检查 `P130` 页面脚本、样式、on-demand 进程与排序 SQL 是否就位。
+1. 结构检查 `P130` 页面脚本、样式、on-demand 过程与排序 SQL 是否就位。
 2. 导入目标页面或应用后，在浏览器执行真实拖拽排序验证。
 3. 核对页面文档与功能切片记录同步更新。
 

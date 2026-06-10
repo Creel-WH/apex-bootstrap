@@ -21,7 +21,9 @@ DECLARE
           apex_web_service.g_request_headers(3).value := GET_APP_SECRET(:new.BASE_DEPT_ID);                      
           url_name:=utl_url.escape(:new.name,true,'UTF8');                                                       
       l_clob := apex_web_service.make_rest_request(                                                              
-        p_url => 'http://jingbao_api.ywjasolar.com/apex/pinyin/'||url_name,                                      
+--         p_url => 'http://jingbao_api.ywjasolar.com/apex/pinyin/'||url_name,                                   
+        p_url => 'https://testjing.jasolar.com/apex/pinyin/'||url_name,                                          
+                                                                                                                 
         p_http_method => 'GET');                                                                                 
         select code,msg into l_code,l_msg from json_table(l_clob FORMAT JSON, '$'                                
         COLUMNS(                                                                                                 
@@ -40,5 +42,5 @@ DECLARE
        END IF;                                                                                                   
     end;                                                                                                         
 /                                                                                                                
-ALTER TRIGGER "TRIGER_CATEGORY_INSERT" ENABLE;                                                        
+ALTER TRIGGER "TRIGER_CATEGORY_INSERT" DISABLE;                                                       
 

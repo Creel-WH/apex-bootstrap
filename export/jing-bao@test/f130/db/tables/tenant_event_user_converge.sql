@@ -48,6 +48,7 @@
 	"BASE_DEPT_ID" NVARCHAR2(36),                                            
 	"EVENT_CREATION_DATE" DATE,                                              
 	"SUBMIT_USER_NAME" NVARCHAR2(52),                                        
-	"SUBMIT_EXT_ORG_NAME" NVARCHAR2(52)                                      
+	"SUBMIT_EXT_ORG_NAME" NVARCHAR2(52),                                     
+	"CAUSE_NAME" NVARCHAR2(20)                                               
    ) ;                                                                    
 

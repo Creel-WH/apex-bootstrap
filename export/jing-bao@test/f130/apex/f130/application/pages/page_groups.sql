@@ -12,11 +12,11 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(2286772870379554825)
+ p_id=>wwv_flow_imp.id(2302133956672836270)
 ,p_group_name=>'Administration'
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(221917483227404467)
+ p_id=>wwv_flow_imp.id(237278569520685912)
 ,p_group_name=>unistr('\53D8\66F4\70B9\7BA1\7406')
 );
 wwv_flow_imp.component_end;

@@ -55,6 +55,7 @@ prompt --install
 @@application/shared_components/logic/application_items/bpoint_button_url.sql
 @@application/shared_components/logic/application_items/is_change_pswd.sql
 @@application/shared_components/logic/application_items/jingbao_api_url.sql
+@@application/shared_components/logic/application_items/jingbao_api_url_1.sql
 @@application/shared_components/logic/application_items/jingbao_url.sql
 @@application/shared_components/logic/application_items/mpf_api_url.sql
 @@application/shared_components/logic/application_items/org_id.sql
@@ -107,6 +108,7 @@ prompt --install
 @@application/shared_components/user_interface/templates/page/login.sql
 @@application/shared_components/user_interface/templates/page/minimal_no_navigation.sql
 @@application/shared_components/user_interface/templates/page/standard.sql
+@@application/shared_components/user_interface/templates/button/html_button_legacy_apex_5_migration.sql
 @@application/shared_components/user_interface/templates/button/icon.sql
 @@application/shared_components/user_interface/templates/button/text.sql
 @@application/shared_components/user_interface/templates/button/text_with_icon.sql
@@ -497,6 +499,7 @@ prompt --install
 @@application/pages/page_00301.sql
 @@application/pages/page_00302.sql
 @@application/pages/page_00303.sql
+@@application/pages/page_00304.sql
 @@application/pages/page_00305.sql
 @@application/pages/page_00306.sql
 @@application/pages/page_00307.sql

@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JING_BAO'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(2160573878920372945)
+ p_id=>wwv_flow_imp.id(2175934965213654390)
 ,p_lov_name=>'USERNAME_LOV'
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select name, ext_user_id',
