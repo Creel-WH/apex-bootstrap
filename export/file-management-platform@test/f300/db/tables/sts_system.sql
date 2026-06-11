@@ -4,6 +4,7 @@
 	"SYSTEM_NAME" VARCHAR2(100) NOT NULL ENABLE,                                                                                                                                                                
 	"IS_ENABLE" NUMBER(1,0) DEFAULT 1,                                                                                                                                                                          
 	"DEL_FLAG" NUMBER(1,0) DEFAULT 0,                                                                                                                                                                           
+	"REMARK" VARCHAR2(500),                                                                                                                                                                                     
 	"CREATED_BY" NUMBER(20,0),                                                                                                                                                                                  
 	"CREATION_DATE" DATE DEFAULT sysdate,                                                                                                                                                                       
 	"UPDATED_BY" NUMBER(20,0),                                                                                                                                                                                  
@@ -11,4 +12,3 @@
 	 PRIMARY KEY ("SYSTEM_ID")                                                                                                                                                                                  
   USING INDEX  ENABLE                                                                                                                                                                                        
    ) ;                                                                                                                                                                                                       
-

@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plug_template(
- p_id=>wwv_flow_imp.id(9795534608169686502)
+ p_id=>wwv_flow_imp.id(9731594692547394028)
 ,p_layout=>'TABLE'
 ,p_template=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '<div class="t-ItemContainer #REGION_CSS_CLASSES#" id="#REGION_STATIC_ID#" #REGION_LANDMARK_ATTRIBUTES# #REGION_ATTRIBUTES#>',
@@ -30,8 +30,8 @@ wwv_flow_imp_shared.create_plug_template(
 ,p_translate_this_template=>'N'
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9099069023206390938)
-,p_plug_template_id=>wwv_flow_imp.id(9795534608169686502)
+ p_id=>wwv_flow_imp.id(9035129107584098464)
+,p_plug_template_id=>wwv_flow_imp.id(9731594692547394028)
 ,p_name=>'Sub Regions'
 ,p_placeholder=>'SUB_REGIONS'
 ,p_has_grid_support=>true
@@ -41,8 +41,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9795534918869686502)
-,p_plug_template_id=>wwv_flow_imp.id(9795534608169686502)
+ p_id=>wwv_flow_imp.id(9731595003247394028)
+,p_plug_template_id=>wwv_flow_imp.id(9731594692547394028)
 ,p_name=>'Item'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>false
@@ -52,8 +52,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9795535251247686502)
-,p_plug_template_id=>wwv_flow_imp.id(9795534608169686502)
+ p_id=>wwv_flow_imp.id(9731595335625394028)
+,p_plug_template_id=>wwv_flow_imp.id(9731594692547394028)
 ,p_name=>'Button End'
 ,p_placeholder=>'BUTTON_END'
 ,p_has_grid_support=>false
@@ -63,8 +63,8 @@ wwv_flow_imp_shared.create_plug_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_plug_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9795535548107686502)
-,p_plug_template_id=>wwv_flow_imp.id(9795534608169686502)
+ p_id=>wwv_flow_imp.id(9731595632485394028)
+,p_plug_template_id=>wwv_flow_imp.id(9731594692547394028)
 ,p_name=>'Button Start'
 ,p_placeholder=>'BUTTON_START'
 ,p_has_grid_support=>false

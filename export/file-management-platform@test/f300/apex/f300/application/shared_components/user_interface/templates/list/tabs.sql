@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_list_template(
- p_id=>wwv_flow_imp.id(9795608936062686539)
+ p_id=>wwv_flow_imp.id(9731669020440394065)
 ,p_list_template_current=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '<li class="t-Tabs-item is-active #A03#" aria-current="page" id="#A01#">',
 '  <a href="#LINK#" class="t-Tabs-link #A04#">',

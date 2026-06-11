@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_template(
- p_id=>wwv_flow_imp.id(9795448211979686466)
+ p_id=>wwv_flow_imp.id(9731508296357393992)
 ,p_theme_id=>42
 ,p_name=>'Login'
 ,p_internal_name=>'LOGIN'
@@ -138,8 +138,8 @@ wwv_flow_imp_shared.create_template(
 ,p_reference_id=>2099711150063350616
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9795448541009686466)
-,p_page_template_id=>wwv_flow_imp.id(9795448211979686466)
+ p_id=>wwv_flow_imp.id(9731508625387393992)
+,p_page_template_id=>wwv_flow_imp.id(9731508296357393992)
 ,p_name=>'Background Image'
 ,p_placeholder=>'BACKGROUND_IMAGE'
 ,p_has_grid_support=>false
@@ -150,8 +150,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_max_fixed_grid_columns=>12
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9795448869212686466)
-,p_page_template_id=>wwv_flow_imp.id(9795448211979686466)
+ p_id=>wwv_flow_imp.id(9731508953590393992)
+,p_page_template_id=>wwv_flow_imp.id(9731508296357393992)
 ,p_name=>'Content Body'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>true
@@ -162,8 +162,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_max_fixed_grid_columns=>12
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9795449171933686467)
-,p_page_template_id=>wwv_flow_imp.id(9795448211979686466)
+ p_id=>wwv_flow_imp.id(9731509256311393993)
+,p_page_template_id=>wwv_flow_imp.id(9731508296357393992)
 ,p_name=>'Body Header'
 ,p_placeholder=>'REGION_POSITION_01'
 ,p_has_grid_support=>false
@@ -173,8 +173,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9795449446537686467)
-,p_page_template_id=>wwv_flow_imp.id(9795448211979686466)
+ p_id=>wwv_flow_imp.id(9731509530915393993)
+,p_page_template_id=>wwv_flow_imp.id(9731508296357393992)
 ,p_name=>'Body Footer'
 ,p_placeholder=>'REGION_POSITION_02'
 ,p_has_grid_support=>false
