@@ -1,7 +1,7 @@
-prompt --application/shared_components/navigation/lists/导航�?
+prompt --application/shared_components/navigation/lists/导航栏
 begin
 --   Manifest
---     LIST: 导航�?
+--     LIST: 导航栏
 --   Manifest End
 wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'

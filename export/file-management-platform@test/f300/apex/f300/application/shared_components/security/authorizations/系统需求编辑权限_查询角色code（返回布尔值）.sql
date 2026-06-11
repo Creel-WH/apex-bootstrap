@@ -1,7 +1,7 @@
 prompt --application/shared_components/security/authorizations/系统需求编辑权限_查询角色code（返回布尔值）
 begin
 --   Manifest
---     SECURITY SCHEME: 系统需求编辑权�?查询角色CODE（返回布尔值）
+--     SECURITY SCHEME: 系统需求编辑权限-查询角色CODE（返回布尔值）
 --   Manifest End
 wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
@@ -12,7 +12,7 @@ wwv_flow_imp.component_begin (
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_security_scheme(
- p_id=>wwv_flow_imp.id(3780545709650814427)
+ p_id=>wwv_flow_imp.id(3716605794028521953)
 ,p_name=>unistr('\7CFB\7EDF\9700\6C42\7F16\8F91\6743\9650-\67E5\8BE2\89D2\8272CODE\FF08\8FD4\56DE\5E03\5C14\503C\FF09')
 ,p_scheme_type=>'NATIVE_FUNCTION_BODY'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(

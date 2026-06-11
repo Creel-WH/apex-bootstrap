@@ -18,22 +18,95 @@
       "request": "LOGIN"
     },
     {
+      "action": "wait_for_selector",
+      "selector": "#p300-create-btn"
+    },
+    {
+      "action": "click",
+      "selector": "#p300-create-btn"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "iframe[title='鏂板骞冲彴']"
+    },
+    {
+      "action": "wait_for_selector",
+      "frame_selector": "iframe[title='鏂板骞冲彴']",
+      "selector": "#P301_SYSTEM_NAME"
+    },
+    {
+      "action": "click",
+      "selector": ".ui-dialog-titlebar-close"
+    },
+    {
+      "action": "click",
+      "selector": "#report_table_p300-report tbody tr:first-child button[data-act='edit']"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "iframe[title='淇敼骞冲彴淇℃伅']"
+    },
+    {
+      "action": "wait_for_selector",
+      "frame_selector": "iframe[title='淇敼骞冲彴淇℃伅']",
+      "selector": "#P301_REMARK"
+    },
+    {
+      "action": "fill",
+      "frame_selector": "iframe[title='淇敼骞冲彴淇℃伅']",
+      "selector": "#P301_REMARK",
+      "value": "AUTOTEST REMARK"
+    },
+    {
+      "action": "click",
+      "frame_selector": "iframe[title='淇敼骞冲彴淇℃伅']",
+      "selector": ".t-Button--hot"
+    },
+    {
       "action": "wait_for_text",
-      "text": "分平台列表"
+      "text": "AUTOTEST REMARK"
+    },
+    {
+      "action": "click",
+      "selector": "#report_table_p300-report tbody tr:first-child button[data-act='edit']"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "iframe[title='淇敼骞冲彴淇℃伅']"
+    },
+    {
+      "action": "wait_for_selector",
+      "frame_selector": "iframe[title='淇敼骞冲彴淇℃伅']",
+      "selector": "#P301_REMARK"
+    },
+    {
+      "action": "fill",
+      "frame_selector": "iframe[title='淇敼骞冲彴淇℃伅']",
+      "selector": "#P301_REMARK",
+      "value": ""
+    },
+    {
+      "action": "click",
+      "frame_selector": "iframe[title='淇敼骞冲彴淇℃伅']",
+      "selector": ".t-Button--hot"
     }
   ],
   "assertions": [
     {
-      "type": "text_visible",
-      "text": "销售工具集"
-    },
-    {
-      "type": "text_visible",
-      "text": "PLT-001"
+      "type": "selector_visible",
+      "selector": "#report_table_p300-report tbody tr"
     },
     {
       "type": "selector_visible",
-      "selector": "#report_table_p300-report tbody tr"
+      "selector": "#p300-create-btn"
+    },
+    {
+      "type": "text_visible",
+      "text": "鏆傛棤澶囨敞"
+    },
+    {
+      "type": "selector_visible",
+      "selector": "#report_table_p300-report tbody tr:first-child button[data-act='edit']"
     }
   ]
 }
