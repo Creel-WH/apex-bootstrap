@@ -1,9 +1,0 @@
-{
-  "status": "success",
-  "message": "Functional checks passed for https://apextest.jasolar.com/ords/uatapex23/f?p=300:300",
-  "attachments": [
-    "D:\\ja-projects\\apex\\apex-bootstrap\\output\\playwright\\f300-p300-data-fixed\\smoke.png",
-    "D:\\ja-projects\\apex\\apex-bootstrap\\output\\playwright\\f300-p300-data-fixed\\console.json"
-  ],
-  "navigation": []
-}
