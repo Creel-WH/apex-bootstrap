@@ -24,7 +24,7 @@ wwv_flow_imp_shared.create_flow_process(
 '    apex_json.open_array(''tenants'');',
 '    for r in (',
 '        select system_id, system_name',
-'          from sts_system',
+'          from FMP_SYSTEM',
 '         where is_enable = 1',
 '           and del_flag = 0',
 '         order by system_id',

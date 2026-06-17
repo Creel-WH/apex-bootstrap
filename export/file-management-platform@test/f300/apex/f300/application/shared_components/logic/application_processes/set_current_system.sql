@@ -26,7 +26,7 @@ wwv_flow_imp_shared.create_flow_process(
 '',
 '    select count(*)',
 '      into v_count',
-'      from sts_system',
+'      from FMP_SYSTEM',
 '     where system_id = v_system_id',
 '       and is_enable = 1',
 '       and del_flag = 0;',

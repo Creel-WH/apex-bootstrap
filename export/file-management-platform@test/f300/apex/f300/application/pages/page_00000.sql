@@ -412,7 +412,7 @@ wwv_flow_imp_page.create_page_item(
 '           ),',
 '           ''[]''',
 '       )',
-'  from sts_system',
+'  from FMP_SYSTEM',
 ' where is_enable = 1',
 '   and del_flag = 0'))
 ,p_item_default_type=>'SQL_QUERY'
@@ -435,7 +435,7 @@ wwv_flow_imp_page.create_page_process(
 '',
 '    select count(*)',
 '      into v_count',
-'      from sts_system',
+'      from FMP_SYSTEM',
 '     where system_id = v_system_id',
 '       and is_enable = 1',
 '       and del_flag = 0;',
@@ -474,7 +474,7 @@ wwv_flow_imp_page.create_page_process(
 '    apex_json.open_array(''tenants'');',
 '    for r in (',
 '        select system_id, system_name',
-'          from sts_system',
+'          from FMP_SYSTEM',
 '         where is_enable = 1',
 '           and del_flag = 0',
 '         order by system_id',

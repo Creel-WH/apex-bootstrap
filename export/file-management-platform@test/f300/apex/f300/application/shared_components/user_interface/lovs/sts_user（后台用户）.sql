@@ -1,7 +1,7 @@
-prompt --application/shared_components/user_interface/lovs/sts_user（后台用户）
+prompt --application/shared_components/user_interface/lovs/FMP_USER（后台用户）
 begin
 --   Manifest
---     STS_USER（后台用户）
+--     FMP_USER（后台用户）
 --   Manifest End
 wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
@@ -13,10 +13,10 @@ wwv_flow_imp.component_begin (
 );
 wwv_flow_imp_shared.create_list_of_values(
  p_id=>wwv_flow_imp.id(3716010868965211797)
-,p_lov_name=>unistr('STS_USER\FF08\540E\53F0\7528\6237\FF09')
+,p_lov_name=>unistr('FMP_USER\FF08\540E\53F0\7528\6237\FF09')
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select USER_NAME || ''-'' || JOB_NUMBER JOB_NUMBER_NAME,EXT_USER_ID USER_ID',
-'from STS_USER where  TENANT_ID = 3 and IS_LEAVE = 0 and DEL_FLAG = 0'))
+'from FMP_USER where  TENANT_ID = 3 and IS_LEAVE = 0 and DEL_FLAG = 0'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
 ,p_use_local_sync_table=>false

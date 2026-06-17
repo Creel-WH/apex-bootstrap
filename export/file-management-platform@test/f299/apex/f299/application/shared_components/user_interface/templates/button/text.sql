@@ -7,12 +7,12 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_button_templates(
- p_id=>wwv_flow_imp.id(9793615506060686552)
+ p_id=>wwv_flow_imp.id(9760159158825264299)
 ,p_template_name=>'Text'
 ,p_internal_name=>'TEXT'
 ,p_template=>'<button onclick="#JAVASCRIPT#" class="t-Button #BUTTON_CSS_CLASSES#" type="button" #BUTTON_ATTRIBUTES# id="#BUTTON_ID#"><span class="t-Button-label">#LABEL#</span></button>'

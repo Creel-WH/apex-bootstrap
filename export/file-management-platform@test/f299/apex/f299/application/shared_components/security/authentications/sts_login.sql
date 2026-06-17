@@ -7,12 +7,12 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_authentication(
- p_id=>wwv_flow_imp.id(9793750060697069126)
+ p_id=>wwv_flow_imp.id(9760293713461646873)
 ,p_name=>'STS_LOGIN'
 ,p_scheme_type=>'NATIVE_CUSTOM'
 ,p_attribute_03=>'STS_APEX_LOGIN'

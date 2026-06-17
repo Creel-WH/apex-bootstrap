@@ -1,0 +1,43 @@
+{
+  "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=299:133",
+  "label": "f299-p133-unified-file-library",
+  "skip_builder_login": true,
+  "steps": [
+    {
+      "action": "fill",
+      "selector": "#P9999_USERNAME",
+      "value": "{apex_builder_username}"
+    },
+    {
+      "action": "fill",
+      "selector": "#P9999_PASSWORD",
+      "value": "{apex_builder_password}"
+    },
+    {
+      "action": "apex_submit",
+      "request": "LOGIN"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "#content"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "#p133_pathbar"
+    }
+  ],
+  "assertions": [
+    {
+      "type": "selector_visible",
+      "selector": "#content"
+    },
+    {
+      "type": "selector_visible",
+      "selector": "#p133_pathbar"
+    },
+    {
+      "type": "url_includes",
+      "value": "f?p=299:133"
+    }
+  ]
+}

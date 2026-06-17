@@ -7,12 +7,12 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_list_of_values(
- p_id=>wwv_flow_imp.id(9795091617704528915)
+ p_id=>wwv_flow_imp.id(9761635270469106662)
 ,p_lov_name=>unistr('BASE\FF08\57FA\5730\FF09')
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT CODE_VALUE, DICT_ID',

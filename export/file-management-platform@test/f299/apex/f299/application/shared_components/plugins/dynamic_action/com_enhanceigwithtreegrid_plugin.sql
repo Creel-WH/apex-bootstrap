@@ -7,12 +7,12 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_plugin(
- p_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_plugin_type=>'DYNAMIC ACTION'
 ,p_name=>'COM.ENHANCEIGWITHTREEGRID.PLUGIN'
 ,p_display_name=>'Enhance Interactive Grid with Treegrid'
@@ -125,8 +125,8 @@ wwv_flow_imp_shared.create_plugin(
 ,p_files_version=>11
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9690778357866006925)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657322010630584672)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -138,8 +138,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'The name of the object (class,id etc...) which identifies the table on which the treegrid is going to be initilazed.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9690778671060009228)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657322323824586975)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -151,8 +151,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'The name of the object (class,id etc...) which identifies the row in the table on which the treegrid is going to be initilazed.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9690778996425011504)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657322649189589251)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -163,8 +163,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'The column which helps to identify the row for the treegrid. For example: EMPNO'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9690779259241012924)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657322912005590671)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>40
@@ -175,8 +175,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'The column which helps to identify the parentrow for the treegrid. For example: MGR (Manager ID)'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9690779567464015587)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657323220228593334)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>5
 ,p_display_sequence=>50
@@ -193,22 +193,22 @@ wwv_flow_imp_shared.create_plugin_attribute(
 'Collapse: Only the root nodes are displayed. Every other child node is hidden/collapsed.'))
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9690779870020017496)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9690779567464015587)
+ p_id=>wwv_flow_imp.id(9657323522784595243)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9657323220228593334)
 ,p_display_sequence=>10
 ,p_display_value=>'Expand'
 ,p_return_value=>'expanded'
 );
 wwv_flow_imp_shared.create_plugin_attr_value(
- p_id=>wwv_flow_imp.id(9690780282690018650)
-,p_plugin_attribute_id=>wwv_flow_imp.id(9690779567464015587)
+ p_id=>wwv_flow_imp.id(9657323935454596397)
+,p_plugin_attribute_id=>wwv_flow_imp.id(9657323220228593334)
 ,p_display_sequence=>20
 ,p_display_value=>'Collapse'
 ,p_return_value=>'collapsed'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9690788739012033253)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657332391776611000)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>6
 ,p_display_sequence=>60
@@ -219,8 +219,8 @@ wwv_flow_imp_shared.create_plugin_attribute(
 ,p_help_text=>'The column which the treegrid enhancement will be displayed.'
 );
 wwv_flow_imp_shared.create_plugin_attribute(
- p_id=>wwv_flow_imp.id(9690789037673034719)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657332690437612466)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>7
 ,p_display_sequence=>70
@@ -249,8 +249,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9690789800720049588)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657333453484627335)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_file_name=>'css/jquery.treegrid.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -274,8 +274,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9690790065250049591)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657333718014627338)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_file_name=>'css/jquery.treegrid.min.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'
@@ -506,8 +506,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9690790445832049592)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657334098596627339)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_file_name=>'js/jquery.treegrid.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_charset=>'utf-8'
@@ -611,8 +611,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9690790832551049594)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657334485315627341)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_file_name=>'js/jquery.treegrid.min.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_charset=>'utf-8'
@@ -656,8 +656,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9690791277464049596)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9657334930228627343)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_file_name=>'js/script.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_charset=>'utf-8'
@@ -686,8 +686,8 @@ end;
 /
 begin
 wwv_flow_imp_shared.create_plugin_file(
- p_id=>wwv_flow_imp.id(9697820333049151607)
-,p_plugin_id=>wwv_flow_imp.id(9690777417480986359)
+ p_id=>wwv_flow_imp.id(9664363985813729354)
+,p_plugin_id=>wwv_flow_imp.id(9657321070245564106)
 ,p_file_name=>'js/script.min.js'
 ,p_mime_type=>'text/javascript'
 ,p_file_charset=>'utf-8'

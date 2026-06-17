@@ -7,7 +7,7 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
@@ -19,13 +19,13 @@ wwv_flow_imp_shared.create_user_interface(
 ,p_theme_style_by_user_pref=>false
 ,p_built_with_love=>false
 ,p_global_page_id=>0
-,p_navigation_list_id=>wwv_flow_imp.id(9793439562631686439)
+,p_navigation_list_id=>wwv_flow_imp.id(9759983215396264186)
 ,p_navigation_list_position=>'SIDE'
-,p_navigation_list_template_id=>wwv_flow_imp.id(9793600296424686535)
+,p_navigation_list_template_id=>wwv_flow_imp.id(9760143949189264282)
 ,p_nav_list_template_options=>'js-navCollapsed--hidden:t-TreeNav--styleA'
 ,p_nav_bar_type=>'LIST'
-,p_nav_bar_list_id=>wwv_flow_imp.id(9793728546302686797)
-,p_nav_bar_list_template_id=>wwv_flow_imp.id(9793603155704686537)
+,p_nav_bar_list_id=>wwv_flow_imp.id(9760272199067264544)
+,p_nav_bar_list_template_id=>wwv_flow_imp.id(9760146808469264284)
 ,p_nav_bar_template_options=>'#DEFAULT#'
 );
 wwv_flow_imp.component_end;

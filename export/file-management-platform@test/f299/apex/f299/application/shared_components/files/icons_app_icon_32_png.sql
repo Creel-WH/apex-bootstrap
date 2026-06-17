@@ -7,7 +7,7 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
@@ -19,7 +19,7 @@ wwv_flow_imp.g_varchar2_table(4) := '3FDA06A037A0DE0339AD84582888608DEF1F250979E
 wwv_flow_imp.g_varchar2_table(5) := '095D2F2212F138BA6AFCDD08603D9582E2FB52C6EC398800CC54300320AD5E8722023053C10C80B4FAA600EAA9905714785CAE2A759BA99E184077825628A2537D4334106CE8AEF3A747146827689FD7B201890148FCDCEA1EE21E68F502AB733680AD80';
 wwv_flow_imp.g_varchar2_table(6) := 'ADC03BCEDF053090CEF64B0000000049454E44AE426082';
 wwv_flow_imp_shared.create_app_static_file(
- p_id=>wwv_flow_imp.id(9793729556182686820)
+ p_id=>wwv_flow_imp.id(9760273208947264567)
 ,p_file_name=>'icons/app-icon-32.png'
 ,p_mime_type=>'image/png'
 ,p_file_charset=>'utf-8'

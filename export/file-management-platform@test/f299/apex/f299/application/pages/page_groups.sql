@@ -7,52 +7,52 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(9793758911530300987)
+ p_id=>wwv_flow_imp.id(9760302564294878734)
 ,p_group_name=>unistr('APEX\7CFB\7EDF\9ED8\8BA4\7EC4')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(9793758008013283548)
+ p_id=>wwv_flow_imp.id(9760301660777861295)
 ,p_group_name=>unistr('\6211\7684\4EFB\52A1')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(9793757941651282819)
+ p_id=>wwv_flow_imp.id(9760301594415860566)
 ,p_group_name=>unistr('\6211\7684\9879\76EE')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(3776627017881704312)
+ p_id=>wwv_flow_imp.id(3743170670646282059)
 ,p_group_name=>unistr('\6587\4EF6\5E93')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(3776627051022704820)
+ p_id=>wwv_flow_imp.id(3743170703787282567)
 ,p_group_name=>unistr('\6587\4EF6\5E93\7BA1\7406')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(3776627309343706248)
+ p_id=>wwv_flow_imp.id(3743170962108283995)
 ,p_group_name=>unistr('\66F4\65B0\53CD\9988')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(9793758853006299529)
+ p_id=>wwv_flow_imp.id(9760302505770877276)
 ,p_group_name=>unistr('\767B\5F55\3001\5BC6\7801')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(9793758151903284732)
+ p_id=>wwv_flow_imp.id(9760301804667862479)
 ,p_group_name=>unistr('\7CFB\7EDF\8BBE\7F6E')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(3776627149135705574)
+ p_id=>wwv_flow_imp.id(3743170801900283321)
 ,p_group_name=>unistr('\81EA\5B9A\4E49\5206\7C7B\7BA1\7406')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(8030595363029337901)
+ p_id=>wwv_flow_imp.id(7997139015793915648)
 ,p_group_name=>unistr('\95EE\9898\53CD\9988')
 );
 wwv_flow_imp_page.create_page_group(
- p_id=>wwv_flow_imp.id(9794075500193841635)
+ p_id=>wwv_flow_imp.id(9760619152958419382)
 ,p_group_name=>unistr('\9879\76EE\914D\7F6E\7BA1\7406')
 );
 wwv_flow_imp.component_end;

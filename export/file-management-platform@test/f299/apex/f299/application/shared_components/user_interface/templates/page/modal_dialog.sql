@@ -7,12 +7,12 @@ wwv_flow_imp.component_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.11'
 ,p_default_workspace_id=>2200408020639491
-,p_default_application_id=>138
+,p_default_application_id=>299
 ,p_default_id_offset=>33456347235422253
 ,p_default_owner=>'JASOLAR'
 );
 wwv_flow_imp_shared.create_template(
- p_id=>wwv_flow_imp.id(9793446708033686465)
+ p_id=>wwv_flow_imp.id(9759990360798264212)
 ,p_theme_id=>42
 ,p_name=>'Modal Dialog'
 ,p_internal_name=>'MODAL_DIALOG'
@@ -144,8 +144,8 @@ wwv_flow_imp_shared.create_template(
 ,p_reference_id=>2098960803539086924
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9793447048035686466)
-,p_page_template_id=>wwv_flow_imp.id(9793446708033686465)
+ p_id=>wwv_flow_imp.id(9759990700800264213)
+,p_page_template_id=>wwv_flow_imp.id(9759990360798264212)
 ,p_name=>'Content Body'
 ,p_placeholder=>'BODY'
 ,p_has_grid_support=>true
@@ -156,8 +156,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_max_fixed_grid_columns=>12
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9793447305183686466)
-,p_page_template_id=>wwv_flow_imp.id(9793446708033686465)
+ p_id=>wwv_flow_imp.id(9759990957948264213)
+,p_page_template_id=>wwv_flow_imp.id(9759990360798264212)
 ,p_name=>'Dialog Header'
 ,p_placeholder=>'REGION_POSITION_01'
 ,p_has_grid_support=>false
@@ -167,8 +167,8 @@ wwv_flow_imp_shared.create_page_tmpl_display_point(
 ,p_glv_new_row=>true
 );
 wwv_flow_imp_shared.create_page_tmpl_display_point(
- p_id=>wwv_flow_imp.id(9793447654184686466)
-,p_page_template_id=>wwv_flow_imp.id(9793446708033686465)
+ p_id=>wwv_flow_imp.id(9759991306949264213)
+,p_page_template_id=>wwv_flow_imp.id(9759990360798264212)
 ,p_name=>'Dialog Footer'
 ,p_placeholder=>'REGION_POSITION_03'
 ,p_has_grid_support=>false

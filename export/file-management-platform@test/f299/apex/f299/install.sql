@@ -181,7 +181,6 @@ prompt --install
 @@application/pages/page_00125.sql
 @@application/pages/page_00126.sql
 @@application/pages/page_00127.sql
-@@application/pages/page_00130.sql
 @@application/pages/page_00131.sql
 @@application/pages/page_00132.sql
 @@application/pages/page_00133.sql
@@ -207,11 +206,7 @@ prompt --install
 @@application/pages/page_00153.sql
 @@application/pages/page_00154.sql
 @@application/pages/page_00155.sql
-@@application/pages/page_00200.sql
-@@application/pages/page_00201.sql
-@@application/pages/page_00202.sql
-@@application/pages/page_00203.sql
-@@application/pages/page_00204.sql
+@@application/pages/page_00156.sql
 @@application/pages/page_00220.sql
 @@application/pages/page_00221.sql
 @@application/pages/page_00222.sql

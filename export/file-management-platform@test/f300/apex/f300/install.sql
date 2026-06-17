@@ -51,9 +51,9 @@ prompt --install
 @@application/shared_components/user_interface/lovs/plans_file_type_计划归档类型_无立即归档.sql
 @@application/shared_components/user_interface/lovs/plans_file_type（计划归档类型）.sql
 @@application/shared_components/user_interface/lovs/req_type（需求类型）.sql
-@@application/shared_components/user_interface/lovs/sts_sys_config（可见范围）.sql
-@@application/shared_components/user_interface/lovs/sts_sys_config（权限类型）.sql
-@@application/shared_components/user_interface/lovs/sts_user（后台用户）.sql
+@@application/shared_components/user_interface/lovs/FMP_SYS_CONFIG（可见范围）.sql
+@@application/shared_components/user_interface/lovs/FMP_SYS_CONFIG（权限类型）.sql
+@@application/shared_components/user_interface/lovs/FMP_USER（后台用户）.sql
 @@application/pages/page_groups.sql
 @@application/shared_components/navigation/breadcrumbs/面包屑.sql
 @@application/shared_components/navigation/breadcrumbentry.sql
