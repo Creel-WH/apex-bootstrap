@@ -7,9 +7,9 @@
 
 ## Scope
 
-- Copy the STS tables and callable PL/SQL units actually used by f300 into FMP-prefixed equivalents.
-- Update f300 APEX source to use the new FMP-prefixed objects.
-- Keep the original STS objects unchanged.
+- Keep the historical `STS_* -> FMP_*` copy script for audit and one-time data migration.
+- Keep `f300` runtime and `db/` truth source on the `FMP_*` object set only.
+- Clean residual `STS_*` naming that would mislead future export/import or maintenance work.
 
 ## Impacted Pages
 
@@ -25,19 +25,26 @@
   - `STS_USER_ROLE` -> `FMP_USER_ROLE`
   - `STS_SYS_CONFIG` -> `FMP_SYS_CONFIG`
   - `STS_USER` -> `FMP_USER`
-- PL/SQL units:
-  - `STS_IS_HAVE_PERMISSION`
 
+## Current f300 Runtime Tables
+
+- `FMP_SYSTEM`
+- `FMP_SCOPE`
+- `FMP_ROLE`
+- `FMP_USER_ROLE`
+- `FMP_SYS_CONFIG`
+- `FMP_USER`
+- `BASIC_USER`
+- `JA_SYSTEM_DICT`
 ## Verification Plan
 
-1. Copy and rename the required DB source files -> verification: source tree contains matching `fmp_*` assets.
-2. Repoint f300 APEX source from `STS_*` to `FMP_*` where those migrated objects are used -> verification: no remaining in-scope `STS_*` hits.
-3. Run static searches and any available repository checks -> verification: collect evidence and note blockers.
+1. Remove old `STS_*` table truth files that duplicate `FMP_*` objects -> verification: `f300/db` keeps only the `FMP_*` runtime source of truth.
+2. Repoint or rename residual `STS_*` runtime/export artifacts that already use `FMP_*` content -> verification: no remaining in-scope `STS_*` table references outside the historical migration script.
+3. Run static searches -> verification: collect the residual historical-only `STS_*` hits.
 
 ## Result
 
-- Added the `f300`-side `FMP_*` table source files required by the sub-platform and permission flow.
-- Repointed the in-scope f300 APEX page/shared-component references from `STS_*` to `FMP_*`.
-- Reused the same newly deployed `FMP_*` objects in `file-management-platform@test` so `f300` can target the migrated object set.
-- Attempted to import the updated `f300` export into the test runtime, but the import rolled back with `ORA-02291` on `APEX_240200.WWV_FLOW_NAV_TEMPLATE_FK`.
-- Remaining blocker: APEX runtime import/deploy for the changed app export is still blocked by the APEX import dependency error above.
+- `f300/db/tables` now keeps `FMP_SYSTEM`, `FMP_SCOPE`, `FMP_ROLE`, `FMP_USER_ROLE`, `FMP_SYS_CONFIG`, and `FMP_USER` as the active runtime table truth source.
+- Removed duplicate `STS_*` table/index source files that no longer represent the `f300` runtime target.
+- Renamed the residual `STS_*` LOV export files whose contents were already based on `FMP_*`, so export/install naming now matches the actual object set.
+- Retained `db/data/2026-06-17_copy_sts_to_fmp_objects.sql` as the historical one-time migration script.

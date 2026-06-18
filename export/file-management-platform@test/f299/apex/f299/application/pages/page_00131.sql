@@ -153,7 +153,7 @@ wwv_flow_imp_page.create_page_da_action(
 '    --DATE: 2025/7/15 15:07',
 unistr('    --DESCRIBE:wxx \65B0\589E\521B\5EFA\6587\4EF6\5939\57CB\70B9'),
 'BEGIN',
-'    INSERT INTO STS_FILE(FILE_NAME,',
+'    INSERT INTO FMP_FILE(FILE_NAME,',
 '                         FILE_FORMAT,',
 '                         FILE_STATUS,',
 '                         FILE_TYPE,',

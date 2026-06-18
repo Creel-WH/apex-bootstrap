@@ -78,7 +78,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P132_FILE_NAME'
 ,p_item_sequence=>10
 ,p_item_plug_id=>wwv_flow_imp.id(3292631882760315358)
-,p_item_default=>'SELECT FILE_NAME FROM STS_FILE WHERE FILE_ID = :P132_FILE_ID;'
+,p_item_default=>'SELECT FILE_NAME FROM FMP_FILE WHERE FILE_ID = :P132_FILE_ID;'
 ,p_item_default_type=>'SQL_QUERY'
 ,p_prompt=>unistr('\6587\4EF6\5E93\540D\79F0')
 ,p_display_as=>'NATIVE_TEXT_FIELD'
@@ -96,7 +96,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P132_FILE_NAME_OLD'
 ,p_item_sequence=>100
 ,p_use_cache_before_default=>'NO'
-,p_item_default=>'SELECT FILE_NAME FROM STS_FILE WHERE FILE_ID = :P132_FILE_ID;'
+,p_item_default=>'SELECT FILE_NAME FROM FMP_FILE WHERE FILE_ID = :P132_FILE_ID;'
 ,p_item_default_type=>'SQL_QUERY'
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -172,7 +172,7 @@ wwv_flow_imp_page.create_page_da_action(
 '    V_ERR_MSG   VARCHAR2(2000);',
 'BEGIN',
 unistr('    --\4FEE\6539\6570\636E'),
-'    UPDATE STS_FILE',
+'    UPDATE FMP_FILE',
 '    SET FILE_NAME  =:P132_FILE_NAME,',
 '        FILE_PATH  =:P132_FILE_NAME,',
 '        UPDATED_BY =:MPF_USER_ID,',
@@ -180,14 +180,14 @@ unistr('    --\4FEE\6539\6570\636E'),
 '    WHERE FILE_ID = :P132_FILE_ID;',
 '',
 unistr('    --\4FEE\6539\4E0B\7EA7\6570\636E'),
-'    FOR ITEM IN (SELECT FILE_ID, FILE_PATH FROM STS_FILE WHERE ROOT_FOLDER_ID = :P132_FILE_ID)',
+'    FOR ITEM IN (SELECT FILE_ID, FILE_PATH FROM FMP_FILE WHERE ROOT_FOLDER_ID = :P132_FILE_ID)',
 '        LOOP',
 unistr('            --\66FF\6362\8DEF\5F84'),
 '            SELECT REGEXP_REPLACE(ITEM.FILE_PATH, :P132_FILE_NAME_OLD, :P132_FILE_NAME, 1, 1)',
 '            INTO V_FILE_PATH',
 '            FROM DUAL;',
 unistr('            --\4FEE\6539\6570\636E'),
-'            UPDATE STS_FILE',
+'            UPDATE FMP_FILE',
 '            SET FILE_PATH  =V_FILE_PATH,',
 '                UPDATED_BY =:MPF_USER_ID,',
 '                UPDATE_DATE=SYSDATE',

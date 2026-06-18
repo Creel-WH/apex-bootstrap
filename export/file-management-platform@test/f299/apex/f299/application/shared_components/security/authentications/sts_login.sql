@@ -15,10 +15,10 @@ wwv_flow_imp_shared.create_authentication(
  p_id=>wwv_flow_imp.id(9760293713461646873)
 ,p_name=>'STS_LOGIN'
 ,p_scheme_type=>'NATIVE_CUSTOM'
-,p_attribute_03=>'STS_APEX_LOGIN'
+,p_attribute_03=>'FMP_APEX_LOGIN'
 ,p_attribute_05=>'N'
 ,p_invalid_session_type=>'LOGIN'
-,p_post_auth_process=>'STS_LOGIN_SUCCESS'
+,p_post_auth_process=>'FMP_LOGIN_SUCCESS'
 ,p_use_secure_cookie_yn=>'N'
 ,p_ras_mode=>0
 ,p_version_scn=>1

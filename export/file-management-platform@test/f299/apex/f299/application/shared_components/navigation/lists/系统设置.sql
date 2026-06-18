@@ -20,10 +20,10 @@ wwv_flow_imp_shared.create_list(
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(7104224194093010983)
 ,p_list_item_display_sequence=>10
-,p_list_item_link_text=>unistr('\6743\9650\7BA1\7406')
+,p_list_item_link_text=>unistr('\9875\9762\7BA1\7406')
 ,p_list_item_link_target=>'f?p=&APP_ID.:221:&SESSION.::&DEBUG.::::'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return STS_IS_HAVE_PERMISSION(V(''MPF_USER_ID''), 221,V(''ROLE_ID'') ,V(''USER_TENANT''),0);'
+,p_list_item_disp_condition=>'return fmp_is_system_manager(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 1), V(''DIAN_USER_ID''), TO_NUMBER(V(''USER_TENANT'')));'
 ,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
@@ -33,7 +33,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_link_text=>unistr('\64CD\4F5C\65E5\5FD7')
 ,p_list_item_link_target=>'f?p=&APP_ID.:230:&SESSION.::&DEBUG.::::'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return STS_IS_HAVE_PERMISSION(V(''MPF_USER_ID''), 230,V(''ROLE_ID'') ,V(''USER_TENANT''),0);'
+,p_list_item_disp_condition=>'return fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 1), TO_NUMBER(V(''USER_TENANT'')), 230);'
 ,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
@@ -43,7 +43,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_link_text=>unistr('\57FA\7840\4FE1\606F\914D\7F6E')
 ,p_list_item_link_target=>'f?p=&APP_ID.:226:&SESSION.::&DEBUG.::::'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return STS_IS_HAVE_PERMISSION(V(''MPF_USER_ID''), 226,V(''ROLE_ID'') ,V(''USER_TENANT''),0);'
+,p_list_item_disp_condition=>'return fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 1), TO_NUMBER(V(''USER_TENANT'')), 226);'
 ,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );

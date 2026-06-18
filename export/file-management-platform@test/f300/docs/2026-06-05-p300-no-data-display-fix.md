@@ -9,7 +9,7 @@
 
 ## Initial Evidence
 
-- STS_SYSTEM has live rows in test.
+- FMP_SYSTEM has live rows in test.
 - P300 source query currently filters 
 vl(s.del_flag, 0) = 0 and 
 vl(s.is_enable, 1) = 1.
@@ -24,11 +24,11 @@ vl(s.is_enable, 1) = 1.
 ## Affected DB Objects
 
 - No planned independent DB object changes.
-- Existing read objects involved: STS_SYSTEM, STS_SCOPE, BASIC_USER.
+- Existing read objects involved: FMP_SYSTEM, FMP_SCOPE, BASIC_USER.
 
 ## Root Cause
 
-- P300 SQL returned 3 active rows from `STS_SYSTEM`.
+- P300 SQL returned 3 active rows from `FMP_SYSTEM`.
 - Browser reproduction after application login showed page title and pagination `1 - 3`, but no table rows.
 - Live app300 APEX metadata did not contain the report row template referenced by the Classic Report region.
 - Because the report row template was missing, APEX rendered pagination but no visible report table.

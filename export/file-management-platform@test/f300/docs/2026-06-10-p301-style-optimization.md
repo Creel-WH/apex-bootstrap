@@ -58,8 +58,8 @@ Make `P301` visually closer to the reference backend modal by improving the moda
 
 - No DB object changes planned.
 - Existing page logic still reads or writes:
-  - `STS_SYSTEM`
-  - `STS_SCOPE`
+  - `FMP_SYSTEM`
+  - `FMP_SCOPE`
   - `BASIC_USER`
   - `JA_UTILS_PKG`
 

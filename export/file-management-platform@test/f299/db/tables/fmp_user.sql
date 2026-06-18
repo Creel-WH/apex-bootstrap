@@ -18,6 +18,7 @@
 	"UPDATED_BY" NUMBER(20,0),                                                                                                                                                                                
 	"UPDATE_DATE" DATE DEFAULT sysdate,                                                                                                                                                                       
 	"LAST_LOGIN_TIME" DATE,                                                                                                                                                                                   
+	"LAST_SYSTEM_ID" NUMBER(20,0),                                                                                                                                                                            
 	"DEL_FLAG" NUMBER(1,0) DEFAULT 0,                                                                                                                                                                         
 	 PRIMARY KEY ("USER_ID")                                                                                                                                                                                  
   USING INDEX  ENABLE                                                                                                                                                                                      

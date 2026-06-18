@@ -29,21 +29,21 @@ Confirm the development-ready scope for the existing f300 sub-platform managemen
 
 ## Current f300 Implementation Evidence
 
-- Page 300 lists enabled, non-deleted records from `STS_SYSTEM`.
+- Page 300 lists enabled, non-deleted records from `FMP_SYSTEM`.
 - Page 300 displays:
   - platform code generated as `PLT-` plus padded `SYSTEM_ID`
   - platform name
-  - business administrators aggregated from `STS_SCOPE` joined to `BASIC_USER`
+  - business administrators aggregated from `FMP_SCOPE` joined to `BASIC_USER`
   - creation date
   - operation buttons: enter, edit, delete
 - Page 300 has client-side keyword filtering across rendered table rows.
-- Page 300 delete is an on-demand process `P300_DELETE_SUB_PLATFORM` that soft-deletes `STS_SYSTEM`, removes related `STS_SCOPE` manager rows, and refreshes the list.
+- Page 300 delete is an on-demand process `P300_DELETE_SUB_PLATFORM` that soft-deletes `FMP_SYSTEM`, removes related `FMP_SCOPE` manager rows, and refreshes the list.
 - Page 301 is a modal maintenance page.
 - Page 301 has required items:
   - `P301_SYSTEM_NAME`
   - `P301_ADMIN_IDS`
 - Page 301 uses a Popup LOV over `BASIC_USER` and supports multi-select with `:` separator.
-- Page 301 save process `P301_SAVE_SUB_PLATFORM` creates or updates `STS_SYSTEM`, validates duplicate platform names, and writes manager permissions into `STS_SCOPE`.
+- Page 301 save process `P301_SAVE_SUB_PLATFORM` creates or updates `FMP_SYSTEM`, validates duplicate platform names, and writes manager permissions into `FMP_SCOPE`.
 - Page 301 load process `P301_LOAD_SUB_PLATFORM` loads platform name and selected administrator ids for editing.
 - Page 9999 exists as the f300 login page and currently appears reusable as-is for this scope.
 
@@ -54,8 +54,8 @@ Confirm the development-ready scope for the existing f300 sub-platform managemen
 - Reuse Page 300 as the sub-platform management list entry.
 - Reuse Page 301 as the create/edit modal.
 - Reuse Page 9999 login page unless Lanhu or acceptance criteria explicitly require login changes.
-- Reuse existing `STS_SYSTEM` as the sub-platform master table.
-- Reuse existing `STS_SCOPE` with `REFERENCE_TYPE = 'SYSTEM'`, `PERMISSIONS_TYPE = 'MANAGE'`, and `RANGE_TYPE = 'USER'` for business administrator assignment.
+- Reuse existing `FMP_SYSTEM` as the sub-platform master table.
+- Reuse existing `FMP_SCOPE` with `REFERENCE_TYPE = 'SYSTEM'`, `PERMISSIONS_TYPE = 'MANAGE'`, and `RANGE_TYPE = 'USER'` for business administrator assignment.
 - Reuse `BASIC_USER` as the administrator candidate source.
 - Reuse `ja_utils_pkg.split_str` for parsing multi-select administrator ids.
 - Reuse existing APEX shared process `SET_CURRENT_SYSTEM` for switching current sub-platform.
@@ -104,13 +104,13 @@ Confirm the development-ready scope for the existing f300 sub-platform managemen
 ### Impacted DB Objects
 
 - Existing objects read or written by current f300 pages:
-  - `STS_SYSTEM`
-  - `STS_SCOPE`
+  - `FMP_SYSTEM`
+  - `FMP_SCOPE`
   - `BASIC_USER`
   - `JA_UTILS_PKG`
 - Existing authorization/user-role objects present in f300 source and possibly relevant if access control is later included:
-  - `STS_ROLE`
-  - `STS_USER_ROLE`
+  - `FMP_ROLE`
+  - `FMP_USER_ROLE`
 - No independent new f300 DB object is proposed for the current scope.
 - No DDL change is proposed before approval.
 
@@ -135,7 +135,7 @@ Confirm the development-ready scope for the existing f300 sub-platform managemen
 Approve only if the intended executable scope is:
 
 - Pages: P300 and P301 as primary targets; P9999 reuse/no-change unless explicitly corrected.
-- DB objects: no new objects; existing `STS_SYSTEM`, `STS_SCOPE`, `BASIC_USER`, and `JA_UTILS_PKG` may be read or affected by page logic; `STS_ROLE` and `STS_USER_ROLE` only if access control is explicitly included.
+- DB objects: no new objects; existing `FMP_SYSTEM`, `FMP_SCOPE`, `BASIC_USER`, and `JA_UTILS_PKG` may be read or affected by page logic; `FMP_ROLE` and `FMP_USER_ROLE` only if access control is explicitly included.
 - Exclusions: f299 and all file-user capabilities remain out of scope.
 
 After approval, implementation may proceed only inside this boundary.

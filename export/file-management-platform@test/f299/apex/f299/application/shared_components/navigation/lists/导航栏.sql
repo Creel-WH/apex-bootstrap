@@ -36,18 +36,6 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(9766188032297267974)
-,p_list_item_display_sequence=>25
-,p_list_item_link_text=>unistr('\5207\6362\89D2\8272')
-,p_list_item_link_target=>'f?p=&APP_ID.:225:&SESSION.::&DEBUG.::::'
-,p_list_item_icon=>'fa-user-man'
-,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return false;'
-,p_list_item_disp_condition2=>'PLSQL'
-,p_parent_list_item_id=>wwv_flow_imp.id(9760284196677264620)
-,p_list_item_current_type=>'TARGET_PAGE'
-);
-wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(9760285051281264621)
 ,p_list_item_display_sequence=>30
 ,p_list_item_link_text=>unistr('\6CE8\9500')

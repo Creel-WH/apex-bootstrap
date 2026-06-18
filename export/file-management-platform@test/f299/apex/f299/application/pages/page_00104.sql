@@ -76,7 +76,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P104_SORT'
 ,p_item_sequence=>10
 ,p_item_plug_id=>wwv_flow_imp.id(3085191723808923050)
-,p_item_default=>'select SORT from STS_FOLDER_CLASS where FOLDER_CLASS_ID =:P104_FOLDER_CLASS_ID;'
+,p_item_default=>'select SORT from FMP_FOLDER_CLASS where FOLDER_CLASS_ID =:P104_FOLDER_CLASS_ID;'
 ,p_item_default_type=>'SQL_QUERY'
 ,p_prompt=>unistr('\6392\5E8F')
 ,p_display_as=>'NATIVE_TEXT_FIELD'
@@ -158,7 +158,7 @@ wwv_flow_imp_page.create_page_da_action(
 'DECLARE',
 '    V_ERR_MSG NVARCHAR2(2000);',
 'BEGIN',
-'    UPDATE STS_FOLDER_CLASS',
+'    UPDATE FMP_FOLDER_CLASS',
 '        SET SORT = :P104_SORT,',
 '            UPDATE_DATE=SYSDATE,',
 '            UPDATED_BY =:MPF_USER_ID',
