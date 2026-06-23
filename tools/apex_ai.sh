@@ -2438,6 +2438,13 @@ run_dispatch_script() {
   bash "${script_path}" "$@"
 }
 
+warn_dispatch_sync_failure() {
+  local summary="$1"
+  local step="$2"
+
+  printf 'WARN: %s succeeded but %s failed.\n' "${summary}" "${step}" >&2
+}
+
 run_dispatch_with_activity_sync() {
   local activity="$1"
   local summary="$2"
@@ -2445,15 +2452,15 @@ run_dispatch_with_activity_sync() {
   shift
 
   if run_dispatch_script "$@"; then
-    update_current_task_activity "${activity}" "success"
-    append_feature_markdown_section_line "Implementation Log" "${summary}: success"
-    sync_feature_markdown_current_status || return 1
+    update_current_task_activity "${activity}" "success" || warn_dispatch_sync_failure "${summary}" "current task activity sync"
+    append_feature_markdown_section_line "Implementation Log" "${summary}: success" || warn_dispatch_sync_failure "${summary}" "feature markdown sync"
+    sync_feature_markdown_current_status || warn_dispatch_sync_failure "${summary}" "feature status markdown sync"
     return 0
   fi
 
-  update_current_task_activity "${activity}" "failure"
-  append_feature_markdown_section_line "Implementation Log" "${summary}: failure"
-  sync_feature_markdown_current_status || return 1
+  update_current_task_activity "${activity}" "failure" || true
+  append_feature_markdown_section_line "Implementation Log" "${summary}: failure" || true
+  sync_feature_markdown_current_status || true
   return 1
 }
 

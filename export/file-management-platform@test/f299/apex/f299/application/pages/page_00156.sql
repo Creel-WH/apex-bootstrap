@@ -775,7 +775,7 @@ wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(821088635529156748)
 ,p_plug_name=>unistr('\6743\9650\8BBE\7F6E')
 ,p_region_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(9726629631744841998)
+,p_plug_template=>wwv_flow_imp.id(9760085978980264251)
 ,p_plug_display_sequence=>10
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '<div class="p156-shell">',

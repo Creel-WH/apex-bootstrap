@@ -53,11 +53,26 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 '    return value;',
 '}',
 '',
-'function p133GetRegionModel() {',
+'function p133TryGetRegion(staticId) {',
+'    var regionId = String(staticId || '''').trim();',
+'    if (!regionId || typeof apex === ''undefined'' || !apex.region || !document.getElementById(regionId)) {',
+'        return null;',
+'    }',
 '    try {',
-'        var region = apex.region(''content'');',
-'        var widget = region && region.widget ? region.widget() : null;',
-'        var gridView = widget ? widget.interactiveGrid(''getViews'', ''grid'') : null;',
+'        return apex.region(regionId);',
+'    } catch (e) {',
+'        return null;',
+'    }',
+'}',
+'',
+'function p133GetRegionModel() {',
+'    var region;',
+'    var widget;',
+'    var gridView;',
+'    try {',
+'        region = p133TryGetRegion(''content'');',
+'        widget = region && region.widget ? region.widget() : null;',
+'        gridView = widget ? widget.interactiveGrid(''getViews'', ''grid'') : null;',
 '        return gridView ? gridView.model : null;',
 '    } catch (e) {',
 '        return null;',
@@ -160,9 +175,16 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 '}',
 '',
 'function p133RefreshContent() {',
+'    var region = p133TryGetRegion(''content'');',
 '    try {',
-'        apex.region(''content'').refresh();',
+'        if (region) {',
+'            region.refresh();',
+'            return;',
+'        }',
 '    } catch (e) {',
+'        // ignore and use fallback below',
+'    }',
+'    if ($(''#content_ig'').length) {',
 '        $(''#content_ig'').trigger(''apexrefresh'');',
 '    }',
 '}',
@@ -224,11 +246,7 @@ unistr('        MANUAL: ''\9ED8\8BA4'''),
 '    apex.item(''P133_SORT_BY'').setValue(nextValue);',
 '    p133ToggleSortMenu(false);',
 '    p133UpdateToolbarState();',
-'    try {',
-'        apex.region(''content'').refresh();',
-'    } catch (e) {',
-'        $(''#content_ig'').trigger(''apexrefresh'');',
-'    }',
+'    p133RefreshContent();',
 '    window.setTimeout(function() {',
 '        var parentFolderId = String($v(''P133_PARENT_FOLDER_ID'') || '''');',
 '        var parentItem$ = $(''#P133_PARENT_FOLDER_ID'');',
@@ -616,10 +634,13 @@ unistr('        $gridView.html(''<div class="p133-grid-empty">\672A\627E\5230\65
 '}',
 '',
 'function p133ApplyGridColumnState() {',
+'    var contentRegion;',
+'    var gridView;',
+'    var isManualSort;',
 '    try {',
-'        var contentRegion = apex.region(''content'');',
-'        var gridView = contentRegion ? contentRegion.call(''getViews'').grid : null;',
-'        var isManualSort = p133ReadSortValue() === ''MANUAL'';',
+'        contentRegion = p133TryGetRegion(''content'');',
+'        gridView = contentRegion ? contentRegion.call(''getViews'').grid : null;',
+'        isManualSort = p133ReadSortValue() === ''MANUAL'';',
 '        if (gridView && gridView.view$ && gridView.view$.grid) {',
 '            gridView.view$.grid(''hideColumn'', ''OPERATE'');',
 '            if (isManualSort) {',
@@ -702,7 +723,7 @@ unistr('    $toolbar.find(''.p133-selection-text'').text(state.count ? ''\5DF2\9
 '    var records = [];',
 '',
 '    try {',
-'        region = apex.region(''content'');',
+'        region = p133TryGetRegion(''content'');',
 '        gridView = region && region.widget ? region.widget().interactiveGrid(''getViews'', ''grid'') : null;',
 '        model = gridView ? gridView.model : null;',
 '    } catch (e) {',
@@ -739,7 +760,7 @@ unistr('    $toolbar.find(''.p133-selection-text'').text(state.count ? ''\5DF2\9
 'window.p133ApplyGridSelectionFromState = p133ApplyGridSelectionFromState;',
 '',
 'function p133BindGridSelectionGuard() {',
-'    var region = apex.region(''content'');',
+'    var region = p133TryGetRegion(''content'');',
 '    var views;',
 '    var gridView;',
 '    var grid$;',
@@ -1315,7 +1336,7 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    var config = p133DragSortConfig;',
 '    var currentAttempt = attempt || 0;',
 '    var handleCount;',
-'    var region = apex.region(config.regionStaticId);',
+'    var region = p133TryGetRegion(config.regionStaticId);',
 '    var views;',
 '    var gridView;',
 '    var grid$;',
@@ -1986,7 +2007,7 @@ wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(821088635529155495)
 ,p_plug_name=>unistr('\6309\94AE\533A\57DF')
 ,p_region_template_options=>'#DEFAULT#:t-ButtonRegion--noUI'
-,p_plug_template=>wwv_flow_imp.id(9726585978749841983)
+,p_plug_template=>wwv_flow_imp.id(9760042325985264236)
 ,p_plug_display_sequence=>150
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'expand_shortcuts', 'N',
@@ -1997,7 +2018,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_name=>unistr('\6587\4EF6\5939\8BE6\7EC6')
 ,p_region_name=>'content'
 ,p_region_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(9726619829779841995)
+,p_plug_template=>wwv_flow_imp.id(9760076177015264248)
 ,p_plug_display_sequence=>170
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -2807,7 +2828,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_name=>unistr('\9762\5305\5C51')
 ,p_region_template_options=>'#DEFAULT#'
 ,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(9726642014881842002)
+,p_plug_template=>wwv_flow_imp.id(9760098362117264255)
 ,p_plug_display_sequence=>150
 ,p_plug_display_point=>'REGION_POSITION_01'
 ,p_plug_display_condition_type=>'NEVER'
