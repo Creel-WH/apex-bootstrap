@@ -1,0 +1,87 @@
+prompt --application/shared_components/data_loads/导入模板
+begin
+--   Manifest
+--     DATA LOAD: 导入模板
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>2200408020639491
+,p_default_application_id=>299
+,p_default_id_offset=>33456347235422253
+,p_default_owner=>'JASOLAR'
+);
+wwv_flow_imp_shared.create_data_profile(
+ p_id=>wwv_flow_imp.id(3310187481881280190)
+,p_name=>unistr('\5BFC\5165\6A21\677F')
+,p_format=>'XLSX'
+,p_encoding=>'utf-8'
+,p_default_xlsx_sheet_name=>'sheet1.xml'
+,p_has_header_row=>true
+);
+wwv_flow_imp_shared.create_data_profile_col(
+ p_id=>wwv_flow_imp.id(3310187715834280195)
+,p_data_profile_id=>wwv_flow_imp.id(3310187481881280190)
+,p_name=>'APP_NAME'
+,p_sequence=>1
+,p_column_type=>'DATA'
+,p_data_type=>'VARCHAR2'
+,p_selector_type=>'NAME'
+,p_selector=>unistr('\5382\533A')
+);
+wwv_flow_imp_shared.create_data_profile_col(
+ p_id=>wwv_flow_imp.id(3310188546444280197)
+,p_data_profile_id=>wwv_flow_imp.id(3310187481881280190)
+,p_name=>'PAGE_ID'
+,p_sequence=>2
+,p_column_type=>'DATA'
+,p_data_type=>'NUMBER'
+,p_selector_type=>'NAME'
+,p_selector=>unistr('\5DE5\6BB5')
+);
+wwv_flow_imp_shared.create_data_profile_col(
+ p_id=>wwv_flow_imp.id(3310187977877280196)
+,p_data_profile_id=>wwv_flow_imp.id(3310187481881280190)
+,p_name=>'CREATED_BY'
+,p_sequence=>3
+,p_column_type=>'DATA'
+,p_data_type=>'NUMBER'
+,p_selector_type=>'NAME'
+,p_selector=>unistr('\4EA7\7EBF')
+);
+wwv_flow_imp_shared.create_data_profile_col(
+ p_id=>wwv_flow_imp.id(3310188260133280197)
+,p_data_profile_id=>wwv_flow_imp.id(3310187481881280190)
+,p_name=>'LOG_ID'
+,p_sequence=>4
+,p_column_type=>'DATA'
+,p_data_type=>'NUMBER'
+,p_selector_type=>'NAME'
+,p_selector=>unistr('\662F\5426\6709\6548')
+);
+wwv_flow_imp_shared.create_data_profile_col(
+ p_id=>wwv_flow_imp.id(3310188889082280197)
+,p_data_profile_id=>wwv_flow_imp.id(3310187481881280190)
+,p_name=>'UPDATE_DATE'
+,p_sequence=>5
+,p_column_type=>'DATA'
+,p_data_type=>'DATE'
+,p_selector_type=>'NAME'
+,p_selector=>unistr('\5907\6CE8')
+);
+wwv_flow_imp_shared.create_load_table(
+ p_id=>wwv_flow_imp.id(3310189209180280197)
+,p_name=>unistr('\5BFC\5165\6A21\677F')
+,p_static_id=>'C61203871605679708'
+,p_target_type=>'TABLE'
+,p_table_name=>'APEX_VISTED_LOG'
+,p_data_profile_id=>wwv_flow_imp.id(3310187481881280190)
+,p_loading_method=>'APPEND'
+,p_commit_interval=>200
+,p_error_handling=>'ABORT'
+,p_skip_validation=>'N'
+,p_reference_id=>3491943076714055840
+);
+wwv_flow_imp.component_end;
+end;
+/

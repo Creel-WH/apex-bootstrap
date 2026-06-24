@@ -86,7 +86,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P135_FILE_NAME'
 ,p_item_sequence=>10
 ,p_item_plug_id=>wwv_flow_imp.id(3761334829839619755)
-,p_item_default=>'SELECT FILE_NAME FROM STS_FILE WHERE FILE_ID = :P135_FILE_ID;'
+,p_item_default=>'SELECT FILE_NAME FROM FMP_FILE WHERE FILE_ID = :P135_FILE_ID;'
 ,p_item_default_type=>'SQL_QUERY'
 ,p_prompt=>unistr('\6587\4EF6\5939/\6587\4EF6\540D\79F0')
 ,p_display_as=>'NATIVE_TEXT_FIELD'
@@ -105,7 +105,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P135_FILE_NAME_OLD'
 ,p_item_sequence=>110
 ,p_use_cache_before_default=>'NO'
-,p_item_default=>'SELECT FILE_NAME FROM STS_FILE WHERE FILE_ID = :P135_FILE_ID;'
+,p_item_default=>'SELECT FILE_NAME FROM FMP_FILE WHERE FILE_ID = :P135_FILE_ID;'
 ,p_item_default_type=>'SQL_QUERY'
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -186,7 +186,7 @@ wwv_flow_imp_page.create_page_da_action(
 unistr('    --\67E5\8BE2\6570\636E'),
 '    SELECT FILE_PATH, FILE_LEVEL,FILE_TYPE',
 '    INTO V_FILE_PATH,V_FILE_LEVEL,V_FILE_TYPE',
-'    FROM STS_FILE',
+'    FROM FMP_FILE',
 '    WHERE FILE_ID = :P135_FILE_ID;',
 unistr('    --\62FC\63A5\8DEF\5F84'),
 '    SELECT CASE',
@@ -201,7 +201,7 @@ unistr('             SELECT INSTR(V_FILE_PATH, :P135_FILE_NAME_OLD, -1, 1) AS LA
 '             FROM DUAL',
 '         );',
 unistr('    --\4FEE\6539\6570\636E'),
-'    UPDATE STS_FILE',
+'    UPDATE FMP_FILE',
 '    SET FILE_NAME  =:P135_FILE_NAME,',
 '        FILE_PATH  =V_FILE_PATH,',
 '        UPDATED_BY =:MPF_USER_ID,',
@@ -211,8 +211,8 @@ unistr('    --\4FEE\6539\6570\636E'),
 unistr('    --\4FEE\6539\4E0B\7EA7\6570\636E'),
 '    IF V_FILE_TYPE = ''FOLDER'' THEN',
 '        FOR ITEM IN (select FILE_PATH, FILE_ID',
-'                     FROM STS_FILE',
-'                     WHERE (ROOT_FOLDER_ID = :P133_ROOT_FOLDER_ID OR FILE_ID = :P133_ROOT_FOLDER_ID)',
+'                     FROM FMP_FILE',
+'                     WHERE (ROOT_FOLDER_ID = :P135_ROOT_FOLDER_ID OR FILE_ID = :P135_ROOT_FOLDER_ID)',
 '                       AND TENANT_ID = :USER_TENANT',
 '                       AND DEL_FLAG = 0',
 '                       AND FILE_ID <> :P135_FILE_ID',
@@ -236,7 +236,7 @@ unistr('            --\66FF\6362\8DEF\5F84'),
 '                     FROM DUAL',
 '                 );',
 unistr('            --\4FEE\6539\6570\636E'),
-'            UPDATE STS_FILE',
+'            UPDATE FMP_FILE',
 '            SET FILE_PATH  =V_FILE_PATH,',
 '                --UPDATED_BY =:MPF_USER_ID,',
 '                UPDATED_BY =-1,',

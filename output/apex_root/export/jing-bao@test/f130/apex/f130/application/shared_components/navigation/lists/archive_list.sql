@@ -1,0 +1,105 @@
+prompt --application/shared_components/navigation/lists/archive_list
+begin
+--   Manifest
+--     LIST: Archive List
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>20731578202767968
+,p_default_application_id=>130
+,p_default_id_offset=>28880731091649549
+,p_default_owner=>'JING_BAO'
+);
+wwv_flow_imp_shared.create_list(
+ p_id=>wwv_flow_imp.id(2246077668307444068)
+,p_name=>'Archive List'
+,p_list_status=>'PUBLIC'
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246078692849444068)
+,p_list_item_display_sequence=>80
+,p_list_item_link_text=>unistr('\89D2\8272\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::::'
+,p_list_item_disp_cond_type=>'EXPRESSION'
+,p_list_item_disp_condition=>':APP_USER!=''YWJAREPORT'''
+,p_list_item_disp_condition2=>'PLSQL'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'6'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246079111458444068)
+,p_list_item_display_sequence=>90
+,p_list_item_link_text=>unistr('\7B56\7565\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:12:&SESSION.::&DEBUG.::::'
+,p_list_item_disp_cond_type=>'EXPRESSION'
+,p_list_item_disp_condition=>':APP_USER!=''YWJAREPORT'''
+,p_list_item_disp_condition2=>'PLSQL'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'12'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246079502977444068)
+,p_list_item_display_sequence=>100
+,p_list_item_link_text=>unistr('\7528\6237\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:13:&SESSION.::&DEBUG.::::'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'13'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246081083675444069)
+,p_list_item_display_sequence=>140
+,p_list_item_link_text=>unistr('\7528\6237\7EC4\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:17:&SESSION.::&DEBUG.::::'
+,p_security_scheme=>wwv_flow_imp.id(2302133328857836269)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'17'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246081486924444069)
+,p_list_item_display_sequence=>150
+,p_list_item_link_text=>unistr('\57FA\5730\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:18:&SESSION.::&DEBUG.::::'
+,p_security_scheme=>wwv_flow_imp.id(2302133328857836269)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'18'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246082268182444069)
+,p_list_item_display_sequence=>170
+,p_list_item_link_text=>unistr('\83DC\5355\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:5:&SESSION.::&DEBUG.::::'
+,p_security_scheme=>wwv_flow_imp.id(2302133328857836269)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'5'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246083106805444070)
+,p_list_item_display_sequence=>190
+,p_list_item_link_text=>unistr('\8BBE\5907\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:7:&SESSION.::&DEBUG.::::'
+,p_security_scheme=>wwv_flow_imp.id(2302133328857836269)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'7,8'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2246083454712444070)
+,p_list_item_display_sequence=>200
+,p_list_item_link_text=>unistr('\9875\9762\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:9:&SESSION.::&DEBUG.::::'
+,p_security_scheme=>wwv_flow_imp.id(2302133328857836269)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'9'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(2248563045848682506)
+,p_list_item_display_sequence=>210
+,p_list_item_link_text=>unistr('\9489\9489\7528\6237\7EC4\6863\6848')
+,p_list_item_link_target=>'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::::'
+,p_security_scheme=>wwv_flow_imp.id(2302133328857836269)
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp.component_end;
+end;
+/

@@ -23,7 +23,6 @@ AS
     v_app_key       VARCHAR2(64);
     v_app_secret    VARCHAR2(64);
     v_env           VARCHAR2(32);
-    v_row_count     NUMBER(20);
     v_system_id     NUMBER(20);
 BEGIN
     SELECT x.ding_user_id,
@@ -134,63 +133,78 @@ BEGIN
            last_login_time = SYSDATE
      WHERE user_id = v_user_id;
 
-    SELECT COUNT(1)
-      INTO v_row_count
-      FROM sts_user_role u
-      JOIN sts_user su
-        ON su.user_id = u.user_id
-       AND su.tenant_id = u.tenant_id
-       AND su.del_flag = 0
-     WHERE u.del_flag = 0
-       AND u.tenant_id = v_tenant_id
-       AND UPPER(su.job_number) = v_job_number
-       AND u.is_enable = 1;
+    BEGIN
+        SELECT x.role_id,
+               x.role_level,
+               x.role_type
+          INTO v_role_id,
+               v_role_level,
+               v_role_code
+          FROM (
+                SELECT r.role_id,
+                       NVL(r.role_level, 0) AS role_level,
+                       NVL(r.role_type, 'VIEW_REPORT') AS role_type
+                  FROM fmp_user_role u
+                  JOIN fmp_role r
+                    ON r.role_id = u.role_id
+                   AND r.tenant_id = u.tenant_id
+                   AND NVL(r.del_flag, 0) = 0
+                   AND NVL(r.is_enable, 1) = 1
+                 WHERE u.user_id = v_user_id
+                   AND u.tenant_id = v_tenant_id
+                   AND NVL(u.del_flag, 0) = 0
+                   AND NVL(u.is_enable, 1) = 1
+                 ORDER BY NVL(r.role_level, 0) DESC, r.role_id DESC
+          ) x
+         WHERE ROWNUM = 1;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            v_role_id := 0;
+            v_role_level := 0;
+            v_role_code := 'VIEW_REPORT';
+    END;
 
-    IF v_row_count > 0 THEN
-        BEGIN
-            SELECT x.role_id,
-                   x.role_level,
-                   x.role_type
-              INTO v_role_id,
-                   v_role_level,
-                   v_role_code
-              FROM (
-                    SELECT r.role_id,
-                           NVL(r.role_level, 0) AS role_level,
-                           NVL(r.role_type, 'VIEW_REPORT') AS role_type
-                      FROM sts_user_role u
-                      JOIN sts_user su
-                        ON su.user_id = u.user_id
-                       AND su.tenant_id = u.tenant_id
-                       AND su.del_flag = 0
-                      JOIN sts_role r
-                        ON r.role_id = u.role_id
-                       AND r.tenant_id = u.tenant_id
-                       AND r.del_flag = 0
-                     WHERE UPPER(su.job_number) = v_job_number
-                       AND u.is_enable = 1
-                       AND u.tenant_id = v_tenant_id
-                       AND u.del_flag = 0
-                     ORDER BY NVL(r.role_level, 0) DESC, r.role_id DESC
-              ) x
-             WHERE ROWNUM = 1;
-        EXCEPTION
-            WHEN NO_DATA_FOUND THEN
-                v_role_id := 0;
-                v_role_level := 0;
-                v_role_code := 'VIEW_REPORT';
-        END;
-    END IF;
+    BEGIN
+        SELECT x.code_value
+          INTO v_app_key
+          FROM (
+                SELECT d.code_value,
+                       CASE
+                           WHEN d.app_id = v_app_id THEN 1
+                           WHEN d.app_id = 138 THEN 2
+                           ELSE 3
+                       END AS ord
+                  FROM ja_system_dict d
+                 WHERE d.dict_code = 'APP_KEY'
+                   AND d.app_id IN (v_app_id, 138)
+                 ORDER BY ord
+          ) x
+         WHERE ROWNUM = 1;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            v_app_key := NULL;
+    END;
 
-    SELECT code_value INTO v_app_key
-      FROM ja_system_dict
-     WHERE dict_code = 'APP_KEY'
-       AND app_id = 138;
-
-    SELECT code_value INTO v_app_secret
-      FROM ja_system_dict
-     WHERE dict_code = 'APP_SECRET'
-       AND app_id = 138;
+    BEGIN
+        SELECT x.code_value
+          INTO v_app_secret
+          FROM (
+                SELECT d.code_value,
+                       CASE
+                           WHEN d.app_id = v_app_id THEN 1
+                           WHEN d.app_id = 138 THEN 2
+                           ELSE 3
+                       END AS ord
+                  FROM ja_system_dict d
+                 WHERE d.dict_code = 'APP_SECRET'
+                   AND d.app_id IN (v_app_id, 138)
+                 ORDER BY ord
+          ) x
+         WHERE ROWNUM = 1;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            v_app_secret := NULL;
+    END;
 
     SELECT code_value INTO v_env
       FROM ja_system_dict

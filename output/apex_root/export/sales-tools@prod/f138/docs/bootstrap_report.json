@@ -1,0 +1,10 @@
+{
+  "application": "f138",
+  "environment": "sales-tools@prod",
+  "schema": "JASOLAR",
+  "apex_app_id": "138",
+  "export_dir": "export/sales-tools@prod/f138/apex",
+  "export_method": "APEX Builder web export",
+  "db_export": "skipped",
+  "artifact": "export/sales-tools@prod/f138/web-export/f138.zip"
+}

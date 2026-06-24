@@ -1,0 +1,10 @@
+{
+  "env_alias": "sales-tools@prod",
+  "app_id": 138,
+  "app_code": "f138",
+  "app_name": "Sales Tools",
+  "version": "0.1.0",
+  "tag_prefix": "sales-tools-f138",
+  "release_single": "release-single/f138.sql",
+  "updated_at": "2026-05-19"
+}

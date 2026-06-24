@@ -1,0 +1,21 @@
+{
+  "dingtalk-workbench@prod": {
+    "env_name": "dingtalk-workbench@prod",
+    "source_project_key": "dingtalk-workbench",
+    "source_env_name": "prod",
+    "driver": "oracle",
+    "db_connection_mode": "direct",
+    "db_schema": "JA_WORKBENCH",
+    "apex_workspace": "JA_WORKBENCH",
+    "apex_builder_login_url": "https://dapex.jasolar.com:26000/ords/_/landing",
+    "apex_builder_username": "JA016181",
+    "apex_base_url": "https://dapex.jasolar.com:26000/ords",
+    "jdbc_url": "jdbc:oracle:thin:@//10.2.10.42:5445/YWJAPDB",
+    "host": "10.2.10.42",
+    "port": 5445,
+    "service": "YWJAPDB",
+    "username": "JA_WORKBENCH",
+    "apex_app_id": "230",
+    "target_app_id": "230"
+  }
+}

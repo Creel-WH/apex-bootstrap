@@ -1,0 +1,59 @@
+prompt --application/shared_components/user_interface/lovs/app_type
+begin
+--   Manifest
+--     APP_TYPE
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>157415801445592876
+,p_default_application_id=>230
+,p_default_id_offset=>2464321665650071
+,p_default_owner=>'JA_WORKBENCH'
+);
+wwv_flow_imp_shared.create_list_of_values(
+ p_id=>wwv_flow_imp.id(3864973736453971115)
+,p_lov_name=>'APP_TYPE'
+,p_lov_query=>'.'||wwv_flow_imp.id(3864973736453971115)||'.'
+,p_location=>'STATIC'
+,p_version_scn=>1
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(3864974063987971117)
+,p_lov_disp_sequence=>1
+,p_lov_disp_value=>unistr('\94FE\63A5\5E94\7528')
+,p_lov_return_value=>'H5'
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(3864974425745971118)
+,p_lov_disp_sequence=>2
+,p_lov_disp_value=>unistr('\9489\9489\5FAE\5E94\7528')
+,p_lov_return_value=>'DING'
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(3864974865676971118)
+,p_lov_disp_sequence=>3
+,p_lov_disp_value=>unistr('IDASS\5E94\7528')
+,p_lov_return_value=>'IDAAS'
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(3864975257735971118)
+,p_lov_disp_sequence=>4
+,p_lov_disp_value=>unistr('\5B9C\642D\5E94\7528')
+,p_lov_return_value=>'YIDA'
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(3864975659072971118)
+,p_lov_disp_sequence=>5
+,p_lov_disp_value=>unistr('OA\5E94\7528')
+,p_lov_return_value=>'OA'
+);
+wwv_flow_imp_shared.create_static_lov_data(
+ p_id=>wwv_flow_imp.id(3864975976520971118)
+,p_lov_disp_sequence=>6
+,p_lov_disp_value=>unistr('\9489\9489\7B2C\4E09\65B9\5E94\7528')
+,p_lov_return_value=>'THIRD_DING'
+);
+wwv_flow_imp.component_end;
+end;
+/

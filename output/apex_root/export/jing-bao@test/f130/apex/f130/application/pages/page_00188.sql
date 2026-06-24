@@ -1,0 +1,141 @@
+prompt --application/pages/page_00188
+begin
+--   Manifest
+--     PAGE: 00188
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>20731578202767968
+,p_default_application_id=>130
+,p_default_id_offset=>28880731091649549
+,p_default_owner=>'JING_BAO'
+);
+wwv_flow_imp_page.create_page(
+ p_id=>188
+,p_name=>unistr('\5DE5\5355\6C47\603B\8868')
+,p_alias=>unistr('\5DE5\5355\6C47\603B\8868')
+,p_step_title=>unistr('\5DE5\5355\6C47\603B\8868')
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'04'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(2166278902805026269)
+,p_plug_name=>unistr('\5DE5\5355\6C47\603B\8868')
+,p_region_template_options=>'#DEFAULT#:js-showMaximizeButton:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_imp.id(2302045568724836200)
+,p_plug_display_sequence=>10
+,p_location=>null
+,p_plug_source_type=>'NATIVE_JET_CHART'
+);
+wwv_flow_imp_page.create_jet_chart(
+ p_id=>wwv_flow_imp.id(2166279253873026269)
+,p_region_id=>wwv_flow_imp.id(2166278902805026269)
+,p_chart_type=>'bar'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_orientation=>'vertical'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_value_position=>'auto'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_show_row=>true
+,p_show_start=>true
+,p_show_end=>true
+,p_show_progress=>true
+,p_show_baseline=>true
+,p_legend_rendered=>'off'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+,p_horizontal_grid=>'auto'
+,p_vertical_grid=>'auto'
+,p_gauge_orientation=>'circular'
+,p_gauge_indicator_size=>1
+,p_gauge_plot_area=>'on'
+,p_show_gauge_value=>true
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(2166281020896026268)
+,p_chart_id=>wwv_flow_imp.id(2166279253873026269)
+,p_seq=>10
+,p_name=>unistr('\7CFB\5217 1')
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT A.FAB_ID,B.NAME ,TO_CHAR(A.CREATION_DATE,''yyyy-mm'') YD ,COUNT(*) COUNTS FROM TENANT_EVENT A',
+'INNER JOIN FND_FAB B ON A.FAB_ID = B.FAB_ID',
+'WHERE A.TENANT_ID=:USERTENANT AND A.BASE_DEPT_ID =:BASE_DEPT_ID AND A.CREATION_DATE >= TO_DATE (:P188_DATE,''YYYY-MM'') AND  A.CREATION_DATE<ADD_MONTHS(to_date(:P188_DATE,''YYYY-MM''),1)',
+'GROUP BY  A.FAB_ID,B.NAME,TO_CHAR(A.CREATION_DATE,''yyyy-mm'')',
+'ORDER BY COUNT(*) DESC;'))
+,p_items_value_column_name=>'COUNTS'
+,p_items_label_column_name=>'NAME'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'PERCENT'
+,p_threshold_display=>'onIndicator'
+,p_link_target=>'f?p=&APP_ID.:189:&SESSION.::&DEBUG.:189:P189_DATE,P189_FAB:&YD.,&FAB_ID.'
+,p_link_target_type=>'REDIRECT_PAGE'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(2166279728595026269)
+,p_chart_id=>wwv_flow_imp.id(2166279253873026269)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'auto'
+,p_minor_tick_rendered=>'auto'
+,p_tick_label_rendered=>'on'
+,p_zoom_order_seconds=>false
+,p_zoom_order_minutes=>false
+,p_zoom_order_hours=>false
+,p_zoom_order_days=>true
+,p_zoom_order_weeks=>true
+,p_zoom_order_months=>true
+,p_zoom_order_quarters=>true
+,p_zoom_order_years=>false
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(2166280424160026269)
+,p_chart_id=>wwv_flow_imp.id(2166279253873026269)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_format_type=>'decimal'
+,p_decimal_places=>0
+,p_format_scaling=>'none'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'auto'
+,p_minor_tick_rendered=>'auto'
+,p_tick_label_rendered=>'on'
+,p_zoom_order_seconds=>false
+,p_zoom_order_minutes=>false
+,p_zoom_order_hours=>false
+,p_zoom_order_days=>true
+,p_zoom_order_weeks=>true
+,p_zoom_order_months=>true
+,p_zoom_order_quarters=>false
+,p_zoom_order_years=>false
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(2182720271074205740)
+,p_name=>'P188_DATE'
+,p_item_sequence=>20
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp.component_end;
+end;
+/

@@ -1,0 +1,4 @@
+                                                                                                                                                                                                                                                                                                                         
+  CREATE UNIQUE INDEX "TENANT_EVENT_REVIEW_RULE_CONFIG_TENANT_ID_EXT_ORG_ID_IS_STOP_LINE_IS_KEY_BASE_DEPT_ID_PROCESS_UINDEX" ON "TENANT_EVENT_REVIEW_RULE_CONFIG" ("TENANT_ID", "EXT_ORG_ID", "BASE_DEPT_ID", DECODE("DEL_FLAG",0,1,"EVENT_REVIEW_RULE_ID"), "IS_STOP_LINE", "IS_KEY_PROCESS")     
+  ;                                                                                                                                                                                                                                                                                                                      
+

@@ -1,0 +1,4 @@
+                                                                                                                                                                                                                                                                                     
+  CREATE INDEX "TENANT_EVENT_USER_CONVERGE_TENANT_ID_BEGIN_TIME_EVENT_STATUS_OBLIGATION_DEPT_SUBMIT_USER_ID_BASE_DEPT_ID" ON "TENANT_EVENT_USER_CONVERGE" ("TENANT_ID", "BASE_DEPT_ID", "BEGIN_TIME", "EVENT_STATUS", "OBLIGATION_DEPT", "SUBMIT_USER_ID")     
+  ;                                                                                                                                                                                                                                                                                  
+

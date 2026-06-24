@@ -1,0 +1,23 @@
+prompt --application/shared_components/logic/application_items/role_code
+begin
+--   Manifest
+--     APPLICATION ITEM: ROLE_CODE
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>2200408020639491
+,p_default_application_id=>138
+,p_default_id_offset=>534703734671071145
+,p_default_owner=>'JASOLAR'
+);
+wwv_flow_imp_shared.create_flow_item(
+ p_id=>wwv_flow_imp.id(3243840862384670829)
+,p_name=>'ROLE_CODE'
+,p_protection_level=>'I'
+,p_item_comment=>unistr('\7528\4E8E\5224\65AD\6743\9650\7684ROLE_CODE --by wxx')
+,p_version_scn=>6720659854609
+);
+wwv_flow_imp.component_end;
+end;
+/

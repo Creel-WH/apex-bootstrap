@@ -1,0 +1,60 @@
+prompt --application/pages/page_groups
+begin
+--   Manifest
+--     PAGE GROUPS: 300
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.11.30'
+,p_release=>'24.2.11'
+,p_default_workspace_id=>2200408020639491
+,p_default_application_id=>300
+,p_default_id_offset=>31969957811146237
+,p_default_owner=>'JASOLAR'
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(9731818995908008513)
+,p_group_name=>unistr('APEX\7CFB\7EDF\9ED8\8BA4\7EC4')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(9731818092390991074)
+,p_group_name=>unistr('\6211\7684\4EFB\52A1')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(9731818026028990345)
+,p_group_name=>unistr('\6211\7684\9879\76EE')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(3714687102259411838)
+,p_group_name=>unistr('\6587\4EF6\5E93')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(3714687135400412346)
+,p_group_name=>unistr('\6587\4EF6\5E93\7BA1\7406')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(3714687393721413774)
+,p_group_name=>unistr('\66F4\65B0\53CD\9988')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(9731818937384007055)
+,p_group_name=>unistr('\767B\5F55\3001\5BC6\7801')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(9731818236280992258)
+,p_group_name=>unistr('\7CFB\7EDF\8BBE\7F6E')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(3714687233513413100)
+,p_group_name=>unistr('\81EA\5B9A\4E49\5206\7C7B\7BA1\7406')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(7968655447407045427)
+,p_group_name=>unistr('\95EE\9898\53CD\9988')
+);
+wwv_flow_imp_page.create_page_group(
+ p_id=>wwv_flow_imp.id(9732135584571549161)
+,p_group_name=>unistr('\9879\76EE\914D\7F6E\7BA1\7406')
+);
+wwv_flow_imp.component_end;
+end;
+/

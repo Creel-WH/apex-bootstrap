@@ -1,0 +1,8 @@
+{
+  "application": "f300",
+  "environment": "file-management-platform@test",
+  "schema": "JASOLAR",
+  "apex_app_id": "300",
+  "export_dir": "export/file-management-platform@test/f300/apex",
+  "config_source": ".conn.json#file-management-platform@test"
+}
