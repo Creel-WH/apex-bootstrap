@@ -269,7 +269,7 @@ wwv_flow_imp_page.create_page_plug(
 '       FILE_NAME,',
 '       FILE_URL,',
 '       FILE_PATH||''/''||FILE_NAME FILE_PATH',
-'from STS_FILE;'))
+'from FMP_FILE;'))
 ,p_is_editable=>false
 ,p_plug_source_type=>'NATIVE_FORM'
 );

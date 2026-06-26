@@ -28,6 +28,9 @@ prompt --install
 @@application/shared_components/logic/application_items/role_code.sql
 @@application/shared_components/logic/application_items/role_id.sql
 @@application/shared_components/logic/application_items/role_level.sql
+@@application/shared_components/logic/application_items/fmp_appkey.sql
+@@application/shared_components/logic/application_items/fmp_appsecret.sql
+@@application/shared_components/logic/application_items/fmp_jy_api_url.sql
 @@application/shared_components/logic/application_items/sts_appkey.sql
 @@application/shared_components/logic/application_items/sts_appsecret.sql
 @@application/shared_components/logic/application_items/sts_jy_api_url.sql
@@ -137,6 +140,7 @@ prompt --install
 @@application/shared_components/globalization/dyntranslations.sql
 @@application/shared_components/security/authentications/oracle_apex_账户.sql
 @@application/shared_components/security/authentications/sts_login.sql
+@@application/shared_components/security/authentications/fmp_login.sql
 @@application/shared_components/plugins/region_type/de_danielh_dropzone2.sql
 @@application/shared_components/plugins/dynamic_action/refresh_rds_region.sql
 @@application/shared_components/plugins/region_type/com_fos_image_slider.sql

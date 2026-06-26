@@ -46,8 +46,8 @@ BEGIN
 
     IF p_password <> v_expected_password THEN
         apex_error.add_error(
-            p_message          => '瀵嗙爜閿欒锛岃妫€鏌ュ悗杈撳叆',
-            p_additional_info  => '闄勫姞娑堟伅-01',
+            p_message          => '密码错误，请检查后输入',
+            p_additional_info  => 'LOGIN-01',
             p_display_location => apex_error.c_inline_in_notification
         );
         RETURN FALSE;
@@ -57,7 +57,7 @@ BEGIN
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
         apex_error.add_error(
-            p_message          => '璇ヨ处鍙蜂笉瀛樺湪鎴栧凡绂昏亴锛岃妫€鏌ュ悗杈撳叆',
+            p_message          => '账号不存在或已离职，请检查后输入',
             p_ignore_ora_error => TRUE,
             p_display_location => apex_error.c_inline_in_notification
         );
@@ -76,7 +76,7 @@ EXCEPTION
         RETURN FALSE;
     WHEN OTHERS THEN
         apex_error.add_error(
-            p_message          => '绯荤粺寮傚父锛岃鑱旂郴绠＄悊鍛?',
+            p_message          => '系统异常，请联系管理员',
             p_ignore_ora_error => TRUE,
             p_display_location => apex_error.c_inline_in_notification
         );

@@ -70,7 +70,7 @@
     "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f138/docs/2026-06-05-p133-drag-sort-no-update-audit.md",
     "env_alias": "sales-tools@test",
     "app_id": "138",
-    "status": "CONFIRM",
+    "status": "IMPLEMENTING",
     "source_of_truth": "ai-context.json",
     "proposed_pages": "P304",
     "proposed_db_objects": "YWJA.TENANT_EVNET_PHENOMENON_CAUSE",
@@ -81,7 +81,7 @@
       "scope_confirmation": "PENDING",
       "implementation": "PASSED",
       "verification": "PASSED",
-      "delivery": "PASSED"
+      "delivery": "IN_PROGRESS"
     },
     "resume_rule": "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
   },
@@ -90,6 +90,4 @@
     "sales-tools@prod",
     "file-management-platform@test"
   ]
-}
-]
 }

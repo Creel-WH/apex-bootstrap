@@ -30,8 +30,16 @@ CREATE OR REPLACE PROCEDURE fmp_upload_files_from_dialog_pro(
     v_plans_file_date  DATE;
     v_file_ids         VARCHAR2(2000) := '[';
     v_system_id        NUMBER(20);
+    v_creator_range_id VARCHAR2(256);
+    v_creator_scope_count NUMBER(20) := 0;
 BEGIN
     p_count := -1;
+    SELECT COALESCE(MAX(ext_user_id), NULLIF(TRIM(p_dian_user_id), ''), TO_CHAR(p_mpf_user_id))
+      INTO v_creator_range_id
+      FROM fmp_user
+     WHERE tenant_id = p_user_tenant
+       AND user_id = p_mpf_user_id
+       AND NVL(del_flag, 0) = 0;
 
     SELECT scope_type,
            DECODE(file_path, NULL, file_name, file_path || '/' || file_name),
@@ -165,9 +173,51 @@ BEGIN
                range_type,
                range_id,
                NVL(is_inherit_permission, 1)
-          FROM fmp_scope
+         FROM fmp_scope
          WHERE reference_type = 'FILE'
            AND reference_id = p_parent_folder_id;
+
+        SELECT COUNT(1)
+          INTO v_creator_scope_count
+          FROM fmp_scope
+         WHERE reference_type = 'FILE'
+           AND reference_id = v_file_id
+           AND range_type = 'USER'
+           AND permissions_type = 'MANAGE'
+           AND range_id IN (v_creator_range_id, NULLIF(TRIM(p_dian_user_id), ''), TO_CHAR(p_mpf_user_id));
+
+        IF v_creator_scope_count = 0 THEN
+            INSERT INTO fmp_scope(
+                reference_id,
+                reference_type,
+                entity_type,
+                user_id,
+                source_user_id,
+                permissions_type,
+                created_by,
+                creation_date,
+                updated_by,
+                update_date,
+                range_type,
+                range_id,
+                is_inherit_permission
+            )
+            VALUES(
+                v_file_id,
+                'FILE',
+                'USER',
+                v_creator_range_id,
+                v_creator_range_id,
+                'MANAGE',
+                p_mpf_user_id,
+                SYSDATE,
+                p_mpf_user_id,
+                SYSDATE,
+                'USER',
+                v_creator_range_id,
+                1
+            );
+        END IF;
     END LOOP;
 
     COMMIT;
