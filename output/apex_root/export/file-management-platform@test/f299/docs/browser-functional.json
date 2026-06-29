@@ -4,18 +4,22 @@
   "skip_builder_login": true,
   "steps": [
     {
+      "action": "click",
+      "selector": ".switch-qrcode"
+    },
+    {
       "action": "fill",
       "selector": "#P9999_USERNAME",
-      "value": "{apex_builder_username}"
+      "value": "{runtime_login_username}"
     },
     {
       "action": "fill",
       "selector": "#P9999_PASSWORD",
-      "value": "{apex_builder_password}"
+      "value": "{runtime_login_password}"
     },
     {
-      "action": "apex_submit",
-      "request": "LOGIN"
+      "action": "click",
+      "selector": "#login"
     },
     {
       "action": "wait_for_selector",

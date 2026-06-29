@@ -67,27 +67,25 @@
     "machine_state_authority": "ai-context.json"
   },
   "current_task": {
-    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/sales-tools@test/f138/docs/2026-06-05-p133-drag-sort-no-update-audit.md",
-    "env_alias": "sales-tools@test",
-    "app_id": "138",
+    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/file-management-platform@test/f299/docs/2026-06-29-f299-folder-permission-unification.md",
+    "env_alias": "file-management-platform@test",
+    "app_id": "299",
     "status": "IMPLEMENTING",
     "source_of_truth": "ai-context.json",
-    "proposed_pages": "P304",
-    "proposed_db_objects": "YWJA.TENANT_EVNET_PHENOMENON_CAUSE",
-    "confirmed_pages": "P133",
-    "confirmed_db_objects": "STS_FILE",
+    "proposed_pages": "P0,P133,P134,P135,P136,P155,P156",
+    "proposed_db_objects": "FMP_SYSTEM,FMP_FILE,FMP_SCOPE,fmp_create_folder_from_dialog_pro,fmp_upload_files_from_dialog_pro,fmp_transfer_files_to_folder_pro,new fmp effective file manage helper,new f299 root-folder convergence data script",
+    "confirmed_pages": "P0,P133,P134,P135,P136,P155,P156",
+    "confirmed_db_objects": "FMP_SYSTEM,FMP_FILE,FMP_SCOPE,fmp_create_folder_from_dialog_pro,fmp_upload_files_from_dialog_pro,fmp_transfer_files_to_folder_pro,new fmp effective file manage helper,new f299 root-folder convergence data script",
     "stage_status": {
       "connectivity": "PASSED",
-      "scope_confirmation": "PENDING",
+      "scope_confirmation": "PASSED",
       "implementation": "PASSED",
-      "verification": "PASSED",
+      "verification": "FAILED",
       "delivery": "IN_PROGRESS"
     },
     "resume_rule": "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
   },
   "supported_envs": [
-    "sales-tools@test",
-    "sales-tools@prod",
     "file-management-platform@test"
   ]
 }

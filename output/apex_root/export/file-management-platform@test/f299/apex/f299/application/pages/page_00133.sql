@@ -194,20 +194,17 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 '    idColumn: ''FILE_ID'',',
 '    handleColumn: ''SORT_NUM'',',
 '    processName: ''SAVE_FILE_LIBRARY_ORDER'',',
-'    pageItems: ''#P133_PARENT_FOLDER_ID,#P133_ROOT_FOLDER_ID,#P133_SORT_BY,#P133_DISPLAY,#P133_ROOT_DISPLAY'',',
+'    pageItems: ''#P133_PARENT_FOLDER_ID,#P133_ROOT_FOLDER_ID,#P133_SORT_BY,#P133_DISPLAY'',',
 '    rebindDelay: 250,',
 '    rebindAttempts: 8',
 '};',
 '',
 'function p133HasManagePermission() {',
-'    if (!String($v(''P133_PARENT_FOLDER_ID'') || '''')) {',
-'        return Number($v(''P133_ROOT_DISPLAY'') || 0) > 0;',
-'    }',
 '    return Number($v(''P133_DISPLAY'') || 0) > 0;',
 '}',
 '',
 'function p133CanCreateFolder() {',
-'    return p133IsRootLevel() || p133HasManagePermission();',
+'    return p133HasManagePermission();',
 '}',
 '',
 'function p133ReadSortValue() {',
@@ -274,14 +271,21 @@ unistr('        MANUAL: ''\9ED8\8BA4'''),
 '}',
 '',
 'function p133ApplyRootState(skipViewSync) {',
-unistr('    $s(''P133_FILE_NAME'', ''\6587\4EF6\5E93'');'),
+'    var rootId = String($v(''P133_ROOT_FOLDER_ID'') || $v(''P133_PARENT_FOLDER_ID'') || '''');',
+'    if (rootId) {',
+'        $s(''P133_ROOT_FOLDER_ID'', rootId);',
+'        $s(''P133_PARENT_FOLDER_ID'', rootId);',
+'        $s(''P133_FILE_ID'', rootId);',
+'        $s(''P133_FILE_TYPE'', ''FOLDER'');',
+'        apex.event.trigger($(''#P133_PARENT_FOLDER_ID''), ''change'');',
+'        return;',
+'    }',
+'    $s(''P133_FILE_LEVEL'', '''');',
+'    $s(''P133_FILE_NAME'', '''');',
 '    $s(''P133_FILE_PATH'', '''');',
-'    $s(''P133_FILE_LEVEL'', ''0'');',
-'    $s(''P133_ROOT_FOLDER_ID'', '''');',
 '    $s(''P133_UP_FOLDER_ID'', '''');',
 '    $s(''P133_BREADCRUMB_JSON'', ''[]'');',
-'    $s(''P133_DISPLAY'', $v(''P133_ROOT_DISPLAY'') || ''0'');',
-unistr('    $(''h1[class="t-Breadcrumb-label"]'').text(''\6587\4EF6\5E93'');'),
+'    $(''h1[class="t-Breadcrumb-label"]'').text('''');',
 '    p133RenderPathbar();',
 '    if (!skipViewSync) {',
 '        p133SyncView();',
@@ -292,9 +296,9 @@ unistr('    $(''h1[class="t-Breadcrumb-label"]'').text(''\6587\4EF6\5E93'');'),
 '    var nextFolderId = String(folderId || '''');',
 '    p133ClearSelection();',
 '    if (!nextFolderId) {',
-'        $s(''P133_PARENT_FOLDER_ID'', '''');',
-'        $s(''P133_FILE_ID'', '''');',
-'        $s(''P133_FILE_TYPE'', '''');',
+'        nextFolderId = String($v(''P133_ROOT_FOLDER_ID'') || '''');',
+'    }',
+'    if (!nextFolderId) {',
 '        p133ApplyRootState(true);',
 '        p133RefreshContent();',
 '        p133ScheduleViewSync();',
@@ -303,7 +307,7 @@ unistr('    $(''h1[class="t-Breadcrumb-label"]'').text(''\6587\4EF6\5E93'');'),
 '    $s(''P133_PARENT_FOLDER_ID'', nextFolderId);',
 '    $s(''P133_FILE_ID'', nextFolderId);',
 '    $s(''P133_FILE_TYPE'', ''FOLDER'');',
-'    p133RefreshContent();',
+'    apex.event.trigger($(''#P133_PARENT_FOLDER_ID''), ''change'');',
 '    p133ScheduleViewSync();',
 '}',
 '',
@@ -332,10 +336,7 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 '    }',
 '',
 '    $s(''P133_FILE_ID'', targetFileId);',
-'    $s(''P133_PAGE'', ''156'');',
-'    apex.submit({',
-'        request: ''OPEN_PERMISSION_DIALOG''',
-'    });',
+'    p133OpenActionUrl(''PERMISSION'');',
 '}',
 '',
 'function p133RedirectToRename(fileId) { if (window.p133RedirectToRenameImpl) { return window.p133RedirectToRenameImpl(fileId); } }',
@@ -385,7 +386,7 @@ unistr('        alert(''\5F53\524D\4EC5\53EF\67E5\770B\5217\8868\FF0C\65E0\6743\
 '}',
 '',
 'function p133IsDragPermissionReady() {',
-'    var permissionValue = p133IsRootLevel() ? String($v(''P133_ROOT_DISPLAY'') || '''') : String($v(''P133_DISPLAY'') || '''');',
+'    var permissionValue = String($v(''P133_DISPLAY'') || '''');',
 '    return permissionValue !== '''';',
 '}',
 '',
@@ -395,7 +396,7 @@ unistr('        alert(''\5F53\524D\4EC5\53EF\67E5\770B\5217\8868\FF0C\65E0\6743\
 '    if (Number($v(''P133_FILE_LEVEL'') || 0) > 1 && currentPath) {',
 '        return currentPath + ''/'' + currentName;',
 '    }',
-'    return currentName || ''\u6587\u4EF6\u5E93'';',
+'    return currentName || '''';',
 '}',
 '',
 'function p133IsRootLevel() {',
@@ -506,18 +507,16 @@ unistr('        if ($toolbar.length) { $toolbar.after(''<div id="p133_pathbar" c
 '    }',
 '    if (!$bar.length) { return; }',
 '    if (crumbs.length) {',
-'        var rootLabel = apex.util.escapeHTML(''\u6587\u4EF6\u5E93'');',
-'        var rootCrumb = ''<button type="button" class="p133-crumb p133-root'' + (parentId ? '''' : '' is-current'') + ''">'' + rootLabel + ''</button>'';',
 '        var childCrumbs = crumbs.map(function(crumb, index) {',
 '            var label = apex.util.escapeHTML(crumb.name || ''/'');',
 '            var id = apex.util.escapeHTML(String(crumb.id || ''''));',
 '            var current = String(crumb.id || '''') === String(parentId || '''');',
-'            var separator = ''<span class="p133-sep"><span class="fa fa-angle-right" aria-hidden="true"></span></span>'';',
+'            var separator = index > 0 ? ''<span class="p133-sep"><span class="fa fa-angle-right" aria-hidden="true"></span></span>'' : '''';',
 '            return separator + ''<button type="button" class="p133-crumb'' + (current ? '' is-current'' : '''') + ''" data-folder-id="'' + id + ''">'' + label + ''</button>'';',
 '        }).join('''');',
-'        $bar.find(''.p133-crumbs'').html(rootCrumb + childCrumbs);',
+'        $bar.find(''.p133-crumbs'').html(childCrumbs);',
 '    } else {',
-'        $bar.find(''.p133-crumbs'').html(''<button type="button" class="p133-crumb is-current" data-folder-id="'' + apex.util.escapeHTML(String(rootId || '''')) + ''">'' + apex.util.escapeHTML(parts.join('' / '') || pathText || ''\u6587\u4EF6\u5E93'') + ''</butto'
+'        $bar.find(''.p133-crumbs'').html(''<button type="button" class="p133-crumb is-current" data-folder-id="'' + apex.util.escapeHTML(String(rootId || '''')) + ''">'' + apex.util.escapeHTML(parts.join('' / '') || pathText || '''') + ''</butto'
 ||'n>'');',
 '    }',
 '    $bar.toggleClass(''is-root'', parentId === rootId);',
@@ -844,6 +843,7 @@ unistr('            error: function(jqXHR, textStatus, errorThrown) { apex.messa
 '    var managerActions = [''create_folder'', ''upload'', ''share'', ''rename'', ''move'', ''settings'', ''delete''];',
 '    if (actionName === ''create_folder'' && !p133CanCreateFolder()) { alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\7BA1\7406\6743\9650''); return; }',
 '    if (actionName === ''create_folder'') { p133TriggerButton(''btn_create_folder''); return; }',
+'    if (actionName === ''upload'' && !p133HasManagePermission()) { alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\7BA1\7406\6743\9650''); return; }',
 '    if (actionName === ''upload'') { p133TriggerButton(''btn_upload''); return; }',
 unistr('    if (!state.count) { alert(''\8BF7\9009\62E9\8981\64CD\4F5C\7684\6587\4EF6\6216\6587\4EF6\5939''); return; }'),
 unistr('    if (singleOnly.indexOf(actionName) >= 0 && state.count !== 1) { alert(''\8BE5\64CD\4F5C\4EC5\652F\6301\5355\9009''); return; }'),
@@ -963,7 +963,7 @@ unistr('        error: function(jqXHR, textStatus, errorThrown) { apex.message.a
 '        if (!$(event.target).closest(''#p133_toolbar .p133-sort-box'').length) { p133ToggleSortMenu(false); }',
 '        if (!$(event.target).closest(''#p133_row_menu, .p133-row-action-btn'').length) { p133HideRowMenu(); }',
 '    });',
-'    $(document).off(''change.p133permstate'', ''#P133_DISPLAY, #P133_ROOT_DISPLAY, #P133_PARENT_FOLDER_ID, #P133_FILE_LEVEL'').on(''change.p133permstate'', ''#P133_DISPLAY, #P133_ROOT_DISPLAY, #P133_PARENT_FOLDER_ID, #P133_FILE_LEVEL'', function() {',
+'    $(document).off(''change.p133permstate'', ''#P133_DISPLAY, #P133_PARENT_FOLDER_ID, #P133_FILE_LEVEL'').on(''change.p133permstate'', ''#P133_DISPLAY, #P133_PARENT_FOLDER_ID, #P133_FILE_LEVEL'', function() {',
 '        p133ScheduleViewSync();',
 '    });',
 '    $(document).off(''apexafterrefresh.p133'', ''#content, #content_ig'').on(''apexafterrefresh.p133'', ''#content, #content_ig'', function() { p133ScheduleViewSync(); });',
@@ -2241,50 +2241,7 @@ unistr('       NVL(U.NAME, TO_CHAR(NVL(A.UPDATED_BY, A.CREATED_BY))) AS UPDATED_
 '           WHEN FILE_TYPE = ''FOLDER'' THEN 0',
 '           ELSE 1 END AS                   IS_HIDE,',
 '       CASE  WHEN FILE_TYPE = ''FOLDER'' THEN 0 ELSE 1 END AS IS_FILE_TYPE,',
-'       CASE',
-'           WHEN :ROLE_CODE IN (''SYSTEM_ADMIN'', ''SUPER_ADMIN'') THEN 1',
-'           WHEN EXISTS (SELECT 1',
-'                          FROM FMP_SCOPE SB',
-'                         WHERE SB.REFERENCE_TYPE = ''SYSTEM''',
-'                           AND TO_CHAR(SB.REFERENCE_ID) = NVL(NULLIF(:SYSTEM_ID, ''''), ''1'')',
-'                           AND SB.PERMISSIONS_TYPE = ''MANAGE''',
-'                           AND ((SB.RANGE_TYPE = ''USER'' AND (SB.RANGE_ID = :DIAN_USER_ID',
-'                             OR SB.RANGE_ID = V(''MPF_USER_ID'')',
-'                             OR SB.RANGE_ID = (SELECT FU.EXT_USER_ID',
-'                                                 FROM FMP_USER FU',
-'                                                WHERE FU.TENANT_ID = :USER_TENANT',
-'                                                  AND FU.USER_ID = TO_NUMBER(NULLIF(V(''MPF_USER_ID''), ''''))',
-'                                                  AND NVL(FU.DEL_FLAG, 0) = 0)',
-'                             OR SB.RANGE_ID = (SELECT BD.UNION_ID',
-'                                                 FROM BASIC_JA_DING_USER BD',
-'                                                WHERE TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID)',
-'                                                  AND NVL(BD.TENANT_ID, :USER_TENANT) = :USER_TENANT)))',
-'                             OR (SB.RANGE_TYPE = ''DEPT'' AND EXISTS (SELECT 1',
-'                                                                        FROM BASIC_JA_DING_DEPT_USER BD',
-'                                                                       WHERE TO_CHAR(BD.DEPT_ID) = SB.RANGE_ID',
-'                                                                         AND TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID))))) THEN 1',
-'           WHEN EXISTS (SELECT 1',
-'                          FROM FMP_SCOPE FS',
-'                         WHERE FS.REFERENCE_TYPE = ''FILE''',
-'                           AND FS.REFERENCE_ID = A.FILE_ID',
-'                           AND FS.PERMISSIONS_TYPE = ''MANAGE''',
-'                           AND ((FS.RANGE_TYPE = ''USER'' AND (FS.RANGE_ID = :DIAN_USER_ID',
-'                             OR FS.RANGE_ID = V(''MPF_USER_ID'')',
-'                             OR FS.RANGE_ID = (SELECT FU.EXT_USER_ID',
-'                                                 FROM FMP_USER FU',
-'                                                WHERE FU.TENANT_ID = :USER_TENANT',
-'                                                  AND FU.USER_ID = TO_NUMBER(NULLIF(V(''MPF_USER_ID''), ''''))',
-'                                                  AND NVL(FU.DEL_FLAG, 0) = 0)',
-'                             OR FS.RANGE_ID = (SELECT BD.UNION_ID',
-'                                                 FROM BASIC_JA_DING_USER BD',
-'                                                WHERE TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID)',
-'                                                  AND NVL(BD.TENANT_ID, :USER_TENANT) = :USER_TENANT)))',
-'                             OR (FS.RANGE_TYPE = ''DEPT'' AND EXISTS (SELECT 1',
-'                                                                        FROM BASIC_JA_DING_DEPT_USER BU',
-'                                                                       WHERE TO_CHAR(BU.DEPT_ID) = FS.RANGE_ID',
-'                                                                         AND TO_CHAR(BU.USER_ID) = TO_CHAR(:DIAN_USER_ID))))) THEN 1',
-'           ELSE 0',
-'       END AS IS_PERMISSIONS,',
+'       fmp_is_file_manager(A.FILE_ID, :USER_TENANT, V(''MPF_USER_ID''), :DIAN_USER_ID, :ROLE_CODE) AS IS_PERMISSIONS,',
 '       CASE',
 '           WHEN :ROLE_CODE IN (''SYSTEM_ADMIN'', ''SUPER_ADMIN'', ''VIEW_REPORT'') THEN 1',
 '           WHEN A.SCOPE_TYPE IN (''VIEW_DOWN'', ''VIEW'') THEN 1',
@@ -2338,8 +2295,8 @@ unistr('       NVL(U.NAME, TO_CHAR(NVL(A.UPDATED_BY, A.CREATED_BY))) AS UPDATED_
 'WHERE A.TENANT_ID = :USER_TENANT',
 '  AND A.SYSTEM_ID = TO_NUMBER(NVL(NULLIF(:SYSTEM_ID, ''''), ''1''))',
 '  AND A.DEL_FLAG = 0',
-'  AND ((:P133_PARENT_FOLDER_ID IS NULL AND A.PARENT_FOLDER_ID IS NULL)',
-'       OR A.PARENT_FOLDER_ID = :P133_PARENT_FOLDER_ID)',
+'  AND :P133_PARENT_FOLDER_ID IS NOT NULL',
+'  AND A.PARENT_FOLDER_ID = :P133_PARENT_FOLDER_ID',
 'ORDER BY CASE WHEN NVL(:P133_SORT_BY, ''MANUAL'') = ''MANUAL'' THEN 0',
 '              WHEN A.FILE_TYPE = ''FOLDER'' THEN 0',
 '              ELSE 1 END,',
@@ -3103,61 +3060,6 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_alignment=>'RIGHT'
 ,p_button_redirect_url=>'f?p=&APP_ID.:133:&SESSION.::&DEBUG.:133::'
 );
-wwv_flow_imp_page.create_page_branch(
- p_id=>wwv_flow_imp.id(821088635529156778)
-,p_branch_name=>unistr('\6743\9650\8BBE\7F6E-\8F6C\5230\9875 156')
-,p_branch_action=>'f?p=&APP_ID.:156:&SESSION.::&DEBUG.:156:P156_FILE_ID,P156_ROOT_FOLDER_ID,P156_PARENT_FOLDER_ID:&P133_FILE_ID.,&P133_ROOT_FOLDER_ID.,&P133_PARENT_FOLDER_ID.&success_msg=#SUCCESS_MSG#'
-,p_branch_point=>'BEFORE_COMPUTATION'
-,p_branch_type=>'REDIRECT_URL'
-,p_branch_sequence=>40
-,p_branch_condition_type=>'VAL_OF_ITEM_IN_COND_EQ_COND2'
-,p_branch_condition=>'P133_PAGE'
-,p_branch_condition_text=>'156'
-);
-wwv_flow_imp_page.create_page_branch(
- p_id=>wwv_flow_imp.id(821088635529156851)
-,p_branch_name=>unistr('\8F6C\5230\9875 131')
-,p_branch_action=>'f?p=&APP_ID.:131:&SESSION.::&DEBUG.:131:&success_msg=#SUCCESS_MSG#'
-,p_branch_point=>'BEFORE_COMPUTATION'
-,p_branch_type=>'REDIRECT_URL'
-,p_branch_sequence=>70
-,p_branch_condition_type=>'VAL_OF_ITEM_IN_COND_EQ_COND2'
-,p_branch_condition=>'P133_PAGE'
-,p_branch_condition_text=>'131'
-);
-wwv_flow_imp_page.create_page_branch(
- p_id=>wwv_flow_imp.id(821088635529155563)
-,p_branch_name=>unistr('\8F6C\5230\9875 134')
-,p_branch_action=>'f?p=&APP_ID.:134:&SESSION.::&DEBUG.:134:P134_PARENT_FOLDER_ID:&P133_PARENT_FOLDER_ID.&success_msg=#SUCCESS_MSG#'
-,p_branch_point=>'BEFORE_COMPUTATION'
-,p_branch_type=>'REDIRECT_URL'
-,p_branch_sequence=>80
-,p_branch_condition_type=>'VAL_OF_ITEM_IN_COND_EQ_COND2'
-,p_branch_condition=>'P133_PAGE'
-,p_branch_condition_text=>'134'
-);
-wwv_flow_imp_page.create_page_branch(
- p_id=>wwv_flow_imp.id(821088635529155564)
-,p_branch_name=>unistr('\8F6C\5230\9875 136-\4E0A\4F20\6587\4EF6')
-,p_branch_action=>'f?p=&APP_ID.:136:&SESSION.::&DEBUG.:136:P136_ROOT_FOLDER_ID,P136_PARENT_FOLDER_ID:&P133_ROOT_FOLDER_ID.,&P133_PARENT_FOLDER_ID.&success_msg=#SUCCESS_MSG#'
-,p_branch_point=>'BEFORE_COMPUTATION'
-,p_branch_type=>'REDIRECT_URL'
-,p_branch_sequence=>90
-,p_branch_condition_type=>'VAL_OF_ITEM_IN_COND_EQ_COND2'
-,p_branch_condition=>'P133_PAGE'
-,p_branch_condition_text=>'136'
-);
-wwv_flow_imp_page.create_page_branch(
- p_id=>wwv_flow_imp.id(821088635529155565)
-,p_branch_name=>unistr('\8F6C\5230\9875 137')
-,p_branch_action=>'f?p=&APP_ID.:137:&SESSION.::&DEBUG.:137:P137_FILE_ID:&P133_FILE_ID.&success_msg=#SUCCESS_MSG#'
-,p_branch_point=>'BEFORE_COMPUTATION'
-,p_branch_type=>'REDIRECT_URL'
-,p_branch_sequence=>100
-,p_branch_condition_type=>'VAL_OF_ITEM_IN_COND_EQ_COND2'
-,p_branch_condition=>'P133_PAGE'
-,p_branch_condition_text=>'137'
-);
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(821088635529155568)
 ,p_name=>'P133_DISPLAY'
@@ -3171,6 +3073,21 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(821088635529155569)
 ,p_name=>'P133_ROOT_FOLDER_ID'
 ,p_item_sequence=>110
+,p_use_cache_before_default=>'NO'
+,p_item_default=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT MIN(f.file_id)',
+'  FROM fmp_file f',
+'  JOIN fmp_system s',
+'    ON s.system_id = f.system_id',
+'   AND NVL(s.del_flag, 0) = 0',
+'   AND NVL(s.is_enable, 1) = 1',
+' WHERE f.tenant_id = :USER_TENANT',
+'   AND f.system_id = TO_NUMBER(NVL(NULLIF(:SYSTEM_ID, ''''), ''1''))',
+'   AND f.file_type = ''FOLDER''',
+'   AND f.parent_folder_id IS NULL',
+'   AND f.file_name = s.system_name',
+'   AND NVL(f.del_flag, 0) = 0'))
+,p_item_default_type=>'SQL_QUERY'
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'N')).to_clob
@@ -3179,6 +3096,21 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(821088635529155570)
 ,p_name=>'P133_PARENT_FOLDER_ID'
 ,p_item_sequence=>120
+,p_use_cache_before_default=>'NO'
+,p_item_default=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT MIN(f.file_id)',
+'  FROM fmp_file f',
+'  JOIN fmp_system s',
+'    ON s.system_id = f.system_id',
+'   AND NVL(s.del_flag, 0) = 0',
+'   AND NVL(s.is_enable, 1) = 1',
+' WHERE f.tenant_id = :USER_TENANT',
+'   AND f.system_id = TO_NUMBER(NVL(NULLIF(:SYSTEM_ID, ''''), ''1''))',
+'   AND f.file_type = ''FOLDER''',
+'   AND f.parent_folder_id IS NULL',
+'   AND f.file_name = s.system_name',
+'   AND NVL(f.del_flag, 0) = 0'))
+,p_item_default_type=>'SQL_QUERY'
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'N')).to_clob
@@ -3229,28 +3161,9 @@ wwv_flow_imp_page.create_page_item(
   'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(821088635529155576)
-,p_name=>'P133_PAGE'
-,p_item_sequence=>260
-,p_display_as=>'NATIVE_HIDDEN'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'value_protected', 'N')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(821088635529155578)
 ,p_name=>'P133_FILE_IDS'
 ,p_item_sequence=>320
-,p_display_as=>'NATIVE_HIDDEN'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'value_protected', 'N')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(821088635529155579)
-,p_name=>'P133_ROLE_CODE'
-,p_item_sequence=>270
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'ROLE_CODE'
-,p_item_default_type=>'ITEM'
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'N')).to_clob
@@ -3284,42 +3197,6 @@ wwv_flow_imp_page.create_page_item(
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'Y')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(821088635529156849)
-,p_name=>'P133_ROOT_DISPLAY'
-,p_item_sequence=>285
-,p_use_cache_before_default=>'NO'
-,p_item_default=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT CASE',
-'           WHEN :ROLE_CODE IN (''SYSTEM_ADMIN'', ''SUPER_ADMIN'') THEN 1',
-'           WHEN EXISTS (SELECT 1',
-'                          FROM FMP_SCOPE SB',
-'                         WHERE SB.REFERENCE_TYPE = ''SYSTEM''',
-'                           AND TO_CHAR(SB.REFERENCE_ID) = NVL(NULLIF(:SYSTEM_ID, ''''), ''1'')',
-'                           AND SB.PERMISSIONS_TYPE = ''MANAGE''',
-'                           AND ((SB.RANGE_TYPE = ''USER'' AND (SB.RANGE_ID = :DIAN_USER_ID',
-'                             OR SB.RANGE_ID = V(''MPF_USER_ID'')',
-'                             OR SB.RANGE_ID = (SELECT FU.EXT_USER_ID',
-'                                                 FROM FMP_USER FU',
-'                                                WHERE FU.TENANT_ID = :USER_TENANT',
-'                                                  AND FU.USER_ID = TO_NUMBER(NULLIF(V(''MPF_USER_ID''), ''''))',
-'                                                  AND NVL(FU.DEL_FLAG, 0) = 0)',
-'                             OR SB.RANGE_ID = (SELECT BD.UNION_ID',
-'                                                 FROM BASIC_JA_DING_USER BD',
-'                                                WHERE TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID)',
-'                                                  AND NVL(BD.TENANT_ID, :USER_TENANT) = :USER_TENANT)))',
-'                             OR (SB.RANGE_TYPE = ''DEPT'' AND EXISTS (SELECT 1',
-'                                                                        FROM BASIC_JA_DING_DEPT_USER BD',
-'                                                                       WHERE TO_CHAR(BD.DEPT_ID) = SB.RANGE_ID',
-'                                                                         AND TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID))))) THEN 1',
-'           ELSE 0',
-'       END',
-'FROM DUAL'))
-,p_item_default_type=>'SQL_QUERY'
-,p_display_as=>'NATIVE_HIDDEN'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(821088635529156905)
@@ -3375,50 +3252,7 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_affected_elements=>'P133_DISPLAY'
 ,p_attribute_01=>'SQL_STATEMENT'
 ,p_attribute_03=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT CASE',
-'           WHEN :ROLE_CODE IN (''SYSTEM_ADMIN'', ''SUPER_ADMIN'') THEN 1',
-'           WHEN EXISTS (SELECT 1',
-'                              FROM FMP_SCOPE SB',
-'                             WHERE SB.REFERENCE_TYPE = ''SYSTEM''',
-'                               AND TO_CHAR(SB.REFERENCE_ID) = NVL(NULLIF(:SYSTEM_ID, ''''), ''1'')',
-'                               AND SB.PERMISSIONS_TYPE = ''MANAGE''',
-'                               AND ((SB.RANGE_TYPE = ''USER'' AND (SB.RANGE_ID = :DIAN_USER_ID',
-'                                 OR SB.RANGE_ID = V(''MPF_USER_ID'')',
-'                                 OR SB.RANGE_ID = (SELECT FU.EXT_USER_ID',
-'                                                     FROM FMP_USER FU',
-'                                                    WHERE FU.TENANT_ID = :USER_TENANT',
-'                                                      AND FU.USER_ID = TO_NUMBER(NULLIF(V(''MPF_USER_ID''), ''''))',
-'                                                      AND NVL(FU.DEL_FLAG, 0) = 0)',
-'                                 OR SB.RANGE_ID = (SELECT BD.UNION_ID',
-'                                                     FROM BASIC_JA_DING_USER BD',
-'                                                    WHERE TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID)',
-'                                                      AND NVL(BD.TENANT_ID, :USER_TENANT) = :USER_TENANT)))',
-'                                 OR (SB.RANGE_TYPE = ''DEPT'' AND EXISTS (SELECT 1',
-'                                                                            FROM BASIC_JA_DING_DEPT_USER BD',
-'                                                                           WHERE TO_CHAR(BD.DEPT_ID) = SB.RANGE_ID',
-'                                                                             AND TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID))))) THEN 1',
-'           WHEN EXISTS (SELECT 1',
-'                          FROM FMP_SCOPE A',
-'                         WHERE A.REFERENCE_TYPE = ''FILE''',
-'                           AND A.REFERENCE_ID = :P133_PARENT_FOLDER_ID',
-'                           AND A.PERMISSIONS_TYPE = ''MANAGE''',
-'                           AND ((A.RANGE_TYPE = ''USER'' AND (A.RANGE_ID = :DIAN_USER_ID',
-'                             OR A.RANGE_ID = V(''MPF_USER_ID'')',
-'                             OR A.RANGE_ID = (SELECT FU.EXT_USER_ID',
-'                                                FROM FMP_USER FU',
-'                                               WHERE FU.TENANT_ID = :USER_TENANT',
-'                                                 AND FU.USER_ID = TO_NUMBER(NULLIF(V(''MPF_USER_ID''), ''''))',
-'                                                 AND NVL(FU.DEL_FLAG, 0) = 0)',
-'                             OR A.RANGE_ID = (SELECT BD.UNION_ID',
-'                                                FROM BASIC_JA_DING_USER BD',
-'                                               WHERE TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID)',
-'                                                 AND NVL(BD.TENANT_ID, :USER_TENANT) = :USER_TENANT)))',
-'                             OR (A.RANGE_TYPE = ''DEPT'' AND EXISTS (SELECT 1',
-'                                                                        FROM BASIC_JA_DING_DEPT_USER B',
-'                                                                       WHERE TO_CHAR(B.DEPT_ID) = A.RANGE_ID',
-'                                                                         AND TO_CHAR(B.USER_ID) = TO_CHAR(:DIAN_USER_ID))))) THEN 1',
-'           ELSE 0',
-'       END AS P133_DISPLAY',
+'SELECT fmp_is_file_manager(:P133_PARENT_FOLDER_ID, :USER_TENANT, V(''MPF_USER_ID''), :DIAN_USER_ID, :ROLE_CODE) AS P133_DISPLAY',
 'FROM DUAL;'))
 ,p_attribute_07=>'P133_PARENT_FOLDER_ID'
 ,p_attribute_08=>'Y'
@@ -3439,6 +3273,14 @@ wwv_flow_imp_page.create_page_da_action(
 '$(''h1[class="t-Breadcrumb-label"]'').text($v(''P133_FILE_NAME''))',
 '}',
 'p133RenderPathbar();',
+'apex.server.process(''P133_SYNC_FOLDER_STATE'', {',
+'    pageItems: ''#P133_ROOT_FOLDER_ID,#P133_PARENT_FOLDER_ID,#P133_FILE_PATH,#P133_FILE_LEVEL,#P133_FILE_NAME,#P133_UP_FOLDER_ID,#P133_BREADCRUMB_JSON,#P133_DISPLAY''',
+'}, {',
+'    dataType: ''json'',',
+'    error: function(jqXHR, textStatus, errorThrown) {',
+'        if (window.console) { console.warn(''P133 folder state sync failed'', textStatus, errorThrown); }',
+'    }',
+'});',
 ''))
 );
 wwv_flow_imp_page.create_page_da_action(
@@ -3519,22 +3361,8 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_event_result=>'FALSE'
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SET_VALUE'
-,p_affected_elements_type=>'ITEM'
-,p_affected_elements=>'P133_PAGE'
-,p_attribute_01=>'STATIC_ASSIGNMENT'
-,p_attribute_02=>'137'
-,p_attribute_09=>'N'
-,p_wait_for_result=>'Y'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155602)
-,p_event_id=>wwv_flow_imp.id(821088635529155584)
-,p_event_result=>'FALSE'
-,p_action_sequence=>20
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SUBMIT_PAGE'
-,p_attribute_02=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'p133OpenActionUrl(''PREVIEW'');'
 );
 wwv_flow_imp_page.create_page_da_action(
  p_id=>wwv_flow_imp.id(821088635529155603)
@@ -3596,8 +3424,6 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_event_sequence=>50
 ,p_triggering_element_type=>'BUTTON'
 ,p_triggering_button_id=>wwv_flow_imp.id(821088635529155550)
-,p_condition_element=>'P133_PARENT_FOLDER_ID'
-,p_triggering_condition_type=>'NULL'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'click'
@@ -3608,45 +3434,8 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SET_VALUE'
-,p_affected_elements_type=>'ITEM'
-,p_affected_elements=>'P133_PAGE'
-,p_attribute_01=>'STATIC_ASSIGNMENT'
-,p_attribute_02=>'131'
-,p_attribute_09=>'N'
-,p_wait_for_result=>'Y'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155608)
-,p_event_id=>wwv_flow_imp.id(821088635529155586)
-,p_event_result=>'FALSE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SET_VALUE'
-,p_affected_elements_type=>'ITEM'
-,p_affected_elements=>'P133_PAGE'
-,p_attribute_01=>'STATIC_ASSIGNMENT'
-,p_attribute_02=>'134'
-,p_attribute_09=>'N'
-,p_wait_for_result=>'Y'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529156850)
-,p_event_id=>wwv_flow_imp.id(821088635529155586)
-,p_event_result=>'TRUE'
-,p_action_sequence=>20
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SUBMIT_PAGE'
-,p_attribute_02=>'N'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155609)
-,p_event_id=>wwv_flow_imp.id(821088635529155586)
-,p_event_result=>'FALSE'
-,p_action_sequence=>30
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SUBMIT_PAGE'
-,p_attribute_02=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'p133OpenActionUrl(''CREATE_FOLDER'');'
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(821088635529155587)
@@ -3654,8 +3443,6 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_event_sequence=>60
 ,p_triggering_element_type=>'BUTTON'
 ,p_triggering_button_id=>wwv_flow_imp.id(821088635529155551)
-,p_condition_element=>'P133_PARENT_FOLDER_ID'
-,p_triggering_condition_type=>'NULL'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'click'
@@ -3667,30 +3454,7 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_action_sequence=>10
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
-,p_attribute_01=>unistr('alert(''\8BF7\9009\62E9\5C42\7EA7'')')
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155611)
-,p_event_id=>wwv_flow_imp.id(821088635529155587)
-,p_event_result=>'FALSE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SET_VALUE'
-,p_affected_elements_type=>'ITEM'
-,p_affected_elements=>'P133_PAGE'
-,p_attribute_01=>'STATIC_ASSIGNMENT'
-,p_attribute_02=>'136'
-,p_attribute_09=>'N'
-,p_wait_for_result=>'Y'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155612)
-,p_event_id=>wwv_flow_imp.id(821088635529155587)
-,p_event_result=>'FALSE'
-,p_action_sequence=>20
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SUBMIT_PAGE'
-,p_attribute_02=>'N'
+,p_attribute_01=>'p133OpenActionUrl(''UPLOAD'');'
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(821088635529155589)
@@ -3745,12 +3509,32 @@ wwv_flow_imp_page.create_page_process(
 ,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'declare',
 '    v_row_count number := 0;',
+'    v_denied    number := 0;',
 '    v_err_msg   nvarchar2(2000);',
 'begin',
 '    if :P133_FILE_IDS is null then',
 '        apex_json.open_object;',
 '        apex_json.write(''status'', ''error'');',
 unistr('        apex_json.write(''message'', ''\8BF7\9009\62E9\8981\5220\9664\7684\6570\636E'');'),
+'        apex_json.close_object;',
+'        return;',
+'    end if;',
+'',
+'    select count(*)',
+'      into v_denied',
+'      from ja_utils_pkg.split_str(:P133_FILE_IDS, '','') ids',
+'     where fmp_is_file_manager(',
+'               to_number(ids.data_val),',
+'               :USER_TENANT,',
+'               V(''MPF_USER_ID''),',
+'               :DIAN_USER_ID,',
+'               :ROLE_CODE',
+'           ) = 0;',
+'',
+'    if v_denied > 0 then',
+'        apex_json.open_object;',
+'        apex_json.write(''status'', ''error'');',
+unistr('        apex_json.write(''message'', ''\5F53\524D\9009\4E2D\5BF9\8C61\4E2D\5B58\5728\65E0\7BA1\7406\6743\9650\9879\FF0C\65E0\6CD5\5220\9664'');'),
 '        apex_json.close_object;',
 '        return;',
 '    end if;',
@@ -3787,8 +3571,24 @@ unistr('    apex_json.write(''message'', case when v_row_count > 0 then ''\5220\
 ,p_internal_uid=>854544982764579121
 );
 wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(821088635529156908)
+,p_process_sequence=>5
+,p_process_point=>'ON_DEMAND'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'P133_SYNC_FOLDER_STATE'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'begin',
+'    apex_json.open_object;',
+'    apex_json.write(''status'', ''success'');',
+'    apex_json.close_object;',
+'end;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>854544982764579123
+);
+wwv_flow_imp_page.create_page_process(
  p_id=>wwv_flow_imp.id(821088635529156907)
-,p_process_sequence=>4
+,p_process_sequence=>6
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'P133_GET_ACTION_URL'
@@ -3798,7 +3598,17 @@ wwv_flow_imp_page.create_page_process(
 '    v_url      varchar2(32767);',
 '    v_err_msg  varchar2(4000);',
 'begin',
-'    if v_action = ''RENAME'' then',
+'    if v_action = ''CREATE_FOLDER'' then',
+'        v_url := apex_util.prepare_url(',
+'            p_url => ''f?p='' || :APP_ID || '':134:'' || :APP_SESSION || ''::'' || :DEBUG || '':134:P134_PARENT_FOLDER_ID:'' || :P133_PARENT_FOLDER_ID,',
+'            p_plain_url => false',
+'        );',
+'    elsif v_action = ''UPLOAD'' then',
+'        v_url := apex_util.prepare_url(',
+'            p_url => ''f?p='' || :APP_ID || '':136:'' || :APP_SESSION || ''::'' || :DEBUG || '':136:P136_ROOT_FOLDER_ID,P136_PARENT_FOLDER_ID:'' || nvl(:P133_ROOT_FOLDER_ID, '''') || '','' || nvl(:P133_PARENT_FOLDER_ID, ''''),',
+'            p_plain_url => false',
+'        );',
+'    elsif v_action = ''RENAME'' then',
 '        v_url := apex_util.prepare_url(',
 '            p_url => ''f?p='' || :APP_ID || '':135:'' || :APP_SESSION || ''::'' || :DEBUG || '':135:P135_FILE_ID,P135_ROOT_FOLDER_ID:'' || :P133_FILE_ID || '','' || nvl(:P133_ROOT_FOLDER_ID, ''''),',
 '            p_plain_url => false',
@@ -3811,6 +3621,11 @@ wwv_flow_imp_page.create_page_process(
 '    elsif v_action = ''MOVE'' then',
 '        v_url := apex_util.prepare_url(',
 '            p_url => ''f?p='' || :APP_ID || '':155:'' || :APP_SESSION || ''::'' || :DEBUG || '':155:P155_FILE_IDS:'' || :P133_FILE_IDS,',
+'            p_plain_url => false',
+'        );',
+'    elsif v_action in (''PERMISSION'', ''SHARE'', ''SETTINGS'') then',
+'        v_url := apex_util.prepare_url(',
+'            p_url => ''f?p='' || :APP_ID || '':156:'' || :APP_SESSION || ''::'' || :DEBUG || '':156:P156_FILE_ID,P156_ROOT_FOLDER_ID,P156_PARENT_FOLDER_ID:'' || :P133_FILE_ID || '','' || nvl(:P133_ROOT_FOLDER_ID, '''') || '','' || nvl(:P133_PARENT_FOLDER_ID, ''''),',
 '            p_plain_url => false',
 '        );',
 '    else',
@@ -3848,10 +3663,7 @@ wwv_flow_imp_page.create_page_process(
 '    l_start          pls_integer := 0;',
 '    l_parent_folder  number := to_number(nullif(:P133_PARENT_FOLDER_ID, ''''));',
 '    l_system_id      number := to_number(nvl(nullif(:SYSTEM_ID, ''''), ''1''));',
-'    l_has_manage     number := case',
-'                            when l_parent_folder is null then nvl(:P133_ROOT_DISPLAY, 0)',
-'                            else nvl(:P133_DISPLAY, 0)',
-'                        end;',
+'    l_has_manage     number := fmp_is_file_manager(l_parent_folder, :USER_TENANT, V(''MPF_USER_ID''), :DIAN_USER_ID, :ROLE_CODE);',
 '',
 '    type t_seen is table of pls_integer index by varchar2(32767);',
 '    l_seen t_seen;',
@@ -3906,8 +3718,8 @@ wwv_flow_imp_page.create_page_process(
 '     where tenant_id = :USER_TENANT',
 '       and system_id = l_system_id',
 '       and del_flag = 0',
-'       and ((l_parent_folder is null and parent_folder_id is null)',
-'         or parent_folder_id = l_parent_folder)',
+'       and l_parent_folder is not null',
+'       and parent_folder_id = l_parent_folder',
 '     order by nvl(sort_num, 999999999), file_id;',
 '',
 '    for i in 1 .. greatest(l_all_ids.count - l_window_count + 1, 0) loop',

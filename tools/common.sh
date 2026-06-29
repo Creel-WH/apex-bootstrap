@@ -702,7 +702,7 @@ ensure_loopback_direct_tunnel() {
 sqlcl_output_has_errors() {
   local output_file="$1"
 
-  grep -Eq '^(Connection failed|连接失败|Error starting at line|ORA-[0-9]{5}:|SP2-[0-9]{4}:|SQL Error:|ERROR:|[[:space:]]*错误消息[[:space:]]*=[[:space:]]*ORA-[0-9]{5}:)' "${output_file}"
+  grep -Eq '^(Connection failed|杩炴帴澶辫触|Error starting at line|ORA-[0-9]{5}:|SP2-[0-9]{4}:|SQL Error:|ERROR:|[[:space:]]*閿欒娑堟伅[[:space:]]*=[[:space:]]*ORA-[0-9]{5}:)' "${output_file}"
 }
 
 run_sqlcl_binary() {

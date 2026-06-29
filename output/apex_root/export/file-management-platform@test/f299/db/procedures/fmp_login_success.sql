@@ -7,7 +7,10 @@ AS
     v_name          VARCHAR2(60);
     v_ding_user_id  VARCHAR2(256);
     v_union_id      VARCHAR2(256);
-    v_job_number    VARCHAR2(20)  := UPPER(V('P9999_USERNAME'));
+    v_job_number    VARCHAR2(20);
+    v_page_username VARCHAR2(20)  := UPPER(TRIM(V('P9999_USERNAME')));
+    v_app_user      VARCHAR2(20)  := UPPER(TRIM(V('APP_USER')));
+    v_cookie_user   VARCHAR2(20);
     v_mobile_raw    VARCHAR2(64);
     v_email         VARCHAR2(128);
     v_mobile_num    NUMBER(20);
@@ -25,6 +28,19 @@ AS
     v_env           VARCHAR2(32);
     v_system_id     NUMBER(20);
 BEGIN
+    BEGIN
+        v_cookie_user := UPPER(TRIM(apex_authentication.get_login_username_cookie));
+    EXCEPTION
+        WHEN OTHERS THEN
+            v_cookie_user := NULL;
+    END;
+
+    v_job_number := COALESCE(
+        NULLIF(v_app_user, ''),
+        NULLIF(v_page_username, ''),
+        NULLIF(v_cookie_user, '')
+    );
+
     SELECT x.ding_user_id,
            SUBSTR(NVL(x.user_name, v_job_number), 1, 60),
            x.union_id,
@@ -36,19 +52,63 @@ BEGIN
            v_mobile_raw,
            v_email
       FROM (
+            WITH preferred_basic_user AS (
+                   SELECT *
+                     FROM (
+                           SELECT bu.user_id,
+                                  bu.name,
+                                  bu.union_id,
+                                  bu.mobile,
+                                  bu.email,
+                                  bu.job_number,
+                                  ROW_NUMBER() OVER (
+                                      ORDER BY CASE
+                                                   WHEN NVL(bu.tenant_id, v_tenant_id) = v_tenant_id THEN 0
+                                                   ELSE 1
+                                               END,
+                                               bu.user_id DESC
+                                  ) AS rn
+                             FROM basic_user bu
+                            WHERE NVL(bu.del_flag, 0) = 0
+                              AND NVL(bu.is_leave, 0) = 0
+                              AND UPPER(bu.job_number) = v_job_number
+                       )
+                    WHERE rn = 1
+                 ),
+                 preferred_ding_user AS (
+                   SELECT *
+                     FROM (
+                           SELECT bd.user_id,
+                                  bd.name,
+                                  bd.union_id,
+                                  bd.mobile,
+                                  bd.email,
+                                  bd.job_number,
+                                  ROW_NUMBER() OVER (
+                                      ORDER BY bd.user_id DESC
+                                  ) AS rn
+                             FROM basic_ja_ding_user bd
+                            WHERE NVL(bd.is_leave, 0) = 0
+                              AND UPPER(bd.job_number) = v_job_number
+                       )
+                    WHERE rn = 1
+                 )
             SELECT TO_CHAR(bd.user_id) AS ding_user_id,
                    COALESCE(NULLIF(TRIM(TO_CHAR(bu.name)), ''), NULLIF(TRIM(TO_CHAR(bd.name)), ''), v_job_number) AS user_name,
                    COALESCE(NULLIF(TRIM(TO_CHAR(bd.union_id)), ''), NULLIF(TRIM(TO_CHAR(bu.union_id)), '')) AS union_id,
                    COALESCE(NULLIF(TRIM(TO_CHAR(bd.mobile)), ''), NULLIF(TRIM(TO_CHAR(bu.mobile)), '')) AS mobile,
                    COALESCE(NULLIF(TRIM(TO_CHAR(bd.email)), ''), NULLIF(TRIM(TO_CHAR(bu.email)), '')) AS email
-              FROM basic_user bu
-              FULL OUTER JOIN basic_ja_ding_user bd
-                ON UPPER(TO_CHAR(bu.job_number)) = UPPER(TO_CHAR(bd.job_number))
-             WHERE UPPER(COALESCE(TO_CHAR(bu.job_number), TO_CHAR(bd.job_number))) = v_job_number
-               AND ((bu.user_id IS NOT NULL AND NVL(bu.del_flag, 0) = 0 AND NVL(bu.is_leave, 0) = 0)
-                 OR (bd.user_id IS NOT NULL AND NVL(bd.is_leave, 0) = 0))
+              FROM dual
+              LEFT JOIN preferred_basic_user bu
+                ON 1 = 1
+              LEFT JOIN preferred_ding_user bd
+                ON 1 = 1
+             WHERE bu.user_id IS NOT NULL
+                OR bd.user_id IS NOT NULL
       ) x
      WHERE ROWNUM = 1;
+
+    apex_util.set_session_state('P9999_USERNAME', v_job_number);
 
     IF REGEXP_LIKE(NVL(v_mobile_raw, 'x'), '^[0-9]+$') THEN
         v_mobile_num := TO_NUMBER(v_mobile_raw);

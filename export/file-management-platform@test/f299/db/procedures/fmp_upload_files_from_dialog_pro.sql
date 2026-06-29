@@ -52,6 +52,16 @@ BEGIN
       FROM fmp_file
      WHERE file_id = p_parent_folder_id;
 
+    IF fmp_is_file_manager(
+           p_parent_folder_id,
+           p_user_tenant,
+           TO_CHAR(p_mpf_user_id),
+           p_dian_user_id,
+           V('ROLE_CODE')
+       ) = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'No manage permission on current folder.');
+    END IF;
+
     SELECT plans_file_type
       INTO v_plans_file_type
       FROM fmp_file

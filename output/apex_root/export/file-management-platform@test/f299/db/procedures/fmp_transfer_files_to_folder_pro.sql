@@ -4,6 +4,8 @@ CREATE OR REPLACE PROCEDURE fmp_transfer_files_to_folder_pro(
     p_mpf_user_id IN NUMBER,
     p_user_tenant IN NUMBER,
     p_system_id IN NUMBER DEFAULT NULL,
+    p_dian_user_id IN VARCHAR2 DEFAULT NULL,
+    p_role_code IN VARCHAR2 DEFAULT NULL,
     p_success OUT VARCHAR2,
     p_message OUT VARCHAR2,
     p_processed_count OUT NUMBER
@@ -95,6 +97,22 @@ BEGIN
 
     IF v_old_files.COUNT = 0 THEN
         p_message := '没有找到有效的文件ID';
+        RETURN;
+    END IF;
+
+    SELECT COUNT(*)
+      INTO v_count
+      FROM TABLE(v_old_files) ids
+     WHERE fmp_is_file_manager(
+               ids.column_value,
+               p_user_tenant,
+               TO_CHAR(p_mpf_user_id),
+               p_dian_user_id,
+               p_role_code
+           ) = 0;
+
+    IF v_count > 0 THEN
+        p_message := 'Current selection contains objects without manage permission.';
         RETURN;
     END IF;
 

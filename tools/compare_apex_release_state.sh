@@ -85,7 +85,7 @@ select page_id || '|' || region_name || '|' || source_type || '|' ||
   from apex_application_page_regions
  where application_id = __APP_ID__
    and (
-         (page_id = 24 and region_name = '版本维护') or
+         (page_id = 24 and region_name = '鐗堟湰缁存姢') or
          (page_id = 120 and region_name = 'Breadcrumb') or
          (page_id = 122 and region_name in ('Breadcrumb','UPLOAD_FILES'))
        )

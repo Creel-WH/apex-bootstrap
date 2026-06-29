@@ -40,6 +40,16 @@ BEGIN
        AND del_flag = 0
        AND tenant_id = p_user_tenant;
 
+    IF fmp_is_file_manager(
+           p_parent_folder_id,
+           p_user_tenant,
+           TO_CHAR(p_mpf_user_id),
+           p_dian_user_id,
+           V('ROLE_CODE')
+       ) = 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'No manage permission on current folder.');
+    END IF;
+
     INSERT INTO fmp_file(
         file_name,
         root_folder_id,
