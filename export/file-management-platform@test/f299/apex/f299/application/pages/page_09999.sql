@@ -484,7 +484,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_field_template=>wwv_flow_imp.id(9760156350373264292)
 ,p_item_icon_css_classes=>'fa-user'
 ,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
+,p_is_persistent=>'Y'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'disabled', 'N',
   'submit_when_enter_pressed', 'N',
@@ -507,7 +507,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_field_template=>wwv_flow_imp.id(9760156350373264292)
 ,p_item_icon_css_classes=>'fa-key'
 ,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
+,p_is_persistent=>'Y'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'submit_when_enter_pressed', 'Y')).to_clob
 );
@@ -776,8 +776,9 @@ wwv_flow_imp_shared.create_invokeapi_comp_param(
 ,p_data_type=>'VARCHAR2'
 ,p_has_default=>false
 ,p_display_sequence=>1
-,p_value_type=>'ITEM'
-,p_value=>'P9999_USERNAME'
+,p_value_type=>'EXPRESSION'
+,p_value_language=>'PLSQL'
+,p_value=>':P9999_USERNAME'
 );
 wwv_flow_imp_shared.create_invokeapi_comp_param(
  p_id=>wwv_flow_imp.id(9760279548137264602)
@@ -788,8 +789,9 @@ wwv_flow_imp_shared.create_invokeapi_comp_param(
 ,p_data_type=>'VARCHAR2'
 ,p_has_default=>false
 ,p_display_sequence=>2
-,p_value_type=>'ITEM'
-,p_value=>'P9999_PASSWORD'
+,p_value_type=>'EXPRESSION'
+,p_value_language=>'PLSQL'
+,p_value=>':P9999_PASSWORD'
 );
 wwv_flow_imp_shared.create_invokeapi_comp_param(
  p_id=>wwv_flow_imp.id(9760280088913264602)
