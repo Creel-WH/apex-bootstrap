@@ -13,8 +13,6 @@ prompt --install
 @@application/shared_components/security/authorizations/系统需求编辑权限_查询角色code（返回布尔值）.sql
 @@application/shared_components/security/authorizations/管理权限.sql
 @@application/shared_components/navigation/navigation_bar.sql
-@@application/shared_components/logic/application_processes/get_system_options.sql
-@@application/shared_components/logic/application_processes/set_current_system.sql
 @@application/shared_components/logic/application_items/app_code.sql
 @@application/shared_components/logic/application_items/app_env.sql
 @@application/shared_components/logic/application_items/dian_user_id.sql
@@ -25,10 +23,12 @@ prompt --install
 @@application/shared_components/logic/application_items/role_code.sql
 @@application/shared_components/logic/application_items/role_id.sql
 @@application/shared_components/logic/application_items/role_level.sql
+@@application/shared_components/logic/application_items/fmp_appkey.sql
+@@application/shared_components/logic/application_items/fmp_appsecret.sql
+@@application/shared_components/logic/application_items/fmp_jy_api_url.sql
 @@application/shared_components/logic/application_items/sts_appkey.sql
 @@application/shared_components/logic/application_items/sts_appsecret.sql
 @@application/shared_components/logic/application_items/sts_jy_api_url.sql
-@@application/shared_components/logic/application_items/system_id.sql
 @@application/shared_components/logic/application_items/user_id.sql
 @@application/shared_components/logic/application_items/user_job_number.sql
 @@application/shared_components/logic/application_items/user_name.sql
@@ -134,6 +134,7 @@ prompt --install
 @@application/shared_components/globalization/dyntranslations.sql
 @@application/shared_components/security/authentications/oracle_apex_账户.sql
 @@application/shared_components/security/authentications/sts_login.sql
+@@application/shared_components/security/authentications/fmp_login.sql
 @@application/shared_components/plugins/region_type/de_danielh_dropzone2.sql
 @@application/shared_components/plugins/dynamic_action/refresh_rds_region.sql
 @@application/shared_components/plugins/region_type/com_fos_image_slider.sql

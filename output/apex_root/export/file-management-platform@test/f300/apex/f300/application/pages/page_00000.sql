@@ -251,32 +251,7 @@ wwv_flow_imp_page.create_page(
 '    align-items: flex-start !important;',
 '}',
 '',
-'.sts-tenant-switcher {',
-'    display: block !important;',
-'    width: 260px;',
-'    margin: 0;',
-'    text-align: left;',
-'}',
-'',
-'.sts-tenant-select {',
-'    width: 260px;',
-'    height: 40px;',
-'    border: 1px solid #d9d9d9;',
-'    border-radius: 6px;',
-'    background: #ffffff !important;',
-'    color: #000000 !important;',
-'    font-size: 14px;',
-'    font-weight: 500;',
-'    padding: 0 32px 0 12px;',
-'    line-height: 40px;',
-'    text-align: left;',
-'    -webkit-text-fill-color: #000000;',
-'}',
-'',
-'.sts-tenant-select option {',
-'    color: #000000 !important;',
-'    background: #ffffff;',
-'}'))
+''))
 ,p_protection_level=>'D'
 ,p_page_component_map=>'14'
 );
@@ -397,105 +372,6 @@ wwv_flow_imp_page.create_page_item(
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'N')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(7927490888081779942)
-,p_name=>'P0_TENANT_OPTIONS_JSON'
-,p_item_sequence=>140
-,p_item_default=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'select coalesce(',
-'           json_arrayagg(',
-'               json_object(',
-'                   ''id'' value system_id,',
-'                   ''name'' value system_name',
-'               ) returning varchar2',
-'           ),',
-'           ''[]''',
-'       )',
-'  from FMP_SYSTEM',
-' where is_enable = 1',
-'   and del_flag = 0'))
-,p_item_default_type=>'SQL_QUERY'
-,p_display_as=>'NATIVE_HIDDEN'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'value_protected', 'N')).to_clob
-);
-wwv_flow_imp_page.create_page_process(
- p_id=>wwv_flow_imp.id(7927490888081779943)
-,p_process_sequence=>10
-,p_process_point=>'ON_DEMAND'
-,p_process_type=>'NATIVE_PLSQL'
-,p_process_name=>'SET_CURRENT_SYSTEM'
-,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'declare',
-'    v_system_id number;',
-'    v_count     number;',
-'begin',
-'    v_system_id := to_number(apex_application.g_x01);',
-'',
-'    select count(*)',
-'      into v_count',
-'      from FMP_SYSTEM',
-'     where system_id = v_system_id',
-'       and is_enable = 1',
-'       and del_flag = 0;',
-'',
-'    apex_json.open_object;',
-'    if v_count = 1 then',
-'        apex_util.set_session_state(''SYSTEM_ID'', v_system_id);',
-'        apex_json.write(''code'', ''200'');',
-'        apex_json.write(''system_id'', v_system_id);',
-'        apex_json.write(''message'', '''');',
-'    else',
-'        apex_json.write(''code'', ''404'');',
-'        apex_json.write(''message'', ''Sub-platform not found or disabled'');',
-'    end if;',
-'    apex_json.close_object;',
-'exception',
-'    when others then',
-'        apex_json.open_object;',
-'        apex_json.write(''code'', ''500'');',
-'        apex_json.write(''message'', ''Sub-platform switch failed'');',
-'        apex_json.close_object;',
-'end;'))
-,p_process_clob_language=>'PLSQL'
-,p_internal_uid=>7956956051630839154
-);
-wwv_flow_imp_page.create_page_process(
- p_id=>wwv_flow_imp.id(7927490888081779944)
-,p_process_sequence=>20
-,p_process_point=>'ON_DEMAND'
-,p_process_type=>'NATIVE_PLSQL'
-,p_process_name=>'GET_SYSTEM_OPTIONS'
-,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'begin',
-'    apex_json.open_object;',
-'    apex_json.write(''currentSystem'', nvl(v(''SYSTEM_ID''), ''1''));',
-'    apex_json.open_array(''tenants'');',
-'    for r in (',
-'        select system_id, system_name',
-'          from FMP_SYSTEM',
-'         where is_enable = 1',
-'           and del_flag = 0',
-'         order by system_id',
-'    ) loop',
-'        apex_json.open_object;',
-'        apex_json.write(''id'', r.system_id);',
-'        apex_json.write(''name'', r.system_name);',
-'        apex_json.close_object;',
-'    end loop;',
-'    apex_json.close_array;',
-'    apex_json.close_object;',
-'exception',
-'    when others then',
-'        apex_json.open_object;',
-'        apex_json.write(''currentSystem'', ''1'');',
-'        apex_json.open_array(''tenants'');',
-'        apex_json.close_array;',
-'        apex_json.close_object;',
-'end;'))
-,p_process_clob_language=>'PLSQL'
-,p_internal_uid=>7956956051630839155
 );
 wwv_flow_imp.component_end;
 end;

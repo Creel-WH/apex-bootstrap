@@ -585,8 +585,8 @@ main() {
     "${target_app_code}"
   if ! {
     build_workspace_init_sql "${APEX_WORKSPACE}"
-    printf '@%s\n' "${set_environment_script_for_sqlcl}"
     build_import_override_sql "${source_app_id}" "${target_app_id}"
+    printf '@%s\n' "${set_environment_script_for_sqlcl}"
     printf 'set define off\n'
     printf '@%s\n' "${filtered_install_script_for_sqlcl}"
     if [[ "${APEX_IMPORT_SKIP_END_ENVIRONMENT:-0}" == "1" ]]; then

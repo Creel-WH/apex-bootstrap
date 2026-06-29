@@ -180,17 +180,12 @@ wwv_flow_imp_page.create_page(
 '    max-width: 100%;',
 '}',
 '.p301-form-region .t-ButtonRegion-col--content {',
-'    position: relative;',
-'    padding: 0 0 68px;',
+'    padding: 20px 0 0;',
 '}',
 '.p301-form-region table[role="presentation"] {',
-'    position: absolute;',
-'    left: 0;',
-'    right: 0;',
-'    bottom: 0;',
 '    width: 100%;',
 '    display: block;',
-'    padding: 16px 24px;',
+'    padding: 0 24px 24px;',
 '    border-top: none;',
 '    background: #ffffff;',
 '}',
@@ -395,7 +390,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_name=>unistr('\5206\5E73\53F0\8868\5355')
 ,p_region_css_classes=>'p301-form-region'
 ,p_region_template_options=>'#DEFAULT#:t-Region--hideHeader:t-Region--noPadding'
-,p_plug_template=>wwv_flow_imp.id(9763528715409540252)
+,p_plug_template=>wwv_flow_imp.id(9731535788814394008)
 ,p_plug_display_sequence=>60
 ,p_location=>null
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -410,7 +405,7 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_name=>'CANCEL'
 ,p_button_action=>'DEFINED_BY_DA'
 ,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(9763645548249540315)
+,p_button_template_id=>wwv_flow_imp.id(9731675590438394078)
 ,p_button_image_alt=>unistr('\53D6\6D88')
 ,p_button_position=>'BELOW_BOX'
 ,p_button_alignment=>'RIGHT'
@@ -424,7 +419,7 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_name=>'CREATE'
 ,p_button_action=>'SUBMIT'
 ,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(9763645548249540315)
+,p_button_template_id=>wwv_flow_imp.id(9731675590438394078)
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>'&P301_SUBMIT_LABEL.'
 ,p_button_position=>'BELOW_BOX'
@@ -440,7 +435,7 @@ p_id=>wwv_flow_imp.id(12968161084377707531)
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>60
 ,p_cMaxlength=>100
-,p_field_template=>wwv_flow_imp.id(9763642899403540310)
+,p_field_template=>wwv_flow_imp.id(9731672941592394073)
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
@@ -467,7 +462,7 @@ wwv_flow_imp_page.create_page_item(
 'ORDER BY A.NAME, A.JOB_NUMBER'))
 ,p_lov_display_null=>'YES'
 ,p_cSize=>60
-,p_field_template=>wwv_flow_imp.id(9763642899403540310)
+,p_field_template=>wwv_flow_imp.id(9731672941592394073)
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
 ,p_lov_display_extra=>'YES'
@@ -493,7 +488,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_cSize=>60
 ,p_cMaxlength=>500
 ,p_cHeight=>4
-,p_field_template=>wwv_flow_imp.id(9763642899403540310)
+,p_field_template=>wwv_flow_imp.id(9731672941592394073)
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(

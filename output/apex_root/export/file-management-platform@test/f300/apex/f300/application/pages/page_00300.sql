@@ -341,7 +341,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_template=>wwv_flow_imp.id(9731614793730394034)
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'REGION_POSITION_01'
-,p_menu_id=>wwv_flow_imp.id(9763469109414540199)
+,p_menu_id=>wwv_flow_imp.id(9731499151603393962)
 ,p_plug_source_type=>'NATIVE_BREADCRUMB'
 ,p_menu_template_id=>wwv_flow_imp.id(9731677229303394079)
 );
@@ -458,7 +458,6 @@ wwv_flow_imp_page.create_page_process(
 ,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'declare',
 '    v_system_id       number;',
-'    v_next_system_id  number;',
 'begin',
 '    v_system_id := to_number(apex_application.g_x01);',
 '',
@@ -488,16 +487,6 @@ unistr('        apex_json.write(''message'', ''\5B50\5E73\53F0\4E0D\5B58\5728\62
 '        p_user_tenant => to_number(v(''USER_TENANT'')),',
 '        p_mpf_user_id => to_number(v(''MPF_USER_ID''))',
 '    );',
-'',
-'    if to_char(v(''SYSTEM_ID'')) = to_char(v_system_id) then',
-'        select min(system_id)',
-'          into v_next_system_id',
-'          from FMP_SYSTEM',
-'         where nvl(del_flag, 0) = 0',
-'           and nvl(is_enable, 1) = 1;',
-'',
-'        apex_util.set_session_state(''SYSTEM_ID'', nvl(v_next_system_id, 1));',
-'    end if;',
 '',
 '    commit;',
 '    apex_json.write(''code'', ''200'');',

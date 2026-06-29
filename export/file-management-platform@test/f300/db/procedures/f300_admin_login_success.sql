@@ -21,10 +21,9 @@ AS
     v_app_key       VARCHAR2(64);
     v_app_secret    VARCHAR2(64);
     v_env           VARCHAR2(32);
-    v_system_id     NUMBER(20);
 BEGIN
     IF v_job_number <> c_admin_username THEN
-        RAISE_APPLICATION_ERROR(-20001, 'Only ADMIN can log in to f300.');
+        RAISE_APPLICATION_ERROR(-20001, unistr('\4EC5\5141\8BB8\7BA1\7406\5458\8D26\53F7\767B\5F55\540E\53F0'));
     END IF;
 
     BEGIN
@@ -175,46 +174,6 @@ BEGIN
             v_jy_api := NULL;
     END;
 
-    BEGIN
-        SELECT x.system_id
-          INTO v_system_id
-          FROM (
-                SELECT fu.last_system_id AS system_id
-                  FROM fmp_user fu
-                  JOIN fmp_system s
-                    ON s.system_id = fu.last_system_id
-                   AND s.is_enable = 1
-                   AND s.del_flag = 0
-                 WHERE fu.tenant_id = v_tenant_id
-                   AND fu.user_id = v_user_id
-                   AND NVL(fu.del_flag, 0) = 0
-                   AND fu.last_system_id IS NOT NULL
-                 ORDER BY fu.update_date DESC, fu.user_id DESC
-          ) x
-         WHERE ROWNUM = 1;
-    EXCEPTION
-        WHEN NO_DATA_FOUND THEN
-            BEGIN
-                SELECT x.system_id
-                  INTO v_system_id
-                  FROM (
-                        SELECT s.system_id
-                          FROM fmp_system s
-                         WHERE s.is_enable = 1
-                           AND s.del_flag = 0
-                         ORDER BY s.system_id
-                  ) x
-                 WHERE ROWNUM = 1;
-            EXCEPTION
-                WHEN NO_DATA_FOUND THEN
-                    v_system_id := 1;
-            END;
-    END;
-
-    UPDATE fmp_user
-       SET last_system_id = NVL(last_system_id, v_system_id)
-     WHERE user_id = v_user_id;
-
     apex_custom_auth.set_user(v_name);
     apex_util.set_session_state('USER_TENANT', v_tenant_id);
     apex_util.set_session_state('USER_ID', v_user_id);
@@ -229,7 +188,6 @@ BEGIN
     apex_util.set_session_state('APP_ENV', v_env);
     apex_util.set_session_state('STS_APPKEY', v_app_key);
     apex_util.set_session_state('STS_APPSECRET', v_app_secret);
-    apex_util.set_session_state('SYSTEM_ID', NVL(v_system_id, 1));
 
     COMMIT;
 EXCEPTION
@@ -247,7 +205,7 @@ EXCEPTION
             v_code
         );
         apex_error.add_error(
-            p_message          => 'Login initialization failed. Please contact the administrator.',
+            p_message          => unistr('\767B\5F55\521D\59CB\5316\5931\8D25\FF0C\8BF7\8054\7CFB\7BA1\7406\5458'),
             p_ignore_ora_error => TRUE,
             p_display_location => apex_error.c_inline_in_notification
         );

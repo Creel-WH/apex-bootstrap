@@ -20,7 +20,7 @@ BEGIN
 
     IF v_username <> c_admin_username THEN
         apex_error.add_error(
-            p_message          => 'Invalid username or password.',
+            p_message          => unistr('\7528\6237\540D\6216\5BC6\7801\9519\8BEF'),
             p_ignore_ora_error => TRUE,
             p_display_location => apex_error.c_inline_in_notification
         );
@@ -29,7 +29,7 @@ BEGIN
 
     IF p_password <> c_admin_password THEN
         apex_error.add_error(
-            p_message          => 'Invalid username or password.',
+            p_message          => unistr('\7528\6237\540D\6216\5BC6\7801\9519\8BEF'),
             p_ignore_ora_error => TRUE,
             p_display_location => apex_error.c_inline_in_notification
         );
@@ -40,7 +40,7 @@ BEGIN
 EXCEPTION
     WHEN OTHERS THEN
         apex_error.add_error(
-            p_message          => 'Login failed. Please contact the administrator.',
+            p_message          => unistr('\767B\5F55\5931\8D25\FF0C\8BF7\8054\7CFB\7BA1\7406\5458'),
             p_ignore_ora_error => TRUE,
             p_display_location => apex_error.c_inline_in_notification
         );
