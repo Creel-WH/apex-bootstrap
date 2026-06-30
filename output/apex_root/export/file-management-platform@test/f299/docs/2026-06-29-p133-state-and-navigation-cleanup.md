@@ -30,6 +30,8 @@
 - Browser functional gate: attempted twice. Both runs stopped at the unrelated login page error "账号不存在或已离职" before reaching P133, so P133 UI behavior was not covered by this gate run.
 - Direct APEX-session browser validation was also attempted after creating an APEX session for `JA016181`; the app still redirected to `LOGIN`, so live browser validation remains blocked by authentication rather than by P133 rendering.
 - Follow-up: `P133_UP_FOLDER_ID`, `P133_FILE_LEVEL`, and `P133_BREADCRUMB_JSON` are active browser-side state items. They were recalculated for breadcrumb/up navigation but were not consistently written back to APEX server session state, so Builder session-state inspection could show stale values. Added `P133_SYNC_FOLDER_STATE` to submit the derived folder state after recalculation.
+- Follow-up: P133 could load with no rows when P0 resolved `SYSTEM_ID` asynchronously after P133 item defaults had already run. In that state the top system selector showed the correct sub-platform, but `P133_ROOT_FOLDER_ID` / `P133_PARENT_FOLDER_ID` stayed empty and the IG query returned no rows. Added `P133_RESOLVE_ROOT_FOLDER` so P133 can resolve the current user's root folder itself when root state is empty.
+- Follow-up: P133 could load with no rows when P0 resolved `SYSTEM_ID` asynchronously after P133 item defaults had already run. In that state the top system selector showed the correct sub-platform, but `P133_ROOT_FOLDER_ID` / `P133_PARENT_FOLDER_ID` stayed empty and the IG query returned no rows. Added `P133_RESOLVE_ROOT_FOLDER` so P133 can resolve the current user's root folder itself when root state is empty.
 
 ## Implementation Notes
 

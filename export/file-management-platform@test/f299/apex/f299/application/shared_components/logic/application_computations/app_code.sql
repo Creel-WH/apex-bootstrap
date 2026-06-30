@@ -18,7 +18,7 @@ wwv_flow_imp_shared.create_flow_computation(
 ,p_computation_point=>'ON_NEW_INSTANCE'
 ,p_computation_type=>'STATIC_ASSIGNMENT'
 ,p_computation_processed=>'REPLACE_EXISTING'
-,p_computation=>'JA_SALES_TOOL_SET'
+,p_computation=>'FMP'
 ,p_version_scn=>6719016292815
 );
 wwv_flow_imp.component_end;

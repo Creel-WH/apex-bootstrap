@@ -19,6 +19,7 @@ wwv_flow_imp_page.create_page(
 ,p_autocomplete_on_off=>'OFF'
 ,p_group_id=>wwv_flow_imp.id(3709714323410859806)
 ,p_javascript_file_urls=>'#WORKSPACE_FILES#static/js/mkUtils.v1.js'
+,p_css_file_urls=>'#APP_FILES#static/vendor/remixicon/remixicon.css'
 ,p_javascript_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '$(''h1[class="t-Breadcrumb-label"]'').text($v(''P133_FILE_NAME'') || ''\u6587\u4EF6\u5E93'')',
 unistr('//\5220\9664\3001\7BA1\7406'),
@@ -53,6 +54,11 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 '    return value;',
 '}',
 '',
+'function p133ShortName(value) {',
+'    var text = String(value || '''');',
+'    return text.length > 10 ? text.substring(0, 10) + ''...'' : text;',
+'}',
+'',
 'function p133TryGetRegion(staticId) {',
 '    var regionId = String(staticId || '''').trim();',
 '    if (!regionId || typeof apex === ''undefined'' || !apex.region || !document.getElementById(regionId)) {',
@@ -82,17 +88,40 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 'function p133GetCurrentRows() {',
 '    var model = p133GetRegionModel();',
 '    var rows = [];',
-'    if (!model) {',
-'        return rows;',
+'    var seen = {};',
+'    if (model) {',
+'        model.forEach(function(record) {',
+'            var row = {',
+'                id: String(p133NormalizeCellValue(model.getValue(record, ''FILE_ID'')) || ''''),',
+'                type: String(p133NormalizeCellValue(model.getValue(record, ''FILE_TYPE'')) || ''''),',
+'                name: String(p133NormalizeCellValue(model.getValue(record, ''FILE_NAME'')) || ''''),',
+'                displayName: String(p133NormalizeCellValue(model.getValue(record, ''FILE_DISPLAY_NAME'')) || ''''),',
+'                iconType: String(p133NormalizeCellValue(model.getValue(record, ''ICON_TYPE'')) || ''other''),',
+'                icon: String(p133NormalizeCellValue(model.getValue(record, ''ICON_CLASS'')) || ''''),',
+'                canOpen: Number(p133NormalizeCellValue(model.getValue(record, ''CAN_OPEN'')) || 0) > 0,',
+'                canManage: Number(p133NormalizeCellValue(model.getValue(record, ''IS_PERMISSIONS'')) || 0) > 0',
+'            };',
+'            if (row.id) {',
+'                seen[row.id] = true;',
+'                rows.push(row);',
+'            }',
+'        });',
 '    }',
-'    model.forEach(function(record) {',
+'    $(''#p133_cards .p133-card-body'').each(function() {',
+'        var $card = $(this);',
+'        var id = String($card.data(''fileId'') || '''');',
+'        if (!id || seen[id]) {',
+'            return;',
+'        }',
 '        rows.push({',
-'            id: String(p133NormalizeCellValue(model.getValue(record, ''FILE_ID'')) || ''''),',
-'            type: String(p133NormalizeCellValue(model.getValue(record, ''FILE_TYPE'')) || ''''),',
-'            name: String(p133NormalizeCellValue(model.getValue(record, ''FILE_NAME'')) || ''''),',
-'            icon: String(p133NormalizeCellValue(model.getValue(record, ''ICON_CLASS'')) || ''''),',
-'            canOpen: Number(p133NormalizeCellValue(model.getValue(record, ''CAN_OPEN'')) || 0) > 0,',
-'            canManage: Number(p133NormalizeCellValue(model.getValue(record, ''IS_PERMISSIONS'')) || 0) > 0',
+'            id: id,',
+'            type: String($card.data(''fileType'') || ''''),',
+'            name: String($card.data(''fileName'') || ''''),',
+'            displayName: String($card.data(''displayName'') || ''''),',
+'            iconType: String($card.data(''iconType'') || ''other''),',
+'            icon: String($card.data(''iconClass'') || ''''),',
+'            canOpen: Number($card.data(''canOpen'') || 0) > 0,',
+'            canManage: Number($card.data(''canManage'') || 0) > 0',
 '        });',
 '    });',
 '    return rows;',
@@ -175,17 +204,27 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 '}',
 '',
 'function p133RefreshContent() {',
-'    var region = p133TryGetRegion(''content'');',
+'    var listRegion = p133TryGetRegion(''content'');',
+'    var cardsRegion = p133TryGetRegion(''p133_cards'');',
 '    try {',
-'        if (region) {',
-'            region.refresh();',
-'            return;',
+'        if (listRegion) {',
+'            listRegion.refresh();',
 '        }',
 '    } catch (e) {',
 '        // ignore and use fallback below',
 '    }',
-'    if ($(''#content_ig'').length) {',
+'    try {',
+'        if (cardsRegion) {',
+'            cardsRegion.refresh();',
+'        }',
+'    } catch (e2) {',
+'        // ignore and use fallback below',
+'    }',
+'    if (!listRegion && $(''#content_ig'').length) {',
 '        $(''#content_ig'').trigger(''apexrefresh'');',
+'    }',
+'    if (!cardsRegion && $(''#p133_cards'').length) {',
+'        $(''#p133_cards'').trigger(''apexrefresh'');',
 '    }',
 '}',
 '',
@@ -372,7 +411,11 @@ unistr('        alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\
 'function p133RedirectToMove(fileIds) { if (window.p133RedirectToMoveImpl) { return window.p133RedirectToMoveImpl(fileIds); } }',
 'function p133DeleteSelection() { if (window.p133DeleteSelectionImpl) { return window.p133DeleteSelectionImpl(); } }',
 'function p133OpenActionUrl(actionName) { if (window.p133OpenActionUrlImpl) { return window.p133OpenActionUrlImpl(actionName); } }',
-'function p133RunAction(actionName) { if (window.p133RunActionImpl) { return window.p133RunActionImpl(actionName); } }',
+'function p133ActionShareSelected() { if (window.p133ActionShareSelectedImpl) { return window.p133ActionShareSelectedImpl(); } }',
+'function p133ActionRenameSelected() { if (window.p133ActionRenameSelectedImpl) { return window.p133ActionRenameSelectedImpl(); } }',
+'function p133ActionMoveSelected() { if (window.p133ActionMoveSelectedImpl) { return window.p133ActionMoveSelectedImpl(); } }',
+'function p133ActionSettingsSelected() { if (window.p133ActionSettingsSelectedImpl) { return window.p133ActionSettingsSelectedImpl(); } }',
+'function p133ActionDeleteSelected() { if (window.p133ActionDeleteSelectedImpl) { return window.p133ActionDeleteSelectedImpl(); } }',
 '',
 'function p133OpenEntry(objId, fileType) {',
 '    if (!p133CanOpenEntry(objId)) {',
@@ -436,6 +479,10 @@ unistr('        alert(''\5F53\524D\4EC5\53EF\67E5\770B\5217\8868\FF0C\65E0\6743\
 '',
 'function p133RenderToolbar() {',
 '    var $toolbar = $(''#p133_toolbar'');',
+'    var $selectionActions = $toolbar.find(''.p133-selection-actions'');',
+'    if ($selectionActions.length) {',
+'        $toolbar.find(''#p133_btn_share, #p133_btn_rename, #p133_btn_move, #p133_btn_settings, #p133_btn_delete'').appendTo($selectionActions);',
+'    }',
 '    return $toolbar;',
 '}',
 '',
@@ -450,8 +497,9 @@ unistr('        alert(''\5F53\524D\4EC5\53EF\67E5\770B\5217\8868\FF0C\65E0\6743\
 '    } catch (e) {',
 '        crumbs = [];',
 '    }',
-'    var $bar = $(''#p133_pathbar'');',
+'    var $bar = $(''#p133_titlebar_path'');',
 '    if (!$bar.length) { return; }',
+'    $bar.closest(''.t-BreadcrumbRegion'').find(''.t-BreadcrumbRegion-titleText'').text($v(''P133_FILE_NAME'') || pathText || ''\u6587\u4EF6\u5E93'');',
 '    $bar.off(''click.p133pathbar'', ''.p133-up'').on(''click.p133pathbar'', ''.p133-up'', function(event) {',
 '        event.preventDefault();',
 '        event.stopPropagation();',
@@ -480,15 +528,18 @@ unistr('        alert(''\5F53\524D\4EC5\53EF\67E5\770B\5217\8868\FF0C\65E0\6743\
 '    });',
 '    if (crumbs.length) {',
 '        var childCrumbs = crumbs.map(function(crumb, index) {',
-'            var label = apex.util.escapeHTML(crumb.name || ''/'');',
+'            var fullLabel = String(crumb.name || ''/'');',
+'            var label = apex.util.escapeHTML(p133ShortName(fullLabel));',
+'            var title = apex.util.escapeHTML(fullLabel);',
 '            var id = apex.util.escapeHTML(String(crumb.id || ''''));',
 '            var current = String(crumb.id || '''') === String(parentId || '''');',
 '            var separator = index > 0 ? ''<span class="p133-sep"><span class="fa fa-angle-right" aria-hidden="true"></span></span>'' : '''';',
-'            return separator + ''<button type="button" class="p133-crumb'' + (current ? '' is-current'' : '''') + ''" data-folder-id="'' + id + ''">'' + label + ''</button>'';',
+'            return separator + ''<button type="button" class="p133-crumb'' + (current ? '' is-current'' : '''') + ''" data-folder-id="'' + id + ''" title="'' + title + ''">'' + label + ''</button>'';',
 '        }).join('''');',
 '        $bar.find(''.p133-crumbs'').html(childCrumbs);',
 '    } else {',
-'        $bar.find(''.p133-crumbs'').html(''<button type="button" class="p133-crumb is-current" data-folder-id="'' + apex.util.escapeHTML(String(rootId || '''')) + ''">'' + apex.util.escapeHTML(parts.join('' / '') || pathText || '''') + ''</butto'
+'        var fallbackLabel = parts.join('' / '') || pathText || '''';',
+'        $bar.find(''.p133-crumbs'').html(''<button type="button" class="p133-crumb is-current" data-folder-id="'' + apex.util.escapeHTML(String(rootId || '''')) + ''" title="'' + apex.util.escapeHTML(fallbackLabel) + ''">'' + apex.util.escapeHTML(p133ShortName(fallbackLabel)) + ''</butto'
 ||'n>'');',
 '    }',
 '    $bar.toggleClass(''is-root'', parentId === rootId);',
@@ -497,51 +548,6 @@ unistr('        alert(''\5F53\524D\4EC5\53EF\67E5\770B\5217\8868\FF0C\65E0\6743\
 'function p133ReadViewMode() {',
 '    var mode = sessionStorage.getItem(''p133:view_mode'') || ''list'';',
 '    return mode === ''grid'' ? ''grid'' : ''list'';',
-'}',
-'',
-'function p133SetViewMode(mode) {',
-'    var nextMode = mode === ''grid'' ? ''grid'' : ''list'';',
-'    sessionStorage.setItem(''p133:view_mode'', nextMode);',
-'    if (window.p133SyncView) { window.p133SyncView(); }',
-'    else if (window.p133SyncViewImpl) { window.p133SyncViewImpl(); }',
-'}',
-'',
-'function p133RenderGridCards() {',
-'    var rows = p133GetCurrentRows();',
-'    var state = p133EnsureValidSelection();',
-'    var selectedMap = {};',
-'    var cards = [];',
-'    var $region = $(''#content'');',
-'    var $gridView = $(''#p133_grid_view'');',
-'    if (!$gridView.length) {',
-'        $region.after(''<div id="p133_grid_view" class="p133-grid-view" style="display:none;"></div>'');',
-'        $gridView = $(''#p133_grid_view'');',
-'    }',
-'    state.ids.forEach(function(id) {',
-'        selectedMap[id] = true;',
-'    });',
-'    if (!rows.length) {',
-unistr('        $gridView.html(''<div class="p133-grid-empty">\672A\627E\5230\6570\636E</div>'');'),
-'        return;',
-'    }',
-'    rows.forEach(function(row) {',
-'        var id = row.id;',
-'        var type = row.type;',
-'        var icon = row.icon || (type === ''FOLDER'' ? ''fa-folder-o'' : ''fa-file-o'');',
-'        var checked = !!selectedMap[id];',
-'        cards.push(',
-'            ''<div class="p133-card'' + (checked ? '' is-selected'' : '''') + ''" data-file-id="'' + apex.util.escapeHTML(String(id || '''')) + ''" data-file-type="'' + apex.util.escapeHTML(String(type || '''')) + ''">'' +',
-'            ''<label class="p133-card-check"><input type="checkbox" class="p133-card-checkbox" data-file-id="'' + apex.util.escapeHTML(String(id || '''')) + ''" data-file-type="'' + apex.util.escapeHTML(String(type || '''')) + ''"'' + (checked ? '' checked'' : '''
-||''') + '' /></label>'' +',
-'            ''<button type="button" class="p133-card-open'' + (row.canOpen ? '''' : '' is-disabled'') + ''" data-file-id="'' + apex.util.escapeHTML(String(id || '''')) + ''" data-file-type="'' + apex.util.escapeHTML(String(type || '''')) + ''"'' + (row.canOpen ? '''' '
-||': '' disabled'') + ''>'' +',
-'            ''<span class="fa '' + apex.util.escapeHTML(String(icon)) + ''" aria-hidden="true"></span>'' +',
-'            ''<span class="p133-card-name">'' + apex.util.escapeHTML(String(row.name || '''')) + ''</span>'' +',
-'            ''</button>'' +',
-'            ''</div>''',
-'        );',
-'    });',
-'    $gridView.html(cards.join(''''));',
 '}',
 '',
 'function p133ApplyGridColumnState() {',
@@ -579,6 +585,7 @@ unistr('        $gridView.html(''<div class="p133-grid-empty">\672A\627E\5230\65
 '    var $settingsButton;',
 '    var $deleteButton;',
 '    var $selectionInline;',
+'    var $selectionPanel;',
 '',
 '    if (!$toolbar.length) {',
 '        return;',
@@ -590,18 +597,20 @@ unistr('        $gridView.html(''<div class="p133-grid-empty">\672A\627E\5230\65
 '    $toolbar.find(''.p133-sort-option'').removeClass(''is-active'');',
 '    $toolbar.find(''.p133-sort-option[data-sort="'' + p133ReadSortValue() + ''"]'').addClass(''is-active'');',
 '    $toolbar.find(''.p133-view-btn'').removeClass(''is-active'');',
-'    $toolbar.find(''.p133-view-btn[data-view-mode="'' + viewMode + ''"]'').addClass(''is-active'');',
-'    $shareButton = $toolbar.find(''[data-p133-action="share"]'');',
-'    $renameButton = $toolbar.find(''[data-p133-action="rename"]'');',
-'    $moveButton = $toolbar.find(''[data-p133-action="move"]'');',
-'    $settingsButton = $toolbar.find(''[data-p133-action="settings"]'');',
-'    $deleteButton = $toolbar.find(''[data-p133-action="delete"]'');',
+'    $toolbar.find(viewMode === ''grid'' ? ''#p133_btn_view_grid'' : ''#p133_btn_view_list'').addClass(''is-active'');',
+'    $shareButton = $toolbar.find(''#p133_btn_share'');',
+'    $renameButton = $toolbar.find(''#p133_btn_rename'');',
+'    $moveButton = $toolbar.find(''#p133_btn_move'');',
+'    $settingsButton = $toolbar.find(''#p133_btn_settings'');',
+'    $deleteButton = $toolbar.find(''#p133_btn_delete'');',
 '    $selectionInline = $toolbar.find(''.p133-selection-inline'');',
+'    $selectionPanel = $toolbar.find(''.p133-selection-panel'');',
 '',
-'    $toolbar.find(''[data-p133-action="create_folder"]'').css(''display'', p133CanCreateFolder() ? ''inline-flex'' : ''none'');',
-'    $toolbar.find(''[data-p133-action="upload"]'').css(''display'', canManage ? ''inline-flex'' : ''none'');',
-'    $selectionInline.css(''display'', state.count > 0 ? ''flex'' : ''none'');',
-'    $toolbar.find(''.p133-toolbar-actions'').css(''display'', selectionCanManage || selectionSingleReadonly ? ''flex'' : ''none'');',
+'    $toolbar.find(''#btn_create_folder'').css(''display'', p133CanCreateFolder() ? ''inline-flex'' : ''none'');',
+'    $toolbar.find(''#btn_upload'').css(''display'', canManage ? ''inline-flex'' : ''none'');',
+'    $selectionPanel.css(''display'', state.count > 0 ? ''flex'' : ''none'');',
+'    $selectionInline.css(''display'', ''flex'');',
+'    $toolbar.find(''.p133-selection-action'').css(''display'', selectionCanManage || selectionSingleReadonly ? ''inline-flex'' : ''none'');',
 '    $shareButton.prop(''disabled'', false).css(''display'', state.count === 1 ? ''inline-flex'' : ''none'');',
 '    $settingsButton.prop(''disabled'', false).css(''display'', state.count === 1 ? ''inline-flex'' : ''none'');',
 '    $renameButton.prop(''disabled'', false).css(''display'', selectionCanManage && state.count === 1 ? ''inline-flex'' : ''none'');',
@@ -622,12 +631,28 @@ unistr('        $gridView.html(''<div class="p133-grid-empty">\672A\627E\5230\65
 '    $deleteButton.prop(''disabled'', state.count < 1);',
 '}',
 '',
+'function p133ApplyCardsSelectionFromState() {',
+'    var state = p133GetSelectionState();',
+'    var selected = {};',
+'    state.ids.forEach(function(id) {',
+'        selected[String(id)] = true;',
+'    });',
+'    $(''#p133_cards .p133-card-body'').each(function() {',
+'        var $card = $(this);',
+'        var id = String($card.data(''fileId'') || '''');',
+'        var checked = !!selected[id];',
+'        $card.toggleClass(''is-selected'', checked);',
+'        $card.closest(''.p133-card'').toggleClass(''is-selected'', checked);',
+'        $card.find(''.p133-card-checkbox'').prop(''checked'', checked);',
+'    });',
+'}',
+'',
 'function p133SyncSelectionUi() {',
 '    p133EnsureValidSelection();',
 '    if (window.p133ApplyGridSelectionFromState) {',
 '        window.p133ApplyGridSelectionFromState();',
 '    }',
-'    p133RenderGridCards();',
+'    p133ApplyCardsSelectionFromState();',
 '    p133UpdateToolbarState();',
 '}',
 '',
@@ -636,41 +661,25 @@ unistr('        $gridView.html(''<div class="p133-grid-empty">\672A\627E\5230\65
 '    var targetType = String(fileType || '''').trim();',
 '    p133SetSelection([targetId], [targetType]);',
 '    p133SyncSelectionUi();',
+'    if (actionName === ''share'') {',
+'        p133ActionShareSelected();',
+'        return;',
+'    }',
 '    if (actionName === ''rename'') {',
-'        p133RedirectToRename(targetId);',
+'        p133ActionRenameSelected();',
 '        return;',
 '    }',
 '    if (actionName === ''move'') {',
-'        p133RedirectToMove([targetId]);',
+'        p133ActionMoveSelected();',
+'        return;',
+'    }',
+'    if (actionName === ''settings'') {',
+'        p133ActionSettingsSelected();',
 '        return;',
 '    }',
 '    if (actionName === ''delete'') {',
-unistr('        apex.message.confirm(''\786E\5B9A\5220\9664\9009\4E2D\7684\6570\636E\5417\FF1F'', function(okPressed) {'),
-'            if (!okPressed) {',
-'                return;',
-'            }',
-'            apex.server.process(''P133_DELETE_SELECTION'', { pageItems: ''#P133_FILE_IDS'' }, {',
-'                dataType: ''json'',',
-'                success: function(resp) {',
-'                    if (resp && resp.status === ''success'') {',
-'                        p133ClearSelection();',
-'                        p133SyncSelectionUi();',
-unistr('                        apex.message.showPageSuccess(''\5220\9664\6210\529F\FF01'');'),
-'                        p133RefreshContent();',
-'                        return;',
-'                    }',
-unistr('                    apex.message.alert((resp && resp.message) || ''\5220\9664\5931\8D25\FF01'');'),
-'                },',
-unistr('                error: function(jqXHR, textStatus, errorThrown) { apex.message.alert(errorThrown || textStatus || ''\5220\9664\5931\8D25\FF01''); }'),
-'            });',
-'        });',
-'        return;',
+'        p133ActionDeleteSelected();',
 '    }',
-'    if (actionName === ''share'' || actionName === ''settings'') {',
-'        p133OpenPermissionDialog(targetId);',
-'        return;',
-'    }',
-'    p133RunAction(actionName);',
 '}', 
 '',
 'function p133EnsureRowMenu() {',
@@ -724,6 +733,119 @@ unistr('        items.push(''<button type="button" class="p133-row-menu-item" da
 '    }, 0);',
 '}',
 '',
+'function p133CanDragCards() {',
+'    return p133ReadSortValue() === ''MANUAL'' && p133HasManagePermission();',
+'}',
+'',
+'function p133CollectCardIds() {',
+'    return $(''#p133_cards .p133-card-body'').map(function() {',
+'        return String($(this).data(''fileId'') || '''');',
+'    }).get().filter(Boolean);',
+'}',
+'',
+'function p133SaveCardsDragOrder(originalIds, currentIds) {',
+'    if (!originalIds.length || originalIds.join('':'') === currentIds.join('':'')) {',
+'        return;',
+'    }',
+'    apex.server.process(''SAVE_FILE_LIBRARY_ORDER'', {',
+'        x01: ''0'',',
+'        pageItems: ''#P133_PARENT_FOLDER_ID,#P133_ROOT_FOLDER_ID,#P133_SORT_BY,#P133_DISPLAY'',',
+'        f01: currentIds,',
+'        f02: originalIds',
+'    }, {',
+'        dataType: ''json'',',
+'        success: function(data) {',
+'            if (!data || (data.success !== true && data.status !== ''success'')) {',
+'                apex.message.alert(data && data.message ? data.message : ''排序保存失败'');',
+'                p133RefreshContent();',
+'                return;',
+'            }',
+'            p133RefreshContent();',
+'            if (window.p133ScheduleViewSync) { window.p133ScheduleViewSync(); }',
+'            apex.message.showPageSuccess(data.message || ''排序已保存'');',
+'        },',
+'        error: function() {',
+'            apex.message.alert(''排序保存失败'');',
+'            p133RefreshContent();',
+'        }',
+'    });',
+'}',
+'',
+'function p133BeginCardDrag($handle, event) {',
+'    var pointer = event.originalEvent || event;',
+'    var $body = $handle.closest(''.p133-card-body'');',
+'    var $item = $body.closest(''.a-CardView-item, .t-Cards-item'');',
+'    if (!$item.length) { $item = $body.closest(''.p133-card''); }',
+'    var state = {',
+'        handle: $handle,',
+'        body: $body,',
+'        item: $item,',
+'        originalIds: p133CollectCardIds(),',
+'        active: false,',
+'        moved: false,',
+'        timer: null,',
+'        ghost: null',
+'    };',
+'    if (!p133CanDragCards() || !$body.length || !$item.length) {',
+'        return null;',
+'    }',
+'    state.timer = window.setTimeout(function() {',
+'        state.active = true;',
+'        $item.addClass(''is-card-dragging'');',
+'        state.ghost = $item.clone().addClass(''p133-card-drag-ghost'').appendTo(''body'');',
+'        state.ghost.css({ left: pointer.pageX + 8, top: pointer.pageY + 8 });',
+'    }, 500);',
+'    return state;',
+'}',
+'',
+'function p133MoveCardDrag(state, event) {',
+'    var pointer = event.originalEvent || event;',
+'    var target;',
+'    var $targetBody;',
+'    var $targetItem;',
+'    var rect;',
+'    if (!state) { return; }',
+'    if (!state.active) {',
+'        return;',
+'    }',
+'    event.preventDefault();',
+'    state.moved = true;',
+'    if (state.ghost) {',
+'        state.ghost.css({ left: pointer.pageX + 8, top: pointer.pageY + 8 });',
+'    }',
+'    target = document.elementFromPoint(pointer.clientX, pointer.clientY);',
+'    $targetBody = $(target).closest(''#p133_cards .p133-card-body'');',
+'    if (!$targetBody.length || $targetBody.is(state.body)) {',
+'        return;',
+'    }',
+'    $targetItem = $targetBody.closest(''.a-CardView-item, .t-Cards-item'');',
+'    if (!$targetItem.length) { $targetItem = $targetBody.closest(''.p133-card''); }',
+'    if (!$targetItem.length || $targetItem.is(state.item)) {',
+'        return;',
+'    }',
+'    rect = $targetItem[0].getBoundingClientRect();',
+'    if (pointer.clientY > rect.top + rect.height / 2 || pointer.clientX > rect.left + rect.width / 2) {',
+'        $targetItem.after(state.item);',
+'    } else {',
+'        $targetItem.before(state.item);',
+'    }',
+'}',
+'',
+'function p133EndCardDrag(state) {',
+'    var currentIds;',
+'    if (!state) { return; }',
+'    window.clearTimeout(state.timer);',
+'    state.handle.data(''p133SuppressClick'', state.active || state.moved);',
+'    if (state.ghost) {',
+'        state.ghost.remove();',
+'    }',
+'    state.item.removeClass(''is-card-dragging'');',
+'    if (state.active && state.moved) {',
+'        currentIds = p133CollectCardIds();',
+'        p133SaveCardsDragOrder(state.originalIds, currentIds);',
+'    }',
+'    window.setTimeout(function() { state.handle.removeData(''p133SuppressClick''); }, 0);',
+'}',
 'window.p133SyncView = function() { if (window.p133SyncViewImpl) { return window.p133SyncViewImpl(); } };',
 'window.p133ScheduleViewSync = function() { if (window.p133ScheduleViewSyncImpl) { return window.p133ScheduleViewSyncImpl(); } };',
 'window.p133InitViewMode = function() { if (window.p133InitViewModeImpl) { return window.p133InitViewModeImpl(); } };',
@@ -810,23 +932,39 @@ unistr('            error: function(jqXHR, textStatus, errorThrown) { apex.messa
 '    });',
 '};',
 '',
-'window.p133RunActionImpl = function(actionName) {',
+'function p133RequireSelectedAction(options) {',
 '    var state = p133EnsureValidSelection();',
-'    var singleOnly = [''rename'', ''share'', ''settings''];',
-'    var managerActions = [''create_folder'', ''upload'', ''share'', ''rename'', ''move'', ''settings'', ''delete''];',
-'    if (actionName === ''create_folder'' && !p133CanCreateFolder()) { alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\7BA1\7406\6743\9650''); return; }',
-'    if (actionName === ''create_folder'') { p133TriggerButton(''btn_create_folder''); return; }',
-'    if (actionName === ''upload'' && !p133HasManagePermission()) { alert(''\5F53\524D\6CA1\6709\53EF\6267\884C\8BE5\64CD\4F5C\7684\7BA1\7406\6743\9650''); return; }',
-'    if (actionName === ''upload'') { p133TriggerButton(''btn_upload''); return; }',
+'    var opts = options || {};',
 unistr('    if (!state.count) { alert(''\8BF7\9009\62E9\8981\64CD\4F5C\7684\6587\4EF6\6216\6587\4EF6\5939''); return; }'),
-unistr('    if (singleOnly.indexOf(actionName) >= 0 && state.count !== 1) { alert(''\8BE5\64CD\4F5C\4EC5\652F\6301\5355\9009''); return; }'),
-unistr('    if (managerActions.indexOf(actionName) >= 0 && actionName !== ''create_folder'' && !p133SelectionCanManage(state)) { alert(''\5F53\524D\9009\4E2D\5BF9\8C61\4E2D\5B58\5728\65E0\7BA1\7406\6743\9650\9879\FF0C\65E0\6CD5\6267\884C\8BE5\64CD\4F5C''); return; }'),
+unistr('    if (opts.singleOnly && state.count !== 1) { alert(''\8BE5\64CD\4F5C\4EC5\652F\6301\5355\9009''); return; }'),
+unistr('    if (opts.manageRequired && !p133SelectionCanManage(state)) { alert(''\5F53\524D\9009\4E2D\5BF9\8C61\4E2D\5B58\5728\65E0\7BA1\7406\6743\9650\9879\FF0C\65E0\6CD5\6267\884C\8BE5\64CD\4F5C''); return; }'),
 '    if (!String($v(''P133_PARENT_FOLDER_ID'') || '''') && state.singleType === ''FOLDER'' && state.singleId) { $s(''P133_ROOT_FOLDER_ID'', state.singleId); }',
-'    if (actionName === ''share'') { p133OpenPermissionDialog(state.singleId); return; }',
-'    if (actionName === ''rename'') { p133RedirectToRename(state.singleId); return; }',
-'    if (actionName === ''move'') { p133RedirectToMove(state.ids); return; }',
-'    if (actionName === ''settings'') { p133OpenPermissionDialog(state.singleId); return; }',
-'    if (actionName === ''delete'') { p133DeleteSelection(); }',
+'    return state;',
+'}',
+'',
+'window.p133ActionShareSelectedImpl = function() {',
+'    var state = p133RequireSelectedAction({ singleOnly: true, manageRequired: true });',
+'    if (state) { p133OpenPermissionDialog(state.singleId); }',
+'};',
+'',
+'window.p133ActionRenameSelectedImpl = function() {',
+'    var state = p133RequireSelectedAction({ singleOnly: true, manageRequired: true });',
+'    if (state) { p133RedirectToRename(state.singleId); }',
+'};',
+'',
+'window.p133ActionMoveSelectedImpl = function() {',
+'    var state = p133RequireSelectedAction({ manageRequired: true });',
+'    if (state) { p133RedirectToMove(state.ids); }',
+'};',
+'',
+'window.p133ActionSettingsSelectedImpl = function() {',
+'    var state = p133RequireSelectedAction({ singleOnly: true, manageRequired: true });',
+'    if (state) { p133OpenPermissionDialog(state.singleId); }',
+'};',
+'',
+'window.p133ActionDeleteSelectedImpl = function() {',
+'    var state = p133RequireSelectedAction({ manageRequired: true });',
+'    if (state) { p133DeleteSelection(); }',
 '};',
 '',
 'function p133RunPreparedUrl(targetUrl) {',
@@ -885,21 +1023,20 @@ unistr('        error: function(jqXHR, textStatus, errorThrown) { apex.message.a
 'window.p133SyncViewImpl = function() {',
 '    var mode = p133ReadViewMode();',
 '    var $region = $(''#content'');',
-'    var $gridView = $(''#p133_grid_view'');',
+'    var $cardsView = $(''#p133_cards'');',
 '    p133RenderToolbar();',
 '    p133RenderPathbar();',
-'    p133RenderGridCards();',
-'    $gridView = $(''#p133_grid_view'');',
 '    if (mode === ''grid'') {',
 '        $region.addClass(''p133-content-hidden'');',
-'        $gridView.show();',
+'        $cardsView.removeClass(''p133-content-hidden'').show();',
 '    } else {',
-'        $gridView.hide();',
+'        $cardsView.addClass(''p133-content-hidden'').hide();',
 '        $region.removeClass(''p133-content-hidden'');',
 '        window.setTimeout(function() { apex.event.trigger(window, ''apexwindowresized''); }, 0);',
 '    }',
 '    p133ApplyGridColumnState();',
 '    if (window.p133ApplyGridSelectionFromState) { window.p133ApplyGridSelectionFromState(); }',
+'    p133ApplyCardsSelectionFromState();',
 '    p133BindGridSelectionGuard();',
 '    p133UpdateToolbarState();',
 '    if (window.p133ScheduleDragSortInit) { window.p133ScheduleDragSortInit(0); }',
@@ -909,14 +1046,13 @@ unistr('        error: function(jqXHR, textStatus, errorThrown) { apex.message.a
 '    [0, 120, 320].forEach(function(delay) { window.setTimeout(function() { if (window.p133SyncView) { window.p133SyncView(); } }, delay); });',
 '};',
 '',
+
 'window.p133InitViewModeImpl = function() {',
-'    $(document).off(''click.p133toolbar'', ''#p133_toolbar [data-p133-action]'').on(''click.p133toolbar'', ''#p133_toolbar [data-p133-action]'', function() { p133RunAction($(this).data(''p133Action'')); });',
-'    $(document).off(''click.p133view'', ''#p133_toolbar .p133-view-btn'').on(''click.p133view'', ''#p133_toolbar .p133-view-btn'', function() { p133SetViewMode($(this).data(''viewMode'') || ''list''); });',
+'    var cardDragState = null;',
 '    $(document).off(''click.p133sort'', ''#p133_toolbar .p133-sort-trigger'').on(''click.p133sort'', ''#p133_toolbar .p133-sort-trigger'', function(event) { event.preventDefault(); event.stopPropagation(); p133ToggleSortMenu(); });',
 '    $(document).off(''click.p133sortoption'', ''#p133_toolbar .p133-sort-option'').on(''click.p133sortoption'', ''#p133_toolbar .p133-sort-option'', function(event) { event.preventDefault(); event.stopPropagation(); p133SetSortValue($(this).data(''sort'')); });',
-'    $(document).off(''click.p133refresh'', ''#p133_toolbar .p133-refresh'').on(''click.p133refresh'', ''#p133_toolbar .p133-refresh'', function() { p133RefreshContent(); });',
 '    $(document).off(''click.p133rowmenu'', ''#p133_row_menu [data-p133-row-action]'').on(''click.p133rowmenu'', ''#p133_row_menu [data-p133-row-action]'', function(event) { event.preventDefault(); event.stopPropagation(); p133HideRowMenu(); p133RunSingleAction($(this).data(''p133RowAction''), $(this).data(''fileId''), $(this).data(''fileType'')); });',
-'    $(document).off(''change.p133cards'', ''#p133_grid_view .p133-card-checkbox'').on(''change.p133cards'', ''#p133_grid_view .p133-card-checkbox'', function(event) {',
+'    $(document).off(''click.p133cards change.p133cards'', ''#p133_cards .p133-card-checkbox'').on(''click.p133cards change.p133cards'', ''#p133_cards .p133-card-checkbox'', function(event) {',
 '        var state = p133GetSelectionState();',
 '        var ids = state.ids.slice();',
 '        var types = state.types.slice();',
@@ -929,17 +1065,32 @@ unistr('        error: function(jqXHR, textStatus, errorThrown) { apex.message.a
 '        p133SetSelection(ids, types);',
 '        p133SyncSelectionUi();',
 '    });',
+'    $(document).off(''click.p133cardmenu'', ''#p133_cards .p133-card-menu-handle'').on(''click.p133cardmenu'', ''#p133_cards .p133-card-menu-handle'', function(event) {',
+'        var $handle = $(this);',
+'        if ($handle.data(''p133SuppressClick'')) {',
+'            event.preventDefault();',
+'            event.stopPropagation();',
+'            return;',
+'        }',
+'        p133OpenRowMenu(event, $handle.data(''fileId''), $handle.data(''fileType''), $handle.data(''canManage''));',
+'    });',
+'    $(document).off(''pointerdown.p133carddrag'', ''#p133_cards .p133-card-menu-handle'').on(''pointerdown.p133carddrag'', ''#p133_cards .p133-card-menu-handle'', function(event) {',
+'        cardDragState = p133BeginCardDrag($(this), event);',
+'    });',
+'    $(document).off(''pointermove.p133carddrag'').on(''pointermove.p133carddrag'', function(event) { p133MoveCardDrag(cardDragState, event); });',
+'    $(document).off(''pointerup.p133carddrag pointercancel.p133carddrag'').on(''pointerup.p133carddrag pointercancel.p133carddrag'', function() { p133EndCardDrag(cardDragState); cardDragState = null; });',
 '    $(document).off(''click.p133fileopen'', ''#content .p133-file-open'').on(''click.p133fileopen'', ''#content .p133-file-open'', function(event) { event.preventDefault(); event.stopPropagation(); });',
 '    $(document).off(''dblclick.p133fileopen'', ''#content .p133-file-open'').on(''dblclick.p133fileopen'', ''#content .p133-file-open'', function(event) { event.preventDefault(); event.stopPropagation(); p133OpenEntry($(this).data(''fileId''), $(this).data(''fileType'')); });',
-'    $(document).off(''dblclick.p133cardopen'', ''#p133_grid_view .p133-card-open'').on(''dblclick.p133cardopen'', ''#p133_grid_view .p133-card-open'', function(event) { event.preventDefault(); event.stopPropagation(); p133OpenEntry($(this).data(''fileId''), $(this).data(''fileType'')); });',
+'    $(document).off(''click.p133cardopen'', ''#p133_cards .p133-card-open'').on(''click.p133cardopen'', ''#p133_cards .p133-card-open'', function(event) { event.preventDefault(); event.stopPropagation(); });',
+'    $(document).off(''dblclick.p133cardopen'', ''#p133_cards .p133-card-open'').on(''dblclick.p133cardopen'', ''#p133_cards .p133-card-open'', function(event) { event.preventDefault(); event.stopPropagation(); p133OpenEntry($(this).data(''fileId''), $(this).data(''fileType'')); });',
 '    $(document).off(''click.p133sortdismiss'').on(''click.p133sortdismiss'', function(event) {',
 '        if (!$(event.target).closest(''#p133_toolbar .p133-sort-box'').length) { p133ToggleSortMenu(false); }',
-'        if (!$(event.target).closest(''#p133_row_menu, .p133-row-action-btn'').length) { p133HideRowMenu(); }',
+'        if (!$(event.target).closest(''#p133_row_menu, .p133-row-action-btn, .p133-card-menu-handle'').length) { p133HideRowMenu(); }',
 '    });',
 '    $(document).off(''change.p133permstate'', ''#P133_DISPLAY, #P133_PARENT_FOLDER_ID, #P133_FILE_LEVEL'').on(''change.p133permstate'', ''#P133_DISPLAY, #P133_PARENT_FOLDER_ID, #P133_FILE_LEVEL'', function() {',
 '        if (window.p133ScheduleViewSync) { window.p133ScheduleViewSync(); }',
 '    });',
-'    $(document).off(''apexafterrefresh.p133'', ''#content, #content_ig'').on(''apexafterrefresh.p133'', ''#content, #content_ig'', function() { if (window.p133ScheduleViewSync) { window.p133ScheduleViewSync(); } });',
+'    $(document).off(''apexafterrefresh.p133'', ''#content, #content_ig, #p133_cards'').on(''apexafterrefresh.p133'', ''#content, #content_ig, #p133_cards'', function() { if (window.p133ScheduleViewSync) { window.p133ScheduleViewSync(); } });',
 '    if (window.p133SyncView) { window.p133SyncView(); }',
 '};',
 '',
@@ -1176,16 +1327,16 @@ unistr('    return errorThrown || textStatus || ''\4FDD\5B58\6392\5E8F\5931\8D25
 '',
 '            if (response && response.status && response.status !== ''success'') {',
 unistr('                apex.message.alert(response.message || ''\4FDD\5B58\6392\5E8F\5931\8D25'');'),
-'                region.refresh();',
+'                p133RefreshContent();',
 '                return;',
 '            }',
 '',
 unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');'),
-'            region.refresh();',
+'            p133RefreshContent();',
 '        },',
 '        error: function(jqXHR, textStatus, errorThrown) {',
 '            apex.message.alert(p133GetDragErrorMessage(jqXHR, textStatus, errorThrown));',
-'            region.refresh();',
+'            p133RefreshContent();',
 '        }',
 '    });',
 '}',
@@ -1543,14 +1694,35 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    background: #f0f2f5;',
 '}',
 '',
-'.t-BreadcrumbRegion {',
+'.t-BreadcrumbRegion:not(#p133_titlebar) {',
+'    display: none;',
+'}',
+'',
+'#p133_titlebar {',
+'    display: block;',
+'    margin: 0 0 12px 0;',
+'    background: transparent;',
+'    border: 0;',
+'}',
+'',
+'#p133_titlebar .t-BreadcrumbRegion-top {',
+'    min-height: 44px;',
+'    padding: 0;',
+'}',
+'',
+'#p133_titlebar .t-BreadcrumbRegion-body {',
+'    min-width: 0;',
+'}',
+'',
+'#p133_titlebar .t-BreadcrumbRegion-breadcrumb {',
+'    margin-bottom: 4px;',
+'}',
+'',
+'#p133_titlebar .t-BreadcrumbRegion-title {',
 '    display: none;',
 '}',
 '',
 '#p133_toolbar {',
-'    display: flex;',
-'    flex-direction: column;',
-'    gap: 0;',
 '    margin: 0 0 16px 0;',
 '    width: 100%;',
 '    clear: both;',
@@ -1559,12 +1731,11 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    z-index: 400;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-top,',
-'#p133_toolbar .p133-toolbar-left,',
-'#p133_toolbar .p133-toolbar-right,',
-'#p133_toolbar .p133-toolbar-actions,',
-'#p133_toolbar .p133-toolbar-controls,',
-'#p133_toolbar .p133-view-toggle,',
+'#p133_toolbar .t-ButtonRegion-wrap,',
+'#p133_toolbar .t-ButtonRegion-buttons,',
+'#p133_toolbar .t-ButtonRegion-col,',
+'#p133_toolbar .p133-selection-panel,',
+'#p133_toolbar .p133-selection-actions,',
 '#p133_toolbar .p133-selection-inline {',
 '    display: flex;',
 '    align-items: center;',
@@ -1572,27 +1743,51 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    flex-wrap: wrap;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-top {',
+'#p133_toolbar .t-ButtonRegion-wrap {',
 '    justify-content: space-between;',
 '    padding: 0;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-left {',
+'#p133_toolbar .t-ButtonRegion-col--left .t-ButtonRegion-buttons {',
 '    gap: 12px;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-right {',
+'#p133_toolbar .t-ButtonRegion-col--content {',
 '    justify-content: flex-end;',
 '    flex: 1;',
 '    min-width: 0;',
+'    gap: 8px;',
 '}',
 '',
-'#p133_toolbar .p133-selection-inline {',
+'#p133_toolbar .t-ButtonRegion-col--content > .t-ButtonRegion-buttons {',
+'    order: 2;',
+'}',
+'',
+'#p133_toolbar .t-ButtonRegion-col--content > .t-ButtonRegion-buttons:empty {',
 '    display: none;',
+'}',
+'',
+'#p133_toolbar .t-ButtonRegion-col--right .t-ButtonRegion-buttons {',
+'    justify-content: flex-end;',
+'    gap: 0;',
+'}',
+'',
+'#p133_toolbar .p133-toolbar-body {',
+'    display: contents;',
+'}',
+'',
+'#p133_toolbar .p133-selection-panel {',
+'    display: none;',
+'    order: 1;',
 '    padding: 8px 14px;',
 '    border: 1px solid #91d5ff;',
 '    border-radius: 8px;',
 '    background: linear-gradient(135deg, #e6f7ff 0%, #f7fbff 100%);',
+'}',
+'',
+'#p133_toolbar .p133-selection-inline,',
+'#p133_toolbar .p133-selection-actions {',
+'    gap: 8px;',
 '}',
 '',
 '#p133_toolbar .p133-selection-count {',
@@ -1607,10 +1802,11 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    background: #91d5ff;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn,',
-'#p133_toolbar .p133-control-btn,',
-'#p133_toolbar .p133-view-btn,',
-'#p133_pathbar button {',
+'#p133_toolbar .t-Button.p133-toolbar-btn,',
+'#p133_toolbar .t-Button.p133-control-btn,',
+'#p133_toolbar .t-Button.p133-view-btn,',
+'#p133_toolbar .p133-sort-trigger,',
+'#p133_titlebar_path button {',
 '    display: inline-flex;',
 '    align-items: center;',
 '    justify-content: center;',
@@ -1627,13 +1823,14 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    transition: all 0.2s ease;',
 '}',
 '',
-'#p133_toolbar .p133-control-btn,',
-'#p133_toolbar .p133-view-btn {',
+'#p133_toolbar .t-Button.p133-control-btn,',
+'#p133_toolbar .t-Button.p133-view-btn,',
+'#p133_toolbar .p133-sort-trigger {',
 '    min-width: 36px;',
 '    padding: 0 12px;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn.is-inline {',
+'#p133_toolbar .t-Button.p133-toolbar-btn.is-inline {',
 '    min-height: 32px;',
 '    padding: 0 10px;',
 '    border-color: transparent;',
@@ -1641,48 +1838,64 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    color: #0050b3;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn.is-danger {',
+'#p133_toolbar .t-Button.p133-selection-action {',
+'    display: none;',
+'}',
+'',
+'#p133_toolbar #btn_upload,',
+'#p133_toolbar #btn_create_folder {',
+'    display: none;',
+'}',
+'',
+'#p133_toolbar #p133_btn_refresh {',
+'    margin-left: 8px;',
+'}',
+'',
+'#p133_toolbar .t-Button.p133-toolbar-btn.is-danger {',
 '    color: #ff4d4f;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn.is-primary {',
+'#p133_toolbar .t-Button.p133-toolbar-btn.is-primary {',
 '    border-color: #1890ff;',
 '    background: #1890ff;',
 '    color: #fff;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn:hover:not(:disabled),',
-'#p133_toolbar .p133-control-btn:hover:not(:disabled),',
-'#p133_toolbar .p133-view-btn:hover:not(:disabled),',
-'#p133_pathbar button:hover:not(:disabled) {',
+'#p133_toolbar .t-Button.p133-toolbar-btn:hover:not(:disabled),',
+'#p133_toolbar .t-Button.p133-control-btn:hover:not(:disabled),',
+'#p133_toolbar .t-Button.p133-view-btn:hover:not(:disabled),',
+'#p133_toolbar .p133-sort-trigger:hover:not(:disabled),',
+'#p133_titlebar_path button:hover:not(:disabled) {',
 '    border-color: #1890ff;',
 '    color: #1890ff;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn.is-inline:hover:not(:disabled) {',
+'#p133_toolbar .t-Button.p133-toolbar-btn.is-inline:hover:not(:disabled) {',
 '    border-color: transparent;',
 '    background: rgba(24,144,255,0.12);',
 '    color: #1890ff;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn.is-inline.is-danger:hover:not(:disabled) {',
+'#p133_toolbar .t-Button.p133-toolbar-btn.is-inline.is-danger:hover:not(:disabled) {',
 '    background: rgba(255,77,79,0.10);',
 '    color: #ff4d4f;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn.is-primary:hover:not(:disabled) {',
+'#p133_toolbar .t-Button.p133-toolbar-btn.is-primary:hover:not(:disabled) {',
 '    background: #40a9ff;',
 '    color: #fff;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn:focus,',
-'#p133_toolbar .p133-toolbar-btn:focus-visible,',
-'#p133_toolbar .p133-control-btn:focus,',
-'#p133_toolbar .p133-control-btn:focus-visible,',
-'#p133_toolbar .p133-view-btn:focus,',
-'#p133_toolbar .p133-view-btn:focus-visible,',
-'#p133_pathbar button:focus,',
-'#p133_pathbar button:focus-visible,',
+'#p133_toolbar .t-Button.p133-toolbar-btn:focus,',
+'#p133_toolbar .t-Button.p133-toolbar-btn:focus-visible,',
+'#p133_toolbar .t-Button.p133-control-btn:focus,',
+'#p133_toolbar .t-Button.p133-control-btn:focus-visible,',
+'#p133_toolbar .t-Button.p133-view-btn:focus,',
+'#p133_toolbar .t-Button.p133-view-btn:focus-visible,',
+'#p133_toolbar .p133-sort-trigger:focus,',
+'#p133_toolbar .p133-sort-trigger:focus-visible,',
+'#p133_titlebar_path button:focus,',
+'#p133_titlebar_path button:focus-visible,',
 '.p133-card-open:focus,',
 '.p133-card-open:focus-visible,',
 '.p133-card-checkbox:focus,',
@@ -1691,14 +1904,15 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    box-shadow: none;',
 '}',
 '',
-'#p133_toolbar .p133-toolbar-btn:disabled,',
-'#p133_toolbar .p133-control-btn:disabled,',
-'#p133_toolbar .p133-view-btn:disabled {',
+'#p133_toolbar .t-Button.p133-toolbar-btn:disabled,',
+'#p133_toolbar .t-Button.p133-control-btn:disabled,',
+'#p133_toolbar .t-Button.p133-view-btn:disabled,',
+'#p133_toolbar .p133-sort-trigger:disabled {',
 '    cursor: not-allowed;',
 '    opacity: .45;',
 '}',
 '',
-'#p133_toolbar .p133-view-btn.is-active {',
+'#p133_toolbar .t-Button.p133-view-btn.is-active {',
 '    border-color: #1890ff;',
 '    background: #e6f7ff;',
 '    color: #1890ff;',
@@ -1706,6 +1920,7 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '',
 '#p133_toolbar .p133-sort-box {',
 '    position: relative;',
+'    order: 3;',
 '    z-index: 410;',
 '}',
 '',
@@ -1760,7 +1975,7 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    font-weight: 600;',
 '}',
 '',
-'#p133_pathbar {',
+'#p133_titlebar_path {',
 '    display: flex;',
 '    align-items: center;',
 '    gap: 8px;',
@@ -1778,7 +1993,7 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    box-shadow: none;',
 '}',
 '',
-'#p133_pathbar .p133-crumbs {',
+'#p133_titlebar_path .p133-crumbs {',
 '    display: flex;',
 '    align-items: center;',
 '    flex: 1;',
@@ -1790,7 +2005,7 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    text-overflow: ellipsis;',
 '}',
 '',
-'#p133_pathbar button {',
+'#p133_titlebar_path button {',
 '    min-width: 28px;',
 '    height: 28px;',
 '    padding: 0 6px;',
@@ -1798,7 +2013,7 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    background: transparent;',
 '}',
 '',
-'#p133_pathbar .p133-crumb {',
+'#p133_titlebar_path .p133-crumb {',
 '    width: auto;',
 '    max-width: 320px;',
 '    padding: 0;',
@@ -1812,13 +2027,13 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    vertical-align: middle;',
 '}',
 '',
-'#p133_pathbar .p133-crumb.is-current {',
+'#p133_titlebar_path .p133-crumb.is-current {',
 '    color: #333;',
 '    font-weight: 600;',
 '    cursor: default;',
 '}',
 '',
-'#p133_pathbar .p133-sep {',
+'#p133_titlebar_path .p133-sep {',
 '    color: #bfbfbf;',
 '    display: inline-flex;',
 '    align-items: center;',
@@ -1894,7 +2109,8 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    box-shadow: none !important;',
 '}',
 '',
-'.p133-grid-view {',
+'#p133_cards .a-CardView-items,',
+'#p133_cards .t-Cards {',
 '    display: grid;',
 '    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));',
 '    gap: 14px;',
@@ -1905,7 +2121,30 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    box-shadow: 0 1px 4px rgba(0,0,0,0.06);',
 '}',
 '',
-'.p133-card {',
+'#p133_cards .a-CardView-item,',
+'#p133_cards .t-Cards-item {',
+'    list-style: none;',
+'}',
+'',
+'#p133_cards .a-CardView-card,',
+'#p133_cards .t-Card {',
+'    height: 100%;',
+'    border: 0;',
+'    background: transparent;',
+'    box-shadow: none;',
+'}',
+'',
+'#p133_cards .a-CardView-header,',
+'#p133_cards .t-Card-header {',
+'    display: none;',
+'}',
+'',
+'#p133_cards .a-CardView-body,',
+'#p133_cards .t-Card-body {',
+'    padding: 0;',
+'}',
+'',
+'.p133-card-body {',
 '    position: relative;',
 '    display: flex;',
 '    flex-direction: column;',
@@ -1918,12 +2157,12 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    color: #334155;',
 '}',
 '',
-'.p133-card:hover {',
+'.p133-card-body:hover {',
 '    border-color: #91d5ff;',
 '    background: #fafafa;',
 '}',
 '',
-'.p133-card.is-selected {',
+'.p133-card-body.is-selected {',
 '    border-color: #1890ff;',
 '    box-shadow: inset 0 0 0 1px #1890ff;',
 '    background: #e6f7ff;',
@@ -2002,9 +2241,11 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    box-shadow: none;',
 '}',
 '',
-'.p133-card-open .fa {',
-'    font-size: 30px;',
-'    color: #1890ff;',
+'.p133-card-open .p133-doc-icon {',
+'    width: 48px;',
+'    height: 48px;',
+'    border-radius: 10px;',
+'    font-size: 26px;',
 '    margin-bottom: 8px;',
 '}',
 '',
@@ -2017,18 +2258,45 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    white-space: nowrap;',
 '}',
 '',
-'.p133-grid-empty {',
-'    display: flex;',
-'    align-items: center;',
-'    justify-content: center;',
-'    min-height: 120px;',
-'    border: 1px dashed #d9d9d9;',
-'    border-radius: 8px;',
-'    color: #999;',
-'    background: #fff;',
+'.p133-card-menu-handle {',
+'    position: absolute;',
+'    right: 8px;',
+'    top: 8px;',
+'    z-index: 2;',
+'    width: 24px;',
+'    height: 24px;',
+'    border: 0;',
+'    border-radius: 6px;',
+'    background: transparent;',
+'    color: #64748b;',
+'    cursor: pointer;',
+'    box-shadow: none;',
 '}',
 '',
-'#p133_pathbar.is-root .p133-up {',
+'.p133-card-menu-handle:hover,',
+'.p133-card-menu-handle:focus {',
+'    background: #eef6ff;',
+'    color: #1677ff;',
+'    outline: none;',
+'}',
+'',
+'.p133-card-body.is-card-dragging,',
+'.p133-card.is-card-dragging .p133-card-body,',
+'#p133_cards .t-Cards-item.is-card-dragging .p133-card-body,',
+'#p133_cards .a-CardView-item.is-card-dragging .p133-card-body {',
+'    opacity: .45;',
+'}',
+'',
+'.p133-card-drag-ghost {',
+'    position: fixed !important;',
+'    z-index: 9999;',
+'    width: 150px;',
+'    pointer-events: none;',
+'    opacity: .82;',
+'    transform: rotate(1deg);',
+'}',
+'',
+'#p133_titlebar_path.is-root .p133-up {',
 '    opacity: .45;',
 '    cursor: default;',
 '}',
@@ -2150,18 +2418,47 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 '    text-decoration: none;',
 '}',
 '',
-'.p133-file-name .fa {',
-'    color: #1890ff;',
-'    font-size: 18px;',
+'.p133-doc-icon {',
+'    display: inline-flex;',
+'    align-items: center;',
+'    justify-content: center;',
+'    flex-shrink: 0;',
+'    width: 24px;',
+'    height: 24px;',
+'    border-radius: 6px;',
+'    font-size: 15px;',
+'    line-height: 1;',
+'}',
+'',
+'.p133-doc-icon.word { background: #e6f7ff; color: #1890ff; }',
+'.p133-doc-icon.pdf { background: #fff1f0; color: #ff4d4f; }',
+'.p133-doc-icon.excel { background: #f6ffed; color: #52c41a; }',
+'.p133-doc-icon.ppt { background: #fff7e6; color: #fa8c16; }',
+'.p133-doc-icon.txt,',
+'.p133-doc-icon.md,',
+'.p133-doc-icon.zip,',
+'.p133-doc-icon.other { background: #f5f5f5; color: #595959; }',
+'.p133-doc-icon.image { background: #fff0f6; color: #eb2f96; }',
+'.p133-doc-icon.video { background: #e6fffb; color: #13c2c2; }',
+'.p133-doc-icon.audio { background: #fff7e6; color: #fa8c16; }',
+'.p133-doc-icon.code { background: #f0f5ff; color: #722ed1; }',
+'.p133-doc-icon.folder { background: #fffbe6; color: #faad14; }',
+'',
+'.p133-doc-icon i {',
+'    display: inline-flex;',
+'    align-items: center;',
+'    justify-content: center;',
+'    line-height: 1;',
 '}',
 '',
 '@media (max-width: 960px) {',
-'    #p133_toolbar .p133-toolbar-top {',
+'    #p133_toolbar .t-ButtonRegion-wrap {',
 '        align-items: flex-start;',
 '        flex-direction: column;',
 '    }',
 '',
-'    #p133_toolbar .p133-toolbar-right {',
+'    #p133_toolbar .t-ButtonRegion-col--content,',
+'    #p133_toolbar .t-ButtonRegion-col--right {',
 '        justify-content: flex-start;',
 '        width: 100%;',
 '    }',
@@ -2177,53 +2474,49 @@ unistr('            apex.message.showPageSuccess(''\6392\5E8F\5DF2\4FDD\5B58'');
 ,p_page_component_map=>'21'
 );
 wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(821088635529156930)
+,p_plug_name=>unistr('\76EE\5F55\8DEF\5F84')
+,p_region_name=>'p133_titlebar'
+,p_region_css_classes=>'p133-titlebar'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--showBreadcrumb:t-BreadcrumbRegion--useRegionTitle'
+,p_plug_template=>wwv_flow_imp.id(9760098362117264255)
+,p_plug_display_sequence=>145
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+unistr('<div id="p133_titlebar_path" class="p133-titlebar-path"><button type="button" class="p133-up" title="\8FD4\56DE\4E0A\4E00\7EA7" aria-label="\8FD4\56DE\4E0A\4E00\7EA7"><span class="fa fa-arrow-up" aria-hidden="true"></span></button><div class="p133-crumbs"></div></div>')))
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'HTML')).to_clob
+,p_plug_source_type=>'NATIVE_STATIC'
+);
+wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(821088635529155495)
 ,p_plug_name=>unistr('\6309\94AE\533A\57DF')
+,p_region_name=>'p133_toolbar'
 ,p_region_template_options=>'#DEFAULT#:t-ButtonRegion--noUI'
 ,p_plug_template=>wwv_flow_imp.id(9760042325985264236)
 ,p_plug_display_sequence=>150
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'<div id="p133_toolbar" class="p133-toolbar">',
-'  <div class="p133-toolbar-top">',
-'    <div class="p133-toolbar-left">',
-unistr('      <button type="button" class="p133-toolbar-btn is-primary" data-p133-action="upload"><span class="fa fa-upload" aria-hidden="true"></span><span class="p133-btn-text">\4E0A\4F20\6587\4EF6</span></button>'),
-unistr('      <button type="button" class="p133-toolbar-btn" data-p133-action="create_folder"><span class="fa fa-folder-o" aria-hidden="true"></span><span class="p133-btn-text">\65B0\5EFA\6587\4EF6\5939</span></button>'),
+'<div class="p133-toolbar-body">',
+'  <div class="p133-selection-panel">',
+'    <div class="p133-selection-inline">',
+unistr('      <span class="p133-selection-count">\5DF2\9009\4E2D <span class="p133-selection-count-value">0</span> \9879</span>'),
+'      <span class="p133-selection-divider" aria-hidden="true"></span>',
 '    </div>',
-'    <div class="p133-toolbar-right">',
-'      <div class="p133-selection-inline">',
-unistr('        <span class="p133-selection-count">\5DF2\9009\4E2D <span class="p133-selection-count-value">0</span> \9879</span>'),
-'        <span class="p133-selection-divider" aria-hidden="true"></span>',
-'        <div class="p133-toolbar-actions">',
-unistr('          <button type="button" class="p133-toolbar-btn is-inline" data-p133-action="share"><span class="fa fa-share-alt" aria-hidden="true"></span><span class="p133-btn-text">\5206\4EAB</span></button>'),
-unistr('          <button type="button" class="p133-toolbar-btn is-inline" data-p133-action="rename"><span class="fa fa-pencil" aria-hidden="true"></span><span class="p133-btn-text">\91CD\547D\540D</span></button>'),
-unistr('          <button type="button" class="p133-toolbar-btn is-inline" data-p133-action="move"><span class="fa fa-exchange" aria-hidden="true"></span><span class="p133-btn-text">\79FB\52A8\5230...</span></button>'),
-unistr('          <button type="button" class="p133-toolbar-btn is-inline" data-p133-action="settings"><span class="fa fa-lock" aria-hidden="true"></span><span class="p133-btn-text">\6743\9650\8BBE\7F6E</span></button>'),
-unistr('          <button type="button" class="p133-toolbar-btn is-inline is-danger" data-p133-action="delete"><span class="fa fa-trash-o" aria-hidden="true"></span><span class="p133-btn-text">\5220\9664</span></button>'),
-'        </div>',
-'      </div>',
-'      <div class="p133-toolbar-controls">',
-'        <div class="p133-sort-box">',
-unistr('          <button type="button" class="p133-control-btn p133-sort-trigger" title="\6392\5E8F\65B9\6848"><span class="p133-sort-label">\9ED8\8BA4</span><span class="fa fa-angle-down" aria-hidden="true"></span></button>'),
-'          <div class="p133-sort-menu">',
-unistr('            <div class="p133-sort-title">\89C4\5219\6392\5E8F</div>'),
-unistr('            <button type="button" class="p133-sort-option" data-sort="NAME_ASC">\6587\4EF6\540D</button>'),
-unistr('            <button type="button" class="p133-sort-option" data-sort="UPDATE_DESC">\66F4\65B0\65F6\95F4\4ECE\8FD1\5230\8FDC</button>'),
-unistr('            <button type="button" class="p133-sort-option" data-sort="UPDATE_ASC">\66F4\65B0\65F6\95F4\4ECE\8FDC\5230\8FD1</button>'),
-unistr('            <button type="button" class="p133-sort-option" data-sort="CREATION_DESC">\521B\5EFA\65F6\95F4\4ECE\8FD1\5230\8FDC</button>'),
-unistr('            <button type="button" class="p133-sort-option" data-sort="CREATION_ASC">\521B\5EFA\65F6\95F4\4ECE\8FDC\5230\8FD1</button>'),
-unistr('            <button type="button" class="p133-sort-option" data-sort="MANUAL">\9ED8\8BA4</button>'),
-'          </div>',
-'        </div>',
-'        <div class="p133-view-toggle">',
-unistr('          <button type="button" class="p133-view-btn" data-view-mode="list" title="\5217\8868\89C6\56FE" aria-label="\5217\8868\89C6\56FE"><span class="fa fa-list" aria-hidden="true"></span></button>'),
-unistr('          <button type="button" class="p133-view-btn" data-view-mode="grid" title="\7F51\683C\89C6\56FE" aria-label="\7F51\683C\89C6\56FE"><span class="fa fa-th-large" aria-hidden="true"></span></button>'),
-'        </div>',
-unistr('        <button type="button" class="p133-control-btn p133-refresh" title="\5237\65B0\5F53\524D\76EE\5F55" aria-label="\5237\65B0\5F53\524D\76EE\5F55"><span class="fa fa-refresh" aria-hidden="true"></span></button>'),
-'      </div>',
+'    <div class="p133-selection-actions"></div>',
+'  </div>',
+'  <div class="p133-sort-box">',
+unistr('    <button type="button" class="p133-sort-trigger" title="\6392\5E8F\65B9\6848"><span class="p133-sort-label">\9ED8\8BA4</span><span class="fa fa-angle-down" aria-hidden="true"></span></button>'),
+'    <div class="p133-sort-menu">',
+unistr('      <div class="p133-sort-title">\89C4\5219\6392\5E8F</div>'),
+unistr('      <button type="button" class="p133-sort-option" data-sort="NAME_ASC">\6587\4EF6\540D</button>'),
+unistr('      <button type="button" class="p133-sort-option" data-sort="UPDATE_DESC">\66F4\65B0\65F6\95F4\4ECE\8FD1\5230\8FDC</button>'),
+unistr('      <button type="button" class="p133-sort-option" data-sort="UPDATE_ASC">\66F4\65B0\65F6\95F4\4ECE\8FDC\5230\8FD1</button>'),
+unistr('      <button type="button" class="p133-sort-option" data-sort="CREATION_DESC">\521B\5EFA\65F6\95F4\4ECE\8FD1\5230\8FDC</button>'),
+unistr('      <button type="button" class="p133-sort-option" data-sort="CREATION_ASC">\521B\5EFA\65F6\95F4\4ECE\8FDC\5230\8FD1</button>'),
+unistr('      <button type="button" class="p133-sort-option" data-sort="MANUAL">\9ED8\8BA4</button>'),
 '    </div>',
 '  </div>',
-'</div>',
-unistr('<div id="p133_pathbar" class="p133-pathbar"><button type="button" class="p133-up" title="\8FD4\56DE\4E0A\4E00\7EA7" aria-label="\8FD4\56DE\4E0A\4E00\7EA7"><span class="fa fa-arrow-up" aria-hidden="true"></span></button><div class="p133-crumbs"></div></div>')))
+'</div>'))
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'expand_shortcuts', 'N',
   'output_as', 'HTML')).to_clob
@@ -2242,11 +2535,42 @@ wwv_flow_imp_page.create_page_plug(
 '       A.ROOT_FOLDER_ID,',
 '       A.PARENT_FOLDER_ID,',
 '       A.FILE_NAME,',
+'       CASE WHEN LENGTH(A.FILE_NAME) > 50 THEN SUBSTR(A.FILE_NAME, 1, 50) || ''...'' ELSE A.FILE_NAME END AS FILE_DISPLAY_NAME,',
+'       CASE WHEN LENGTH(A.FILE_NAME) > 10 THEN SUBSTR(A.FILE_NAME, 1, 10) || ''...'' ELSE A.FILE_NAME END AS CARD_DISPLAY_NAME,',
 '       A.FILE_FORMAT,',
 '       ROW_NUMBER() OVER (ORDER BY NVL(A.SORT_NUM, 999999999), A.FILE_ID) AS SORT_NUM,',
 '       A.FILE_TYPE,',
 '       CASE WHEN A.FILE_TYPE = ''FOLDER'' THEN CAST(unistr(''\6587\4EF6\5939'') AS VARCHAR2(30 CHAR)) ELSE NVL(A.FILE_FORMAT,CAST(unistr(''\6587\4EF6'') AS VARCHAR2(30 CHAR))) END AS TYPE_LABEL,',
-'       CASE WHEN A.FILE_TYPE = ''FOLDER'' THEN ''fa-folder-o'' ELSE ''fa-file-o'' END AS ICON_CLASS,',
+'       CASE',
+'           WHEN A.FILE_TYPE = ''FOLDER'' THEN ''folder''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''doc'', ''docx'', ''wps'') THEN ''word''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''pdf'' THEN ''pdf''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''xls'', ''xlsx'', ''csv'') THEN ''excel''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''ppt'', ''pptx'') THEN ''ppt''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''txt'', ''rtf'') THEN ''txt''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''md'' THEN ''md''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''png'', ''jpg'', ''jpeg'', ''gif'', ''bmp'', ''webp'', ''svg'') THEN ''image''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp4'', ''avi'', ''mov'', ''wmv'', ''mkv'', ''flv'') THEN ''video''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp3'', ''wav'', ''flac'', ''aac'', ''ogg'') THEN ''audio''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''html'', ''css'', ''js'', ''ts'', ''json'', ''xml'', ''sql'', ''java'', ''py'', ''cs'', ''cpp'', ''c'', ''go'', ''php'', ''vue'') THEN ''code''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''zip'', ''rar'', ''7z'', ''tar'', ''gz'') THEN ''zip''',
+'           ELSE ''other''',
+'       END AS ICON_TYPE,',
+'       CASE',
+'           WHEN A.FILE_TYPE = ''FOLDER'' THEN ''ri-folder-3-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''doc'', ''docx'', ''wps'') THEN ''ri-file-word-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''pdf'' THEN ''ri-file-pdf-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''xls'', ''xlsx'', ''csv'') THEN ''ri-file-excel-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''ppt'', ''pptx'') THEN ''ri-file-ppt-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''txt'', ''rtf'') THEN ''ri-file-text-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''md'' THEN ''ri-markdown-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''png'', ''jpg'', ''jpeg'', ''gif'', ''bmp'', ''webp'', ''svg'') THEN ''ri-image-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp4'', ''avi'', ''mov'', ''wmv'', ''mkv'', ''flv'') THEN ''ri-video-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp3'', ''wav'', ''flac'', ''aac'', ''ogg'') THEN ''ri-music-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''html'', ''css'', ''js'', ''ts'', ''json'', ''xml'', ''sql'', ''java'', ''py'', ''cs'', ''cpp'', ''c'', ''go'', ''php'', ''vue'') THEN ''ri-file-code-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''zip'', ''rar'', ''7z'', ''tar'', ''gz'') THEN ''ri-folder-zip-fill''',
+'           ELSE ''ri-file-3-fill''',
+'       END AS ICON_CLASS,',
 '       --        A.UPDATED_BY,       ',
 unistr('       NVL(U.NAME, TO_CHAR(NVL(A.UPDATED_BY, A.CREATED_BY))) AS UPDATED_BY,  -- \5217\8868\66F4\65B0\4EBA\5C55\793A\4EBA\540D'),
 '       A.UPDATE_DATE,',
@@ -2490,10 +2814,10 @@ wwv_flow_imp_page.create_region_column(
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'html_expression', wwv_flow_string.join(wwv_flow_t_varchar2(
     '<span class="p133-file-cell">',
-    '	<a href="javascript:void(0)" class="p133-file-name p133-file-open p133-file-type-&FILE_TYPE." data-file-id="&FILE_ID." data-file-type="&FILE_TYPE.">',
+    '	<a href="javascript:void(0)" class="p133-file-name p133-file-open p133-file-type-&FILE_TYPE." data-file-id="&FILE_ID." data-file-type="&FILE_TYPE." title="&FILE_NAME!ATTR.">',
     '      <span class="p133-file-label">',
-    '        <span class="fa &ICON_CLASS." aria-hidden="true"></span>',
-    '		  <span>&FILE_NAME.</span>',
+    '        <span class="p133-doc-icon &ICON_TYPE." aria-hidden="true"><i class="&ICON_CLASS."></i></span>',
+    '		  <span>&FILE_DISPLAY_NAME!HTML.</span>',
     '      </span>',
     '	</a>',
     '  <span class="p133-row-actions" data-can-manage="&IS_PERMISSIONS.">',
@@ -2510,6 +2834,24 @@ wwv_flow_imp_page.create_region_column(
 ,p_is_primary_key=>false
 ,p_duplicate_value=>true
 ,p_include_in_export=>true
+);
+wwv_flow_imp_page.create_region_column(
+ p_id=>wwv_flow_imp.id(821088635529156931)
+,p_name=>'FILE_DISPLAY_NAME'
+,p_source_type=>'DB_COLUMN'
+,p_source_expression=>'FILE_DISPLAY_NAME'
+,p_data_type=>'VARCHAR2'
+,p_session_state_data_type=>'VARCHAR2'
+,p_is_query_only=>true
+,p_item_type=>'NATIVE_HIDDEN'
+,p_display_sequence=>61
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'N')).to_clob
+,p_use_as_row_header=>false
+,p_enable_sort_group=>false
+,p_is_primary_key=>false
+,p_duplicate_value=>true
+,p_include_in_export=>false
 );
 wwv_flow_imp_page.create_region_column(
  p_id=>wwv_flow_imp.id(821088635529155504)
@@ -2617,6 +2959,24 @@ wwv_flow_imp_page.create_region_column(
 ,p_is_primary_key=>false
 ,p_duplicate_value=>true
 ,p_include_in_export=>true
+);
+wwv_flow_imp_page.create_region_column(
+ p_id=>wwv_flow_imp.id(821088635529156912)
+,p_name=>'ICON_TYPE'
+,p_source_type=>'DB_COLUMN'
+,p_source_expression=>'ICON_TYPE'
+,p_data_type=>'VARCHAR2'
+,p_session_state_data_type=>'VARCHAR2'
+,p_is_query_only=>true
+,p_item_type=>'NATIVE_HIDDEN'
+,p_display_sequence=>95
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'N')).to_clob
+,p_use_as_row_header=>false
+,p_enable_sort_group=>false
+,p_is_primary_key=>false
+,p_duplicate_value=>true
+,p_include_in_export=>false
 );
 wwv_flow_imp_page.create_region_column(
  p_id=>wwv_flow_imp.id(821088635529155509)
@@ -3004,17 +3364,155 @@ wwv_flow_imp_page.create_ig_report_column(
 ,p_is_frozen=>false
 );
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(821088635529155497)
-,p_plug_name=>unistr('\9762\5305\5C51')
+ p_id=>wwv_flow_imp.id(821088635529158201)
+,p_plug_name=>unistr('\7F51\683C\89C6\56FE')
+,p_region_name=>'p133_cards'
 ,p_region_template_options=>'#DEFAULT#'
-,p_component_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_imp.id(9760098362117264255)
-,p_plug_display_sequence=>150
-,p_plug_display_point=>'REGION_POSITION_01'
-,p_plug_display_condition_type=>'NEVER'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'expand_shortcuts', 'N',
-  'output_as', 'HTML')).to_clob
+,p_plug_template=>wwv_flow_imp.id(9760076177015264248)
+,p_plug_display_sequence=>175
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT A.FILE_ID,',
+'       A.ROOT_FOLDER_ID,',
+'       A.PARENT_FOLDER_ID,',
+'       A.FILE_NAME,',
+'       CASE WHEN LENGTH(A.FILE_NAME) > 50 THEN SUBSTR(A.FILE_NAME, 1, 50) || ''...'' ELSE A.FILE_NAME END AS FILE_DISPLAY_NAME,',
+'       CASE WHEN LENGTH(A.FILE_NAME) > 10 THEN SUBSTR(A.FILE_NAME, 1, 10) || ''...'' ELSE A.FILE_NAME END AS CARD_DISPLAY_NAME,',
+'       A.FILE_FORMAT,',
+'       ROW_NUMBER() OVER (ORDER BY NVL(A.SORT_NUM, 999999999), A.FILE_ID) AS SORT_NUM,',
+'       A.FILE_TYPE,',
+'       CASE WHEN A.FILE_TYPE = ''FOLDER'' THEN CAST(unistr(''\6587\4EF6\5939'') AS VARCHAR2(30 CHAR)) ELSE NVL(A.FILE_FORMAT,CAST(unistr(''\6587\4EF6'') AS VARCHAR2(30 CHAR))) END AS TYPE_LABEL,',
+'       CASE',
+'           WHEN A.FILE_TYPE = ''FOLDER'' THEN ''folder''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''doc'', ''docx'', ''wps'') THEN ''word''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''pdf'' THEN ''pdf''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''xls'', ''xlsx'', ''csv'') THEN ''excel''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''ppt'', ''pptx'') THEN ''ppt''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''txt'', ''rtf'') THEN ''txt''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''md'' THEN ''md''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''png'', ''jpg'', ''jpeg'', ''gif'', ''bmp'', ''webp'', ''svg'') THEN ''image''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp4'', ''avi'', ''mov'', ''wmv'', ''mkv'', ''flv'') THEN ''video''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp3'', ''wav'', ''flac'', ''aac'', ''ogg'') THEN ''audio''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''html'', ''css'', ''js'', ''ts'', ''json'', ''xml'', ''sql'', ''java'', ''py'', ''cs'', ''cpp'', ''c'', ''go'', ''php'', ''vue'') THEN ''code''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''zip'', ''rar'', ''7z'', ''tar'', ''gz'') THEN ''zip''',
+'           ELSE ''other''',
+'       END AS ICON_TYPE,',
+'       CASE',
+'           WHEN A.FILE_TYPE = ''FOLDER'' THEN ''ri-folder-3-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''doc'', ''docx'', ''wps'') THEN ''ri-file-word-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''pdf'' THEN ''ri-file-pdf-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''xls'', ''xlsx'', ''csv'') THEN ''ri-file-excel-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''ppt'', ''pptx'') THEN ''ri-file-ppt-2-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''txt'', ''rtf'') THEN ''ri-file-text-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) = ''md'' THEN ''ri-markdown-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''png'', ''jpg'', ''jpeg'', ''gif'', ''bmp'', ''webp'', ''svg'') THEN ''ri-image-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp4'', ''avi'', ''mov'', ''wmv'', ''mkv'', ''flv'') THEN ''ri-video-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''mp3'', ''wav'', ''flac'', ''aac'', ''ogg'') THEN ''ri-music-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''html'', ''css'', ''js'', ''ts'', ''json'', ''xml'', ''sql'', ''java'', ''py'', ''cs'', ''cpp'', ''c'', ''go'', ''php'', ''vue'') THEN ''ri-file-code-fill''',
+'           WHEN LOWER(LTRIM(NVL(NULLIF(A.FILE_FORMAT, ''''), REGEXP_SUBSTR(A.FILE_NAME, ''\.([^.]+)$'', 1, 1, NULL, 1)), ''.'')) IN (''zip'', ''rar'', ''7z'', ''tar'', ''gz'') THEN ''ri-folder-zip-fill''',
+'           ELSE ''ri-file-3-fill''',
+'       END AS ICON_CLASS,',
+'       --        A.UPDATED_BY,       ',
+unistr('       NVL(U.NAME, TO_CHAR(NVL(A.UPDATED_BY, A.CREATED_BY))) AS UPDATED_BY,  -- \5217\8868\66F4\65B0\4EBA\5C55\793A\4EBA\540D'),
+'       A.UPDATE_DATE,',
+'       A.SCOPE_TYPE,',
+'       A.FILE_VERSION_TAG,',
+'       ''''             AS                   OPERATE,',
+'       CASE',
+'           WHEN FILE_TYPE = ''FOLDER'' THEN 0',
+'           ELSE 1 END AS                   IS_HIDE,',
+'       CASE  WHEN FILE_TYPE = ''FOLDER'' THEN 0 ELSE 1 END AS IS_FILE_TYPE,',
+'       fmp_is_file_manager(A.FILE_ID, :USER_TENANT, V(''MPF_USER_ID''), :DIAN_USER_ID, :ROLE_CODE) AS IS_PERMISSIONS,',
+'       CASE',
+'           WHEN :ROLE_CODE IN (''SYSTEM_ADMIN'', ''SUPER_ADMIN'', ''VIEW_REPORT'') THEN 1',
+'           WHEN A.SCOPE_TYPE IN (''VIEW_DOWN'', ''VIEW'') THEN 1',
+'           WHEN EXISTS (SELECT 1',
+'                          FROM FMP_SCOPE SB',
+'                         WHERE SB.REFERENCE_TYPE = ''SYSTEM''',
+'                           AND TO_CHAR(SB.REFERENCE_ID) = NVL(NULLIF(:SYSTEM_ID, ''''), ''1'')',
+'                           AND SB.PERMISSIONS_TYPE IN (''MANAGE'', ''VIEW_DOWN'', ''VIEW'')',
+'                           AND ((SB.RANGE_TYPE = ''USER'' AND (SB.RANGE_ID = :DIAN_USER_ID',
+'                             OR SB.RANGE_ID = V(''MPF_USER_ID'')',
+'                             OR SB.RANGE_ID = (SELECT FU.EXT_USER_ID',
+'                                                 FROM FMP_USER FU',
+'                                                WHERE FU.TENANT_ID = :USER_TENANT',
+'                                                  AND FU.USER_ID = TO_NUMBER(NULLIF(V(''MPF_USER_ID''), ''''))',
+'                                                  AND NVL(FU.DEL_FLAG, 0) = 0)',
+'                             OR SB.RANGE_ID = (SELECT BD.UNION_ID',
+'                                                 FROM BASIC_JA_DING_USER BD',
+'                                                WHERE TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID)',
+'                                                  AND NVL(BD.TENANT_ID, :USER_TENANT) = :USER_TENANT)))',
+'                             OR (SB.RANGE_TYPE = ''DEPT'' AND EXISTS (SELECT 1',
+'                                                                        FROM BASIC_JA_DING_DEPT_USER BD',
+'                                                                       WHERE TO_CHAR(BD.DEPT_ID) = SB.RANGE_ID',
+'                                                                         AND TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID))))) THEN 1',
+'           WHEN EXISTS (SELECT 1',
+'                          FROM FMP_SCOPE FS',
+'                         WHERE FS.REFERENCE_TYPE = ''FILE''',
+'                           AND FS.REFERENCE_ID = A.FILE_ID',
+'                           AND FS.PERMISSIONS_TYPE IN (''MANAGE'', ''VIEW_DOWN'', ''VIEW'')',
+'                           AND ((FS.RANGE_TYPE = ''USER'' AND (FS.RANGE_ID = :DIAN_USER_ID',
+'                             OR FS.RANGE_ID = V(''MPF_USER_ID'')',
+'                             OR FS.RANGE_ID = (SELECT FU.EXT_USER_ID',
+'                                                 FROM FMP_USER FU',
+'                                                WHERE FU.TENANT_ID = :USER_TENANT',
+'                                                  AND FU.USER_ID = TO_NUMBER(NULLIF(V(''MPF_USER_ID''), ''''))',
+'                                                  AND NVL(FU.DEL_FLAG, 0) = 0)',
+'                             OR FS.RANGE_ID = (SELECT BD.UNION_ID',
+'                                                 FROM BASIC_JA_DING_USER BD',
+'                                                WHERE TO_CHAR(BD.USER_ID) = TO_CHAR(:DIAN_USER_ID)',
+'                                                  AND NVL(BD.TENANT_ID, :USER_TENANT) = :USER_TENANT)))',
+'                             OR (FS.RANGE_TYPE = ''DEPT'' AND EXISTS (SELECT 1',
+'                                                                        FROM BASIC_JA_DING_DEPT_USER BU',
+'                                                                       WHERE TO_CHAR(BU.DEPT_ID) = FS.RANGE_ID',
+'                                                                         AND TO_CHAR(BU.USER_ID) = TO_CHAR(:DIAN_USER_ID))))) THEN 1',
+'           ELSE 0',
+'       END AS CAN_OPEN',
+'FROM FMP_FILE A',
+'LEFT JOIN BASIC_USER U',
+'  ON U.USER_ID = NVL(A.UPDATED_BY, A.CREATED_BY)',
+' AND U.TENANT_ID = :USER_TENANT',
+' AND U.DEL_FLAG = 0',
+'WHERE A.TENANT_ID = :USER_TENANT',
+'  AND A.SYSTEM_ID = TO_NUMBER(NVL(NULLIF(:SYSTEM_ID, ''''), ''1''))',
+'  AND A.DEL_FLAG = 0',
+'  AND :P133_PARENT_FOLDER_ID IS NOT NULL',
+'  AND A.PARENT_FOLDER_ID = :P133_PARENT_FOLDER_ID',
+'ORDER BY CASE WHEN NVL(:P133_SORT_BY, ''MANUAL'') = ''MANUAL'' THEN 0',
+'              WHEN A.FILE_TYPE = ''FOLDER'' THEN 0',
+'              ELSE 1 END,',
+'         CASE WHEN NVL(:P133_SORT_BY, ''MANUAL'') = ''MANUAL'' THEN NVL(A.SORT_NUM, 999999999) END ASC,',
+'         CASE WHEN NVL(:P133_SORT_BY, ''MANUAL'') = ''NAME_ASC'' THEN LOWER(A.FILE_NAME) END ASC,',
+'         CASE WHEN :P133_SORT_BY = ''UPDATE_DESC'' THEN A.UPDATE_DATE END DESC NULLS LAST,',
+'         CASE WHEN :P133_SORT_BY = ''UPDATE_ASC'' THEN A.UPDATE_DATE END ASC NULLS LAST,',
+'         CASE WHEN :P133_SORT_BY = ''CREATION_DESC'' THEN A.CREATION_DATE END DESC NULLS LAST,',
+'         CASE WHEN :P133_SORT_BY = ''CREATION_ASC'' THEN A.CREATION_DATE END ASC NULLS LAST,',
+'         LOWER(A.FILE_NAME),',
+'         A.FILE_ID;'))
+
+,p_plug_source_type=>'NATIVE_CARDS'
+,p_ajax_items_to_submit=>'P133_PARENT_FOLDER_ID,P133_SORT_BY'
+,p_plug_query_num_rows=>40
+,p_plug_query_num_rows_type=>'SET'
+,p_show_total_row_count=>false
+);
+wwv_flow_imp_page.create_card(
+ p_id=>wwv_flow_imp.id(821088635529158202)
+,p_region_id=>wwv_flow_imp.id(821088635529158201)
+,p_layout_type=>'GRID'
+,p_component_css_classes=>'p133-cards-component'
+,p_card_css_classes=>'p133-card'
+,p_body_adv_formatting=>true
+,p_body_html_expr=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<div class="p133-card-body" data-file-id="&FILE_ID!ATTR." data-file-type="&FILE_TYPE!ATTR." data-can-manage="&IS_PERMISSIONS!ATTR." data-can-open="&CAN_OPEN!ATTR." data-file-name="&FILE_NAME!ATTR." data-display-name="&CARD_DISPLAY_NAME!ATTR." data-icon-type="&ICON_TYPE!ATTR." data-icon-class="&ICON_CLASS!ATTR.">',
+'  <label class="p133-card-check" aria-label="&#36873;&#25321; &FILE_NAME!ATTR."><input type="checkbox" class="p133-card-checkbox" data-file-id="&FILE_ID!ATTR." data-file-type="&FILE_TYPE!ATTR."></label>',
+'  <button type="button" class="p133-card-menu-handle" data-file-id="&FILE_ID!ATTR." data-file-type="&FILE_TYPE!ATTR." data-can-manage="&IS_PERMISSIONS!ATTR." title="&#26356;&#22810;&#25805;&#20316;" aria-label="&#26356;&#22810;&#25805;&#20316;"><span class="fa fa-ellipsis-v" aria-hidden="true"></span></button>',
+'  <button type="button" class="p133-card-open" data-file-id="&FILE_ID!ATTR." data-file-type="&FILE_TYPE!ATTR." data-can-open="&CAN_OPEN!ATTR.">',
+'    <span class="p133-doc-icon &ICON_TYPE!ATTR." aria-hidden="true"><i class="&ICON_CLASS!ATTR."></i></span>',
+'    <span class="p133-card-name" title="&FILE_NAME!ATTR.">&CARD_DISPLAY_NAME!HTML.</span>',
+'  </button>',
+'</div>'))
+,p_pk1_column_name=>'FILE_ID'
 );
 wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(821088635529155550)
@@ -3023,14 +3521,15 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_name=>unistr('\521B\5EFA\6587\4EF6\5939')
 ,p_button_static_id=>'btn_create_folder'
 ,p_button_action=>'DEFINED_BY_DA'
-,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(9760159158825264299)
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>wwv_flow_imp.id(9760159296056264299)
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>unistr('\521B\5EFA\6587\4EF6\5939')
 ,p_button_position=>'CLOSE'
 ,p_button_alignment=>'RIGHT'
 ,p_warn_on_unsaved_changes=>null
-,p_button_css_classes=>'hide_btn ja-bpoint-btn'
+,p_button_css_classes=>'p133-toolbar-btn'
+,p_icon_css_classes=>'fa-folder-o'
 );
 wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(821088635529155551)
@@ -3039,42 +3538,143 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_name=>unistr('\4E0A\4F20\6587\4EF6')
 ,p_button_static_id=>'btn_upload'
 ,p_button_action=>'DEFINED_BY_DA'
-,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(9760159158825264299)
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>wwv_flow_imp.id(9760159296056264299)
 ,p_button_is_hot=>'Y'
 ,p_button_image_alt=>unistr('\4E0A\4F20\6587\4EF6')
 ,p_button_position=>'CLOSE'
 ,p_button_alignment=>'RIGHT'
 ,p_warn_on_unsaved_changes=>null
-,p_button_css_classes=>'hide_btn ja-bpoint-btn'
+,p_button_css_classes=>'p133-toolbar-btn is-primary'
+,p_icon_css_classes=>'fa-upload'
 );
 wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(821088635529155549)
-,p_button_sequence=>300
+ p_id=>wwv_flow_imp.id(821088635529157003)
+,p_button_sequence=>10
 ,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
-,p_button_name=>unistr('\6587\4EF6\9884\89C8')
-,p_button_static_id=>'btn_preview'
+,p_button_name=>'P133_BTN_SHARE'
+,p_button_static_id=>'p133_btn_share'
 ,p_button_action=>'DEFINED_BY_DA'
-,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(9760159158825264299)
-,p_button_image_alt=>unistr('\6587\4EF6\9884\89C8')
-,p_button_position=>'CREATE'
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>wwv_flow_imp.id(9760159296056264299)
+,p_button_image_alt=>unistr('\5206\4EAB')
+,p_button_position=>'CHANGE'
 ,p_button_alignment=>'RIGHT'
 ,p_warn_on_unsaved_changes=>null
-,p_button_css_classes=>'hide_btn ja-bpoint-btn'
+,p_button_css_classes=>'p133-toolbar-btn is-inline p133-selection-action'
+,p_icon_css_classes=>'fa-share-alt'
 );
 wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(821088635529155555)
-,p_button_sequence=>100
-,p_button_plug_id=>wwv_flow_imp.id(821088635529155497)
-,p_button_name=>unistr('\8FD4\56DE\6587\4EF6\5E93\76EE\5F55')
-,p_button_action=>'REDIRECT_PAGE'
-,p_button_template_options=>'#DEFAULT#:t-Button--large:t-Button--link'
-,p_button_template_id=>wwv_flow_imp.id(9760159158825264299)
-,p_button_image_alt=>unistr('<  \8FD4\56DE\6587\4EF6\5E93\76EE\5F55')
-,p_button_position=>'UP'
+ p_id=>wwv_flow_imp.id(821088635529157004)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
+,p_button_name=>'P133_BTN_RENAME'
+,p_button_static_id=>'p133_btn_rename'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>wwv_flow_imp.id(9760159296056264299)
+,p_button_image_alt=>unistr('\91CD\547D\540D')
+,p_button_position=>'CHANGE'
 ,p_button_alignment=>'RIGHT'
-,p_button_redirect_url=>'f?p=&APP_ID.:133:&SESSION.::&DEBUG.:133::'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'p133-toolbar-btn is-inline p133-selection-action'
+,p_icon_css_classes=>'fa-pencil'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(821088635529157005)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
+,p_button_name=>'P133_BTN_MOVE'
+,p_button_static_id=>'p133_btn_move'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>wwv_flow_imp.id(9760159296056264299)
+,p_button_image_alt=>unistr('\79FB\52A8\5230...')
+,p_button_position=>'CHANGE'
+,p_button_alignment=>'RIGHT'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'p133-toolbar-btn is-inline p133-selection-action'
+,p_icon_css_classes=>'fa-exchange'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(821088635529157006)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
+,p_button_name=>'P133_BTN_SETTINGS'
+,p_button_static_id=>'p133_btn_settings'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>wwv_flow_imp.id(9760159296056264299)
+,p_button_image_alt=>unistr('\6743\9650\8BBE\7F6E')
+,p_button_position=>'CHANGE'
+,p_button_alignment=>'RIGHT'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'p133-toolbar-btn is-inline p133-selection-action'
+,p_icon_css_classes=>'fa-lock'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(821088635529157007)
+,p_button_sequence=>50
+,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
+,p_button_name=>'P133_BTN_DELETE'
+,p_button_static_id=>'p133_btn_delete'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>wwv_flow_imp.id(9760159296056264299)
+,p_button_image_alt=>unistr('\5220\9664')
+,p_button_position=>'CHANGE'
+,p_button_alignment=>'RIGHT'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'p133-toolbar-btn is-inline is-danger p133-selection-action'
+,p_icon_css_classes=>'fa-trash-o'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(821088635529157008)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
+,p_button_name=>'P133_BTN_VIEW_LIST'
+,p_button_static_id=>'p133_btn_view_list'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#:t-Button--pillStart'
+,p_button_template_id=>wwv_flow_imp.id(9760158496296264297)
+,p_button_image_alt=>unistr('\5217\8868\89C6\56FE')
+,p_button_position=>'EDIT'
+,p_button_alignment=>'RIGHT'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'p133-view-btn'
+,p_icon_css_classes=>'fa-list'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(821088635529157009)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
+,p_button_name=>'P133_BTN_VIEW_GRID'
+,p_button_static_id=>'p133_btn_view_grid'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#:t-Button--pillEnd'
+,p_button_template_id=>wwv_flow_imp.id(9760158496296264297)
+,p_button_image_alt=>unistr('\7F51\683C\89C6\56FE')
+,p_button_position=>'EDIT'
+,p_button_alignment=>'RIGHT'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'p133-view-btn'
+,p_icon_css_classes=>'fa-th-large'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(821088635529157010)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_imp.id(821088635529155495)
+,p_button_name=>'P133_BTN_REFRESH'
+,p_button_static_id=>'p133_btn_refresh'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(9760158496296264297)
+,p_button_image_alt=>unistr('\5237\65B0\5F53\524D\76EE\5F55')
+,p_button_position=>'NEXT'
+,p_button_alignment=>'RIGHT'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'p133-control-btn p133-refresh'
+,p_icon_css_classes=>'fa-refresh'
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(821088635529155568)
@@ -3343,66 +3943,6 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_attribute_01=>'N'
 );
 wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(821088635529155584)
-,p_name=>unistr('\8BBE\7F6E\503C')
-,p_event_sequence=>30
-,p_triggering_element_type=>'BUTTON'
-,p_triggering_button_id=>wwv_flow_imp.id(821088635529155549)
-,p_condition_element=>'P133_FILE_TYPE'
-,p_triggering_condition_type=>'EQUALS'
-,p_triggering_expression=>'FOLDER'
-,p_bind_type=>'bind'
-,p_execution_type=>'IMMEDIATE'
-,p_bind_event_type=>'click'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155600)
-,p_event_id=>wwv_flow_imp.id(821088635529155584)
-,p_event_result=>'TRUE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_SET_VALUE'
-,p_affected_elements_type=>'ITEM'
-,p_affected_elements=>'P133_PARENT_FOLDER_ID'
-,p_attribute_01=>'SQL_STATEMENT'
-,p_attribute_03=>'SELECT :P133_FILE_ID FROM DUAL;'
-,p_attribute_07=>'P133_FILE_ID'
-,p_attribute_08=>'N'
-,p_attribute_09=>'N'
-,p_wait_for_result=>'Y'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155601)
-,p_event_id=>wwv_flow_imp.id(821088635529155584)
-,p_event_result=>'FALSE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_JAVASCRIPT_CODE'
-,p_attribute_01=>'p133OpenActionUrl(''PREVIEW'');'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155603)
-,p_event_id=>wwv_flow_imp.id(821088635529155584)
-,p_event_result=>'TRUE'
-,p_action_sequence=>30
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_REFRESH'
-,p_affected_elements_type=>'REGION'
-,p_affected_region_id=>wwv_flow_imp.id(821088635529155496)
-,p_attribute_01=>'N'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(821088635529155604)
-,p_event_id=>wwv_flow_imp.id(821088635529155584)
-,p_event_result=>'TRUE'
-,p_action_sequence=>40
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_REFRESH'
-,p_affected_elements_type=>'REGION'
-,p_affected_region_id=>wwv_flow_imp.id(821088635529155496)
-,p_attribute_01=>'N'
-);
-wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(821088635529155585)
 ,p_name=>unistr('\6821\9A8C\5C42\7EA7')
 ,p_event_sequence=>40
@@ -3471,6 +4011,191 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>'p133OpenActionUrl(''UPLOAD'');'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157101)
+,p_name=>'P133_ACTION_SHARE'
+,p_event_sequence=>61
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157003)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157102)
+,p_event_id=>wwv_flow_imp.id(821088635529157101)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'p133ActionShareSelected();'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157103)
+,p_name=>'P133_ACTION_RENAME'
+,p_event_sequence=>62
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157004)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157104)
+,p_event_id=>wwv_flow_imp.id(821088635529157103)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'p133ActionRenameSelected();'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157105)
+,p_name=>'P133_ACTION_MOVE'
+,p_event_sequence=>63
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157005)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157106)
+,p_event_id=>wwv_flow_imp.id(821088635529157105)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'p133ActionMoveSelected();'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157107)
+,p_name=>'P133_ACTION_SETTINGS'
+,p_event_sequence=>64
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157006)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157108)
+,p_event_id=>wwv_flow_imp.id(821088635529157107)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'p133ActionSettingsSelected();'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157109)
+,p_name=>'P133_ACTION_DELETE'
+,p_event_sequence=>65
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157007)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157110)
+,p_event_id=>wwv_flow_imp.id(821088635529157109)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'p133ActionDeleteSelected();'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157111)
+,p_name=>'P133_VIEW_LIST'
+,p_event_sequence=>66
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157008)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157112)
+,p_event_id=>wwv_flow_imp.id(821088635529157111)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'sessionStorage.setItem(''p133:view_mode'', ''list'');',
+'if (window.p133SyncView) { window.p133SyncView(); }',
+'else if (window.p133SyncViewImpl) { window.p133SyncViewImpl(); }'))
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157113)
+,p_name=>'P133_VIEW_GRID'
+,p_event_sequence=>67
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157009)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157114)
+,p_event_id=>wwv_flow_imp.id(821088635529157113)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'sessionStorage.setItem(''p133:view_mode'', ''grid'');',
+'if (window.p133SyncView) { window.p133SyncView(); }',
+'else if (window.p133SyncViewImpl) { window.p133SyncViewImpl(); }'))
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157115)
+,p_name=>'P133_REFRESH_LIST_VIEW'
+,p_event_sequence=>68
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157010)
+,p_triggering_condition_type=>'JAVASCRIPT_EXPRESSION'
+,p_triggering_expression=>'p133ReadViewMode() === ''list'''
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157116)
+,p_event_id=>wwv_flow_imp.id(821088635529157115)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(821088635529155496)
+,p_attribute_01=>'N'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(821088635529157117)
+,p_name=>'P133_REFRESH_GRID_VIEW'
+,p_event_sequence=>69
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(821088635529157010)
+,p_triggering_condition_type=>'JAVASCRIPT_EXPRESSION'
+,p_triggering_expression=>'p133ReadViewMode() === ''grid'''
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(821088635529157118)
+,p_event_id=>wwv_flow_imp.id(821088635529157117)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(821088635529158201)
+,p_attribute_01=>'N'
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(821088635529155589)

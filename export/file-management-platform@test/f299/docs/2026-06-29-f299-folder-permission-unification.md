@@ -195,6 +195,19 @@
 
 ## 2026-06-29 Verification Update
 
+- Residual runtime fix:
+  - Switching sub-platforms on `P133`, `P221`, and other pages still threw `Uncaught TypeError: apex.util.prepareURL is not a function`.
+  - Root cause was the shared `P0` tenant-switch success callback using the nonexistent client API `apex.util.prepareURL(...)`.
+  - A direct plain `f?p=` redirect removed the JS exception but then triggered APEX session-state protection.
+  - `apex.util.makeApplicationUrl(...)` exists in APEX 24.2, but in this runtime it still produced a bare `f?p=` URL and did not satisfy page access protection.
+  - Final fix: pass the current page id into `SET_CURRENT_SYSTEM`, let the server return `apex_util.prepare_url(..., p_checksum_type => 'SESSION')`, and redirect with that checksum-safe `redirect_url`.
+- Runtime validation:
+  - Imported `P0` and then imported the full `f299` app so the shared application process `SET_CURRENT_SYSTEM` was updated in the target environment.
+  - Real browser validation on `P133` confirmed sub-platform switching no longer throws `prepareURL is not a function` and no longer hits session-state-protection error.
+  - Browser evidence: `output/playwright/f299-system-switch-fix/p133-after-switch.png`.
+  - Raw `SET_CURRENT_SYSTEM` response with `x02 = 133` now includes checksum-safe `redirect_url`.
+  - Raw `SET_CURRENT_SYSTEM` response with `x02 = 221` also includes checksum-safe `redirect_url`, confirming the shared switcher logic is page-agnostic.
+  - With the runtime account `JA016181`, direct navigation to `P221` currently redirects back to `LOGIN`, so same-account end-to-end browser replay on `P221` remains blocked by page access rather than by the switcher error itself.
 - DB compile/deploy:
   - `fmp_is_file_manager`: VALID.
   - `fmp_create_folder_from_dialog_pro`: VALID.
@@ -258,4 +271,322 @@
 - Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=FAILED, delivery=IN_PROGRESS
 - Open Issues: verification
 - Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=FAILED, delivery=FAILED
+- Open Issues: verification, delivery
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## 2026-06-29 Header Switcher UI Update
+
+- Replaced the ad-hoc header-injected sub-platform `<select>` on `P0` with an APEX native `Select List` item `P0_SYSTEM_SWITCH`.
+- Rendered the switcher through the `BEFORE_NAVIGATION_BAR` display point so it appears immediately to the left of the username dropdown in the Universal Theme header.
+- Removed the now-redundant page-level `p_javascript_code` tenant-switch helper and kept a single switch initialization path in the page-ready dynamic action.
+- Added `docs/pages/P0.md` to document the global page header switcher behavior and its dependency on `SET_CURRENT_SYSTEM` / `GET_SYSTEM_OPTIONS`.
+
+## 2026-06-29 Header Switcher Verification Update
+
+- Imported `P0` into `file-management-platform@test / f299` after the native switcher cleanup.
+- Real browser validation on `P133` confirmed:
+  - the `P0_SYSTEM_SWITCH` native select list renders to the left of the username dropdown;
+  - the switcher still changes sub-platform successfully;
+  - the redirect remains checksum-safe (`&cs=...`);
+  - no severe console or page errors were raised during the switch.
+- Browser evidence:
+  - `output/playwright/f299-system-switcher-header/before-switch.png`
+  - `output/playwright/f299-system-switcher-header/after-switch.png`
+  - `output/playwright/f299-system-switcher-header/result.json`
+
+## 2026-06-29 Leave-Site Prompt Fix
+
+- Switching sub-platform on `P133` still triggered the browser leave-site confirmation dialog.
+- Root causes:
+  - the `P0` switch success callback updated `P133_PARENT_FOLDER_ID`, `P133_FILE_ID`, and `P133_FILE_TYPE` on the client before redirecting, which marked the page as dirty in APEX;
+  - the header switch item `P0_SYSTEM_SWITCH` itself also participated in APEX unsaved-change detection, so selecting another sub-platform could still trigger `beforeunload`.
+- Fix:
+  - keep the session-state reset inside shared application process `SET_CURRENT_SYSTEM` only, and remove the pre-redirect client-side `$s(...)` mutations from `P0`;
+  - call `apex.page.cancelWarnOnUnsavedChanges()` immediately before redirecting after a successful system switch.
+- Result: sub-platform switching no longer triggers the browser leave-site prompt; ordinary unsaved-change protection outside this explicit switch action remains unchanged.
+- Verification:
+  - Re-imported `P0` into `file-management-platform@test / f299`.
+  - Real browser replay on `P133` completed a sub-platform switch with `dialogs: []`, confirming no `beforeunload` / leave-site prompt was raised.
+  - Evidence:
+    - `output/playwright/f299-system-switcher-no-leave-warning/before-switch.png`
+    - `output/playwright/f299-system-switcher-no-leave-warning/after-switch.png`
+    - `output/playwright/f299-system-switcher-no-leave-warning/result.json`
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=IN_PROGRESS, verification=FAILED, delivery=IN_PROGRESS
+- Open Issues: verification
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues: None
+- Next Action: Optional manual browser-based final verification by developer.
 - Resume Notes: Authoritative state: ai-context.json

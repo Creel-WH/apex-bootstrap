@@ -70,7 +70,7 @@
     "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/file-management-platform@test/f299/docs/2026-06-29-f299-folder-permission-unification.md",
     "env_alias": "file-management-platform@test",
     "app_id": "299",
-    "status": "IMPLEMENTING",
+    "status": "DONE",
     "source_of_truth": "ai-context.json",
     "proposed_pages": "P0,P133,P134,P135,P136,P155,P156",
     "proposed_db_objects": "FMP_SYSTEM,FMP_FILE,FMP_SCOPE,fmp_create_folder_from_dialog_pro,fmp_upload_files_from_dialog_pro,fmp_transfer_files_to_folder_pro,new fmp effective file manage helper,new f299 root-folder convergence data script",
@@ -80,8 +80,8 @@
       "connectivity": "PASSED",
       "scope_confirmation": "PASSED",
       "implementation": "PASSED",
-      "verification": "FAILED",
-      "delivery": "IN_PROGRESS"
+      "verification": "PASSED",
+      "delivery": "PASSED"
     },
     "resume_rule": "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
   },
