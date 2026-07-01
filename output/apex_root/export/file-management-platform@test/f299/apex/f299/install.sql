@@ -17,6 +17,9 @@ prompt --install
 @@application/shared_components/files/icons_app_icon_192_png.sql
 @@application/shared_components/files/icons_app_icon_256_rounded_png.sql
 @@application/shared_components/files/icons_app_icon_512_png.sql
+@@application/shared_components/files/static_vendor_remixicon_remixicon_css.sql
+@@application/shared_components/files/static_vendor_remixicon_remixicon_woff2.sql
+@@application/shared_components/files/static_js_p133_file_library_js.sql
 @@application/plugin_settings.sql
 @@application/shared_components/security/authorizations/系统需求编辑权限_查询角色等级（返回布尔值）.sql
 @@application/shared_components/security/authorizations/系统需求编辑权限_查询角色code（返回布尔值）.sql
