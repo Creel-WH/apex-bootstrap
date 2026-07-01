@@ -1,12 +1,8 @@
 {
-  "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=299:133",
-  "label": "f299-p133-unified-file-library",
+  "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=299:9999",
+  "label": "f299-p1-homepage",
   "skip_builder_login": true,
   "steps": [
-    {
-      "action": "click",
-      "selector": ".switch-qrcode"
-    },
     {
       "action": "fill",
       "selector": "#P9999_USERNAME",
@@ -23,25 +19,49 @@
     },
     {
       "action": "wait_for_selector",
-      "selector": "#content"
+      "selector": "#p1_tabs_region"
     },
     {
       "action": "wait_for_selector",
-      "selector": "#p133_pathbar"
+      "selector": ".p1-file-grid .a-GV"
+    },
+    {
+      "action": "click",
+      "text": "我的关注"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "#p1_favorite_files_rpt .a-GV"
+    },
+    {
+      "action": "click",
+      "text": "与我分享"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "#p1_shared_to_me_rpt .a-GV"
+    },
+    {
+      "action": "click",
+      "text": "我分享的"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "#p1_shared_by_me_rpt .a-GV"
     }
   ],
   "assertions": [
     {
       "type": "selector_visible",
-      "selector": "#content"
+      "selector": "#p1_tabs_region"
     },
     {
       "type": "selector_visible",
-      "selector": "#p133_pathbar"
+      "selector": "#p1_shared_by_me_rpt .a-GV"
     },
     {
       "type": "url_includes",
-      "value": "f?p=299:133"
+      "value": "f?p=299:1:"
     }
   ]
 }
