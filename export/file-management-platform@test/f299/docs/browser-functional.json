@@ -19,11 +19,11 @@
     },
     {
       "action": "wait_for_selector",
-      "selector": "#p1_tabs_region"
+      "selector": ".p1-file-grid .a-GV"
     },
     {
       "action": "wait_for_selector",
-      "selector": ".p1-file-grid .a-GV"
+      "selector": "#p1_shared_by_me_rpt .a-GV"
     },
     {
       "action": "click",
@@ -53,7 +53,7 @@
   "assertions": [
     {
       "type": "selector_visible",
-      "selector": "#p1_tabs_region"
+      "selector": ".p1-file-grid .a-GV"
     },
     {
       "type": "selector_visible",

@@ -33,7 +33,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_link_text=>unistr('\6570\636E\5206\6790')
 ,p_list_item_link_target=>'f?p=&APP_ID.:150:&SESSION.::&DEBUG.::::'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return STS_IS_HAVE_PERMISSION(V(''MPF_USER_ID''), 150,V(''ROLE_ID'') ,V(''USER_TENANT''),0);'
+,p_list_item_disp_condition=>'return false;'
 ,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );

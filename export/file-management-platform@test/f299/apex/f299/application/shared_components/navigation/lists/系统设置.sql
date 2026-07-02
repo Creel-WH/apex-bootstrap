@@ -23,7 +23,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_link_text=>unistr('\9875\9762\7BA1\7406')
 ,p_list_item_link_target=>'f?p=&APP_ID.:221:&SESSION.::&DEBUG.::::'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return fmp_is_system_manager(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 1), V(''DIAN_USER_ID''), TO_NUMBER(V(''USER_TENANT'')));'
+,p_list_item_disp_condition=>'return false;'
 ,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );

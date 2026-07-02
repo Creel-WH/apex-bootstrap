@@ -1,0 +1,6 @@
+{
+  "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=299:LOGIN",
+  "label": "f299-p1-homepage-smoke",
+  "skip_builder_login": true,
+  "selector": ".switch-qrcode"
+}

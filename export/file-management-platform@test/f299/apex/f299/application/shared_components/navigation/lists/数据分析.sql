@@ -22,6 +22,9 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_display_sequence=>10
 ,p_list_item_link_text=>unistr('\6570\636E\5BFC\51FA')
 ,p_list_item_link_target=>'f?p=&APP_ID.:151:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>'return false;'
+,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
@@ -29,6 +32,9 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_display_sequence=>20
 ,p_list_item_link_text=>unistr('\6570\636E\63A8\9001')
 ,p_list_item_link_target=>'f?p=&APP_ID.:152:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>'return false;'
+,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp.component_end;

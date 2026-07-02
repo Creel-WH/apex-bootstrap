@@ -202,6 +202,7 @@ prompt --install
 @@application/pages/page_00154.sql
 @@application/pages/page_00155.sql
 @@application/pages/page_00156.sql
+@@application/pages/page_00157.sql
 @@application/pages/page_00220.sql
 @@application/pages/page_00221.sql
 @@application/pages/page_00226.sql
