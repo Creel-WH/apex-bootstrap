@@ -73,8 +73,20 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_for_pages=>'152'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3743071729360223312)
+ p_id=>wwv_flow_imp.id(910002270000000060)
 ,p_list_item_display_sequence=>999
+,p_list_item_link_text=>unistr('\7BA1\7406\540E\53F0')
+,p_list_item_link_target=>'f?p=&APP_ID.:227:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-cogs'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>'return fmp_is_system_manager(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), V(''DIAN_USER_ID''), TO_NUMBER(V(''USER_TENANT'')));'
+,p_list_item_disp_condition2=>'PLSQL'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'227'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(3743071729360223312)
+,p_list_item_display_sequence=>1000
 ,p_list_item_link_text=>unistr('\7CFB\7EDF\8BBE\7F6E')
 ,p_list_item_link_target=>'f?p=&APP_ID.:220:&SESSION.::&DEBUG.::::'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
@@ -82,6 +94,18 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'220,221'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(910001490000000060)
+,p_list_item_display_sequence=>997
+,p_list_item_link_text=>unistr('\56DE\6536\7AD9')
+,p_list_item_link_target=>'f?p=&APP_ID.:149:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-trash-o'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>'return fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), TO_NUMBER(V(''USER_TENANT'')), 133);'
+,p_list_item_disp_condition2=>'PLSQL'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'149'
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(3743074137856244247)
