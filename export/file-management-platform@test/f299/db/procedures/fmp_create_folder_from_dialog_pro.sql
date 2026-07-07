@@ -115,7 +115,7 @@ BEGIN
            SYSDATE,
            range_type,
            range_id,
-           NVL(is_inherit_permission, 1)
+           1
       FROM fmp_scope
      WHERE reference_type = 'FILE'
        AND reference_id = p_parent_folder_id;

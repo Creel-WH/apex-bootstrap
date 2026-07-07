@@ -67,21 +67,21 @@
     "machine_state_authority": "ai-context.json"
   },
   "current_task": {
-    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/file-management-platform@test/f299/docs/2026-06-29-f299-folder-permission-unification.md",
+    "feature_file": "/mnt/d/ja-projects/apex/apex-bootstrap/export/file-management-platform@test/f299/docs/2026-07-07-cleanup-unused-pages-audit.md",
     "env_alias": "file-management-platform@test",
     "app_id": "299",
-    "status": "DONE",
+    "status": "IMPLEMENTING",
     "source_of_truth": "ai-context.json",
-    "proposed_pages": "P0,P133,P134,P135,P136,P155,P156",
-    "proposed_db_objects": "FMP_SYSTEM,FMP_FILE,FMP_SCOPE,fmp_create_folder_from_dialog_pro,fmp_upload_files_from_dialog_pro,fmp_transfer_files_to_folder_pro,new fmp effective file manage helper,new f299 root-folder convergence data script",
-    "confirmed_pages": "P0,P133,P134,P135,P136,P155,P156",
-    "confirmed_db_objects": "FMP_SYSTEM,FMP_FILE,FMP_SCOPE,fmp_create_folder_from_dialog_pro,fmp_upload_files_from_dialog_pro,fmp_transfer_files_to_folder_pro,new fmp effective file manage helper,new f299 root-folder convergence data script",
+    "proposed_pages": "Candidate delete pages pending confirmation: P3,P8,P100,P102,P103,P104,P121,P122,P123,P124,P125,P126,P127,P131,P132,P139,P140,P141,P142,P143,P144,P145,P146,P147,P148,P150,P151,P152,P153,P154,P220,P221,P226,P230,P901,P902,P903,P904; keep P0,P1,P133,P134,P135,P136,P137,P149,P155,P156,P157,P227,P9999",
+    "proposed_db_objects": "None",
+    "confirmed_pages": "\u4fdd\u7559 P0,P1,P133,P134,P135,P136,P137,P149,P155,P156,P157,P221,P227,P9999\uff1b\u5220\u9664 P3,P8,P100,P102,P103,P104,P121,P122,P123,P124,P125,P126,P127,P131,P132,P139,P140,P141,P142,P143,P144,P145,P146,P147,P148,P150,P151,P152,P153,P154,P220,P226,P230,P901,P902,P903,P904",
+    "confirmed_db_objects": "None",
     "stage_status": {
       "connectivity": "PASSED",
       "scope_confirmation": "PASSED",
-      "implementation": "PASSED",
-      "verification": "PASSED",
-      "delivery": "PASSED"
+      "implementation": "PENDING",
+      "verification": "PENDING",
+      "delivery": "IN_PROGRESS"
     },
     "resume_rule": "If status is not DONE, continue troubleshooting, implementation, and verification until DONE."
   },

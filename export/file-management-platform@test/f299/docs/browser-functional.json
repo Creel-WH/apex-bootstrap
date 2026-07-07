@@ -1,6 +1,6 @@
 {
   "url": "https://apextest.jasolar.com/ords/uatapex23/f?p=299:9999",
-  "label": "f299-p1-homepage",
+  "label": "f299-p1-favorite-ui",
   "skip_builder_login": true,
   "steps": [
     {
@@ -19,11 +19,7 @@
     },
     {
       "action": "wait_for_selector",
-      "selector": ".p1-file-grid .a-GV"
-    },
-    {
-      "action": "wait_for_selector",
-      "selector": "#p1_shared_by_me_rpt .a-GV"
+      "selector": "#p1_tabs_region"
     },
     {
       "action": "click",
@@ -31,7 +27,35 @@
     },
     {
       "action": "wait_for_selector",
+      "selector": "#p1_favorite_groups_rpt .t-Tabs-link"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "#P1_BTN_ADD_GROUP"
+    },
+    {
+      "action": "wait_for_selector",
       "selector": "#p1_favorite_files_rpt .a-GV"
+    },
+    {
+      "action": "click",
+      "selector": "#P1_BTN_ADD_GROUP"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": ".ui-dialog iframe, .t-Dialog iframe, iframe[src*='P157_FAVORITE_GROUP_ID']"
+    },
+    {
+      "action": "click",
+      "selector": ".ui-dialog-titlebar-close, .t-Dialog-closeButton"
+    },
+    {
+      "action": "click",
+      "text": "最近访问"
+    },
+    {
+      "action": "wait_for_selector",
+      "selector": "#p1_tabs_region .a-GV"
     },
     {
       "action": "click",
@@ -51,10 +75,6 @@
     }
   ],
   "assertions": [
-    {
-      "type": "selector_visible",
-      "selector": ".p1-file-grid .a-GV"
-    },
     {
       "type": "selector_visible",
       "selector": "#p1_shared_by_me_rpt .a-GV"

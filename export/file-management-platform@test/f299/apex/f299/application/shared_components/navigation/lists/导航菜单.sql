@@ -30,6 +30,7 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_display_sequence=>240
 ,p_list_item_link_text=>unistr('\6587\4EF6\5E93')
 ,p_list_item_link_target=>'f?p=&APP_ID.:133:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-folder-o'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
 ,p_list_item_disp_condition=>'return fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), TO_NUMBER(V(''USER_TENANT'')), 133);'
 ,p_list_item_disp_condition2=>'PLSQL'
@@ -85,17 +86,6 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_current_for_pages=>'227'
 );
 wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3743071729360223312)
-,p_list_item_display_sequence=>1000
-,p_list_item_link_text=>unistr('\7CFB\7EDF\8BBE\7F6E')
-,p_list_item_link_target=>'f?p=&APP_ID.:220:&SESSION.::&DEBUG.::::'
-,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return fmp_is_system_manager(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), V(''DIAN_USER_ID''), TO_NUMBER(V(''USER_TENANT''))) or fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), TO_NUMBER(V(''USER_TENANT'')), 220) or fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), TO_NUMBER(V(''USER_TENANT'')), 226) or fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), TO_NUMBER(V(''USER_TENANT'')), 230);'
-,p_list_item_disp_condition2=>'PLSQL'
-,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
-,p_list_item_current_for_pages=>'220,221'
-);
-wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(910001490000000060)
 ,p_list_item_display_sequence=>997
 ,p_list_item_link_text=>unistr('\56DE\6536\7AD9')
@@ -106,42 +96,6 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'149'
-);
-wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3743074137856244247)
-,p_list_item_display_sequence=>300
-,p_list_item_link_text=>unistr('\9875\9762\7BA1\7406')
-,p_list_item_link_target=>'f?p=&APP_ID.:221:&SESSION.::&DEBUG.::::'
-,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return false;'
-,p_list_item_disp_condition2=>'PLSQL'
-,p_parent_list_item_id=>wwv_flow_imp.id(3743071729360223312)
-,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
-,p_list_item_current_for_pages=>'221'
-);
-wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3743173727687311241)
-,p_list_item_display_sequence=>310
-,p_list_item_link_text=>unistr('\64CD\4F5C\65E5\5FD7')
-,p_list_item_link_target=>'f?p=&APP_ID.:230:&SESSION.::&DEBUG.::::'
-,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), TO_NUMBER(V(''USER_TENANT'')), 230);'
-,p_list_item_disp_condition2=>'PLSQL'
-,p_parent_list_item_id=>wwv_flow_imp.id(3743071729360223312)
-,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
-,p_list_item_current_for_pages=>'230'
-);
-wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(3743863179683612029)
-,p_list_item_display_sequence=>320
-,p_list_item_link_text=>unistr('\57FA\7840\4FE1\606F\914D\7F6E')
-,p_list_item_link_target=>'f?p=&APP_ID.:226:&SESSION.::&DEBUG.::::'
-,p_list_item_disp_cond_type=>'FUNCTION_BODY'
-,p_list_item_disp_condition=>'return fmp_is_page_managed_visible(NVL(TO_NUMBER(NULLIF(V(''SYSTEM_ID''),'''')), 42), TO_NUMBER(V(''USER_TENANT'')), 226);'
-,p_list_item_disp_condition2=>'PLSQL'
-,p_parent_list_item_id=>wwv_flow_imp.id(3743071729360223312)
-,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
-,p_list_item_current_for_pages=>'226'
 );
 wwv_flow_imp.component_end;
 end;

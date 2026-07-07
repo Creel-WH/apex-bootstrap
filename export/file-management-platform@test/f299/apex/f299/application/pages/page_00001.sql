@@ -32,12 +32,49 @@ wwv_flow_imp_page.create_page(
 '}',
 '',
 'function p1SyncFavoriteToolbar() {',
-'    var hasGroup = !!p1CurrentFavoriteGroupId();',
-'    $(''#P1_BTN_EDIT_GROUP, #P1_BTN_DELETE_GROUP'').prop(''disabled'', !hasGroup).toggleClass(''is-disabled'', !hasGroup);',
+'    return;',
+'}',
+'',
+'function p1RenderFavoriteTabs(groups) {',
+'    var $list = $(''#p1_favorite_groups_rpt .p1-favorite-tabs-list'');',
+'    if (!$list.length) {',
+'        return;',
+'    }',
+'    $list.empty();',
+'    (groups || []).forEach(function(group) {',
+'        var id = group.id || '''';',
+'        var key = id || ''ALL'';',
+'        var active = (group.active === true || group.active === ''Y'') ? '' is-active'' : '''';',
+'        var $item = $(''<li/>'', {',
+'            id: ''P1_FAVORITE_TAB_'' + key,',
+'            class: ''t-Tabs-item'' + active',
+'        });',
+'        var $link = $(''<a/>'', {',
+'            class: ''t-Tabs-link p1-favorite-tab-link'',',
+'            href: ''javascript:p1SelectFavoriteGroup(\'''' + id + ''\'');void(0);''',
+'        });',
+'        $(''<span/>'', { class: ''t-Tabs-label'', text: group.name || '''' }).appendTo($link);',
+'        $item.append($link).appendTo($list);',
+'    });',
+'}',
+'',
+'function p1RefreshFavoriteGroupTabs() {',
+'    apex.server.process(''P1_FAVORITE_GROUP_TABS_DATA'', {',
+'        pageItems: ''#P1_FAVORITE_GROUP_ID''',
+'    }, {',
+'        dataType: ''json'',',
+'        success: function(resp) {',
+'            if (!resp || resp.code !== ''200'') {',
+'                return;',
+'            }',
+'            p1RenderFavoriteTabs(resp.groups);',
+'        }',
+'    });',
 '}',
 '',
 'function p1RefreshHomeRegions() {',
-'    [''p1_favorite_groups_rpt'', ''p1_favorite_files_rpt'', ''p1_shared_to_me_rpt'', ''p1_shared_by_me_rpt''].forEach(function(regionId) {',
+'    p1RefreshFavoriteGroupTabs();',
+'    [''p1_favorite_files_rpt'', ''p1_shared_to_me_rpt'', ''p1_shared_by_me_rpt''].forEach(function(regionId) {',
 '        var region = apex.region(regionId);',
 '        if (region) {',
 '            region.refresh();',
@@ -101,20 +138,23 @@ wwv_flow_imp_page.create_page(
 '    });',
 '}',
 '',
-'function p1FavoriteGroupDialogUrl(groupId) {',
-'    return apex.util.makeApplicationUrl({',
-'        pageId: 157,',
-'        itemNames: [''P157_FAVORITE_GROUP_ID''],',
-'        itemValues: [groupId || '''']',
-'    });',
-'}',
-'',
 'function p1OpenFavoriteGroupDialog(groupId) {',
-'    apex.navigation.dialog(p1FavoriteGroupDialogUrl(groupId), {',
-'        title: groupId ? ''\7F16\8F91\5173\6CE8\5206\7EC4'' : ''\65B0\589E\5173\6CE8\5206\7EC4'',',
-'        height: ''280'',',
-'        width: ''480'',',
-'        modal: true',
+'    apex.server.process(''P1_FAVORITE_GROUP_DIALOG_URL'', { x01: groupId || '''' }, {',
+'        dataType: ''json'',',
+'        success: function(resp) {',
+'            if (!resp || resp.code !== ''200'' || !resp.url) {',
+'                alert((resp && resp.message) || ''\6253\5F00\5173\6CE8\5206\7EC4\5931\8D25'');',
+'                return;',
+'            }',
+'            apex.navigation.dialog(resp.url, {',
+'                height: ''280'',',
+'                width: ''480'',',
+'                modal: true',
+'            });',
+'        },',
+'        error: function() {',
+'            alert(''\6253\5F00\5173\6CE8\5206\7EC4\5931\8D25'');',
+'        }',
 '    });',
 '}',
 '',
@@ -138,6 +178,7 @@ wwv_flow_imp_page.create_page(
 '    apex.gPageContext$.on(''apexafterclosedialog'', function() {',
 '        p1RefreshHomeRegions();',
 '    });',
+'    p1RefreshFavoriteGroupTabs();',
 '    p1SyncFavoriteToolbar();',
 '}'))
 ,p_javascript_code_onload=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -186,7 +227,24 @@ unistr('//         } else if (area == '' \53C2\4E0E\4EBA\6570'') {'),
 '',
 '.p1-tabs-region .apex-rds-container {',
 '    border-bottom: 1px solid #dfe6ef;',
-'    margin-bottom: 16px;',
+'    margin-bottom: 18px;',
+'    padding-bottom: 2px;',
+'}',
+'',
+'.p1-tabs-region .apex-rds {',
+'    margin-bottom: 0;',
+'}',
+'',
+'.p1-tabs-region .apex-rds-container + .t-TabsRegion-items {',
+'    margin-top: 0;',
+'}',
+'',
+'.p1-tab-panel {',
+'    padding-top: 18px;',
+'}',
+'',
+'.p1-tab-panel > .t-Region-body {',
+'    padding-top: 0;',
 '}',
 '',
 '.p1-tabs-region a:focus:not(:focus-visible),',
@@ -195,36 +253,57 @@ unistr('//         } else if (area == '' \53C2\4E0E\4EBA\6570'') {'),
 '    box-shadow: none;',
 '}',
 '',
-'.p1-group-cards .t-Cards {',
+'.p1-favorite-tabs-report .t-Region-body {',
+'    padding: 0 0 16px;',
+'}',
+'',
+'.p1-favorite-tabs-report .t-Report,',
+'.p1-favorite-tabs-report .t-Report-wrap,',
+'.p1-favorite-tabs-report .t-Report-tableWrap,',
+'.p1-favorite-tabs-report .t-Report-report,',
+'.p1-favorite-tabs-report .t-Report-body,',
+'.p1-favorite-tabs-report .t-Report-body > tr,',
+'.p1-favorite-tabs-report .t-Report-cell {',
+'    display: block;',
+'    width: 100%;',
+'    margin: 0;',
+'    padding: 0;',
+'    border: 0;',
+'    background: transparent;',
+'    box-shadow: none;',
+'}',
+'',
+'.p1-favorite-tabs-report .t-Report-cell {',
+'    white-space: normal;',
+'}',
+'',
+'.p1-favorite-tabs-report .t-Report-colHead,',
+'.p1-favorite-tabs-report .t-Report-pagination {',
+'    display: none;',
+'}',
+'',
+'.p1-favorite-tabs-report .t-Tabs {',
 '    display: flex;',
 '    flex-wrap: wrap;',
 '    gap: 8px;',
-'    list-style: none;',
 '    margin: 0;',
 '    padding: 0;',
+'    list-style: none;',
 '}',
 '',
-'.p1-group-cards .t-Cards-item {',
+'.p1-favorite-tabs-report .t-Tabs-item {',
 '    width: auto;',
 '    margin: 0;',
 '}',
 '',
-'.p1-group-cards .t-Card,',
-'.p1-group-cards .t-Card-wrap {',
-'    border: 0;',
-'    box-shadow: none;',
-'    background: transparent;',
-'    padding: 0;',
-'}',
-'',
-'.p1-group-pill {',
+'.p1-favorite-tabs-report .t-Tabs-link {',
 '    display: inline-flex;',
 '    align-items: center;',
-'    gap: 8px;',
 '    min-height: 32px;',
 '    padding: 0 16px;',
 '    border-radius: 16px;',
 '    border: 0;',
+'    box-shadow: none;',
 '    background: #f5f5f5;',
 '    color: #666;',
 '    text-decoration: none;',
@@ -233,34 +312,22 @@ unistr('//         } else if (area == '' \53C2\4E0E\4EBA\6570'') {'),
 '    transition: all .2s;',
 '}',
 '',
-'.p1-group-pill:hover {',
+'.p1-favorite-tabs-report .t-Tabs-link:hover {',
 '    background: #e6f7ff;',
 '    color: #1890ff;',
 '}',
 '',
-'.p1-group-pill.is-active {',
+'.p1-favorite-tabs-report .t-Tabs-item.is-active .t-Tabs-link,',
+'.p1-favorite-tabs-report .t-Tabs-link.is-active {',
 '    background: #1890ff;',
 '    color: #fff;',
 '}',
 '',
-'.p1-pill-count {',
-'    display: inline-flex;',
-'    align-items: center;',
-'    justify-content: center;',
-'    min-width: 20px;',
-'    height: 20px;',
-'    padding: 0 6px;',
-'    border-radius: 999px;',
-'    background: rgba(15, 23, 42, 0.06);',
-'    font-size: 12px;',
+'.p1-favorite-tabs-report .t-Tabs-label {',
+'    line-height: 32px;',
 '}',
 '',
-'.p1-group-pill.is-active .p1-pill-count {',
-'    background: rgba(255,255,255,.2);',
-'}',
-'',
-'.p1-favorite-toolbar {',
-'    margin: -44px 0 16px;',
+'.p1-favorite-tabs-actions {',
 '    display: flex;',
 '    justify-content: flex-end;',
 '    background: transparent;',
@@ -268,28 +335,30 @@ unistr('//         } else if (area == '' \53C2\4E0E\4EBA\6570'') {'),
 '    box-shadow: none;',
 '}',
 '',
-'.p1-favorite-toolbar .t-ButtonRegion,',
-'.p1-favorite-toolbar .t-ButtonRegion-wrap {',
+'.p1-favorite-tabs-actions .t-ButtonRegion,',
+'.p1-favorite-tabs-actions .t-ButtonRegion-wrap {',
+'    width: 100%;',
 '    background: transparent;',
 '    border: 0;',
 '    box-shadow: none;',
-'    padding: 0;',
+'    padding: 0 0 16px;',
 '}',
 '',
-'.p1-favorite-toolbar .t-Button {',
-'    height: 28px;',
-'    min-width: 28px;',
-'    padding: 0 10px;',
-'    border-radius: 14px;',
-'    border-color: transparent;',
-'    background: transparent;',
-'    color: #8c8c8c;',
-'    font-size: 12px;',
-'}',
-'',
-'.p1-favorite-toolbar .t-Button:hover {',
-'    background: #f0f7ff;',
+'.p1-favorite-tabs-actions .t-Button {',
+'    height: 32px;',
+'    padding: 0 14px;',
+'    border-radius: 16px;',
+'    border-color: #d9e7ff;',
+'    background: #fff;',
 '    color: #1890ff;',
+'    font-size: 13px;',
+'    font-weight: 500;',
+'}',
+'',
+'.p1-favorite-tabs-actions .t-Button:hover {',
+'    background: #e6f7ff;',
+'    border-color: #91caff;',
+'    color: #1677ff;',
 '}',
 '',
 '.p1-row-actions {',
@@ -300,10 +369,6 @@ unistr('//         } else if (area == '' \53C2\4E0E\4EBA\6570'') {'),
 '    color: #1677ff;',
 '    text-decoration: none;',
 '    font-size: 12px;',
-'}',
-'',
-'.is-disabled {',
-'    opacity: .5;',
 '}',
 '',
 '.p1-file-grid {',
@@ -426,6 +491,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_template=>wwv_flow_imp.id(9760085978980264251)
 ,p_plug_display_sequence=>10
 ,p_plug_display_point=>'SUB_REGIONS'
+,p_region_css_classes=>'p1-tab-panel'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(910001000000000306)
@@ -435,6 +501,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_template=>wwv_flow_imp.id(9760085978980264251)
 ,p_plug_display_sequence=>20
 ,p_plug_display_point=>'SUB_REGIONS'
+,p_region_css_classes=>'p1-tab-panel'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(910001000000000307)
@@ -444,6 +511,10 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_template=>wwv_flow_imp.id(9760085978980264251)
 ,p_plug_display_sequence=>30
 ,p_plug_display_point=>'SUB_REGIONS'
+,p_region_css_classes=>'p1-tab-panel'
+,p_plug_display_condition_type=>'EXPRESSION'
+,p_plug_display_when_condition=>'1 = 0'
+,p_plug_display_when_cond2=>'PLSQL'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(910001000000000308)
@@ -453,6 +524,10 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_template=>wwv_flow_imp.id(9760085978980264251)
 ,p_plug_display_sequence=>40
 ,p_plug_display_point=>'SUB_REGIONS'
+,p_region_css_classes=>'p1-tab-panel'
+,p_plug_display_condition_type=>'EXPRESSION'
+,p_plug_display_when_condition=>'1 = 0'
+,p_plug_display_when_cond2=>'PLSQL'
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(910001000000000301)
@@ -472,7 +547,7 @@ wwv_flow_imp_page.create_page_plug(
 '      from fmp_operation_log l',
 '     where nvl(l.del_flag, 0) = 0',
 '       and l.tenant_id = :USER_TENANT',
-'       and to_char(l.created_by) = :DIAN_USER_ID',
+'       and to_char(l.created_by) in (nvl(:MPF_USER_ID, :DIAN_USER_ID), nvl(:DIAN_USER_ID, :MPF_USER_ID))',
 '       and l.operation_reference_id is not null',
 '     group by l.operation_reference_id',
 ')',
@@ -489,7 +564,7 @@ wwv_flow_imp_page.create_page_plug(
 '        select f.file_id,',
 '               f.file_name,',
 '               case when length(f.file_name) > 50 then substr(f.file_name, 1, 50) || ''...'' else f.file_name end file_display_name,',
-'               apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID'', p_values => to_char(f.file_id)) open_url,',
+'               apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID,P137_SOURCE_PAGE,P137_SOURCE_MODULE'', p_values => to_char(f.file_id) || '',1,RECENT'') open_url,',
 '               case',
 '                   when f.file_size is null then ''-''',
 '                   when f.file_size >= 1073741824 then to_char(round(f.file_size / 1073741824, 1)) || '' GB''',
@@ -827,68 +902,28 @@ wwv_flow_imp_page.create_page_plug(
 ,p_region_name=>'p1_favorite_groups_rpt'
 ,p_parent_plug_id=>wwv_flow_imp.id(910001000000000306)
 ,p_region_template_options=>'#DEFAULT#:t-Region--hideHeader:t-Region--noUI'
-,p_component_template_options=>'#DEFAULT#'
 ,p_plug_template=>wwv_flow_imp.id(9760085978980264251)
 ,p_plug_display_sequence=>10
-,p_region_css_classes=>'p1-group-cards'
-,p_query_type=>'SQL'
-,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'with all_groups as (',
-'    select cast(null as number) favorite_group_id,',
-unistr('           ''\5168\90E8'' group_name,'),
-'           count(*) favorite_count,',
-'           0 sort_no',
-'      from fmp_favorite_file',
-'     where user_id = :DIAN_USER_ID',
-'    union all',
-'    select g.favorite_group_id,',
-'           g.group_name,',
-'           count(ff.favorite_id) favorite_count,',
-'           nvl(g.sort, 0) + 1 sort_no',
-'      from fmp_favorite_group g',
-'      left join fmp_favorite_file ff',
-'        on ff.group_id = g.favorite_group_id',
-'       and ff.user_id = :DIAN_USER_ID',
-'     where g.user_id = :DIAN_USER_ID',
-'       and nvl(g.del_flag, 0) = 0',
-'     group by g.favorite_group_id, g.group_name, g.sort',
-')',
-'select nvl(to_char(favorite_group_id), '''') favorite_group_id,',
-'       group_name,',
-'       favorite_count,',
-'       case',
-'           when (favorite_group_id is null and :P1_FAVORITE_GROUP_ID is null)',
-'             or to_char(favorite_group_id) = :P1_FAVORITE_GROUP_ID then ''is-active''',
-'           else ''''',
-'       end active_class',
-'  from all_groups',
-' order by sort_no, favorite_group_id'))
-,p_plug_source_type=>'NATIVE_CARDS'
-,p_ajax_items_to_submit=>'P1_FAVORITE_GROUP_ID'
-,p_plug_query_num_rows=>50
-,p_plug_query_num_rows_type=>'SET'
-,p_show_total_row_count=>false
-);
-wwv_flow_imp_page.create_card(
- p_id=>wwv_flow_imp.id(910001000000000312)
-,p_region_id=>wwv_flow_imp.id(910001000000000309)
-,p_layout_type=>'GRID'
-,p_body_adv_formatting=>true
-,p_body_html_expr=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'<a class="p1-group-pill &ACTIVE_CLASS!ATTR." href="javascript:p1SelectFavoriteGroup(''&FAVORITE_GROUP_ID!ATTR.'');void(0);">',
-'  <span>&GROUP_NAME!HTML.</span>',
-'  <span class="p1-pill-count">&FAVORITE_COUNT!HTML.</span>',
-'</a>'))
-,p_pk1_column_name=>'FAVORITE_GROUP_ID'
+,p_plug_display_point=>'SUB_REGIONS'
+,p_plug_grid_column_span=>10
+,p_region_css_classes=>'p1-favorite-tabs-report'
+,p_plug_source=>'<ul class="t-Tabs p1-favorite-tabs-list" role="tablist"></ul>'
+,p_plug_source_type=>'NATIVE_STATIC'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'HTML')).to_clob
 );
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(910001000000000313)
 ,p_plug_name=>unistr('\5173\6CE8\5206\7EC4\64CD\4F5C')
+,p_region_name=>'p1_favorite_tabs_actions'
 ,p_parent_plug_id=>wwv_flow_imp.id(910001000000000306)
 ,p_region_template_options=>'#DEFAULT#:t-Region--hideHeader:t-Region--noUI'
-,p_region_css_classes=>'p1-favorite-toolbar'
+,p_region_css_classes=>'p1-favorite-tabs-actions'
 ,p_plug_template=>wwv_flow_imp.id(9760042325985264236)
 ,p_plug_display_sequence=>20
+,p_plug_new_grid_row=>false
+,p_plug_grid_column_span=>2
 ,p_plug_display_point=>'SUB_REGIONS'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'layout', 'HORIZONTAL',
@@ -908,34 +943,6 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_alignment=>'RIGHT'
 ,p_warn_on_unsaved_changes=>null
 );
-wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(910001000000000315)
-,p_button_sequence=>20
-,p_button_plug_id=>wwv_flow_imp.id(910001000000000313)
-,p_button_name=>'P1_BTN_EDIT_GROUP'
-,p_button_static_id=>'P1_BTN_EDIT_GROUP'
-,p_button_action=>'DEFINED_BY_DA'
-,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(9760159158825264299)
-,p_button_image_alt=>unistr('\7F16\8F91\5206\7EC4')
-,p_button_position=>'NEXT'
-,p_button_alignment=>'RIGHT'
-,p_warn_on_unsaved_changes=>null
-);
-wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(910001000000000316)
-,p_button_sequence=>30
-,p_button_plug_id=>wwv_flow_imp.id(910001000000000313)
-,p_button_name=>'P1_BTN_DELETE_GROUP'
-,p_button_static_id=>'P1_BTN_DELETE_GROUP'
-,p_button_action=>'DEFINED_BY_DA'
-,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>wwv_flow_imp.id(9760159158825264299)
-,p_button_image_alt=>unistr('\5220\9664\5206\7EC4')
-,p_button_position=>'NEXT'
-,p_button_alignment=>'RIGHT'
-,p_warn_on_unsaved_changes=>null
-);
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(910001000000000317)
 ,p_plug_name=>unistr('\5173\6CE8\6587\4EF6')
@@ -945,14 +952,25 @@ wwv_flow_imp_page.create_page_plug(
 ,p_component_template_options=>'#DEFAULT#'
 ,p_plug_template=>wwv_flow_imp.id(9760085978980264251)
 ,p_plug_display_sequence=>30
-,p_plug_new_grid_row=>false
+,p_plug_display_point=>'SUB_REGIONS'
+,p_plug_new_grid_row=>true
 ,p_region_css_classes=>'p1-file-grid'
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'with last_open_logs as (',
+'    select l.operation_reference_id file_id,',
+'           max(l.creation_date) last_open_date',
+'      from fmp_operation_log l',
+'     where nvl(l.del_flag, 0) = 0',
+'       and l.tenant_id = :USER_TENANT',
+'       and to_char(l.created_by) in (nvl(:MPF_USER_ID, :DIAN_USER_ID), nvl(:DIAN_USER_ID, :MPF_USER_ID))',
+'       and l.operation_reference_id is not null',
+'     group by l.operation_reference_id',
+')',
 'select file_id,',
 '       file_name,',
 '       case when length(file_name) > 50 then substr(file_name, 1, 50) || ''...'' else file_name end file_display_name,',
-'       apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID'', p_values => to_char(file_id)) open_url,',
+'       apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID,P137_SOURCE_PAGE,P137_SOURCE_MODULE'', p_values => to_char(file_id) || '',1,FAVORITE'') open_url,',
 '       file_size_label,',
 '       nvl(file_format, regexp_substr(file_name, ''\.([^.]+)$'', 1, 1, null, 1)) type_label,',
 '       updated_by_name,',
@@ -970,7 +988,7 @@ wwv_flow_imp_page.create_page_plug(
 '           when lower(ltrim(nvl(nullif(file_format, ''''), regexp_substr(file_name, ''\.([^.]+)$'', 1, 1, null, 1)), ''.'')) in (''zip'', ''rar'', ''7z'', ''tar'', ''gz'') then ''ri-folder-zip-fill''',
 '           else ''ri-file-3-fill''',
 '       end icon_class,',
-'       to_char(favorite_date, ''yyyy-mm-dd hh24:mi'') update_time,',
+'       to_char(nvl(last_open_date, favorite_date), ''yyyy-mm-dd hh24:mi'') update_time,',
 '       nvl(to_char(group_id), ''null'') group_id_js,',
 '       null actions',
 '  from (',
@@ -986,18 +1004,22 @@ wwv_flow_imp_page.create_page_plug(
 '               end file_size_label,',
 '               nvl(u.name, to_char(nvl(f.updated_by, f.created_by))) updated_by_name,',
 '               ff.favorite_date,',
+'               lol.last_open_date,',
 '               ff.group_id',
 '          from fmp_favorite_file ff',
 '          join fmp_file f',
 '            on f.file_id = ff.file_id',
 '           and nvl(f.del_flag, 0) = 0',
+'           and upper(nvl(f.file_type, ''FILE'')) <> ''FOLDER''',
+'          left join last_open_logs lol',
+'            on lol.file_id = f.file_id',
 '          left join basic_user u',
 '            on u.user_id = nvl(f.updated_by, f.created_by)',
 '           and u.tenant_id = :USER_TENANT',
 '           and nvl(u.del_flag, 0) = 0',
-'         where ff.user_id = :DIAN_USER_ID',
+'         where ff.user_id = :MPF_USER_ID',
 '           and (:P1_FAVORITE_GROUP_ID is null or ff.group_id = to_number(:P1_FAVORITE_GROUP_ID))',
-'         order by ff.favorite_date desc, f.file_id desc',
+'         order by nvl(lol.last_open_date, ff.favorite_date) desc, f.file_id desc',
 '       )',
 ' where rownum <= 20'))
 ,p_plug_source_type=>'NATIVE_IG'
@@ -1198,7 +1220,7 @@ wwv_flow_imp_page.create_region_column(
 ,p_session_state_data_type=>'VARCHAR2'
 ,p_is_query_only=>true
 ,p_item_type=>'NATIVE_DISPLAY_ONLY'
-,p_heading=>unistr('\5173\6CE8\65F6\95F4')
+,p_heading=>unistr('\6700\8FD1\6253\5F00\65F6\95F4')
 ,p_heading_alignment=>'CENTER'
 ,p_display_sequence=>70
 ,p_value_alignment=>'CENTER'
@@ -1339,7 +1361,7 @@ wwv_flow_imp_page.create_ig_report_column(
 ,p_view_id=>wwv_flow_imp.id(910001000000000381)
 ,p_display_seq=>6
 ,p_column_id=>wwv_flow_imp.id(910001000000000378)
-,p_is_visible=>true
+,p_is_visible=>false
 ,p_is_frozen=>false
 );
 wwv_flow_imp_page.create_page_plug(
@@ -1368,6 +1390,7 @@ wwv_flow_imp_page.create_page_plug(
 '      join fmp_file f',
 '        on f.file_id = s.reference_id',
 '       and nvl(f.del_flag, 0) = 0',
+'       and upper(nvl(f.file_type, ''FILE'')) <> ''FOLDER''',
 '      left join basic_user src',
 '        on src.user_id = s.source_user_id',
 '       and src.tenant_id = :USER_TENANT',
@@ -1384,7 +1407,7 @@ wwv_flow_imp_page.create_page_plug(
 '                 (select fu.ext_user_id',
 '                    from fmp_user fu',
 '                   where fu.tenant_id = :USER_TENANT',
-'                     and fu.user_id = to_number(nullif(v(''MPF_USER_ID''), ''''))',
+'                     and fu.user_id = to_number(nullif(v(''USER_ID''), ''''))',
 '                     and nvl(fu.del_flag, 0) = 0),',
 '                 (select bd.union_id',
 '                    from basic_ja_ding_user bd',
@@ -1403,7 +1426,7 @@ wwv_flow_imp_page.create_page_plug(
 'select file_id,',
 '       file_name,',
 '       case when length(file_name) > 50 then substr(file_name, 1, 50) || ''...'' else file_name end file_display_name,',
-'       apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID'', p_values => to_char(file_id)) open_url,',
+'       apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID,P137_SOURCE_PAGE,P137_SOURCE_MODULE'', p_values => to_char(file_id) || '',1,SHARED_TO_ME'') open_url,',
 '       nvl(file_format, regexp_substr(file_name, ''\.([^.]+)$'', 1, 1, null, 1)) type_label,',
 '       case',
 '           when lower(ltrim(nvl(nullif(file_format, ''''), regexp_substr(file_name, ''\.([^.]+)$'', 1, 1, null, 1)), ''.'')) in (''doc'', ''docx'', ''wps'') then ''ri-file-word-2-fill''',
@@ -1768,6 +1791,7 @@ wwv_flow_imp_page.create_page_plug(
 '      join fmp_file f',
 '        on f.file_id = s.reference_id',
 '       and nvl(f.del_flag, 0) = 0',
+'       and upper(nvl(f.file_type, ''FILE'')) <> ''FOLDER''',
 '     where s.reference_type = ''FILE''',
 '       and to_char(s.source_user_id) = to_char(:DIAN_USER_ID)',
 '     group by f.file_id, f.file_name, f.file_format, f.root_folder_id, f.parent_folder_id',
@@ -1776,7 +1800,7 @@ wwv_flow_imp_page.create_page_plug(
 'select file_id,',
 '       file_name,',
 '       case when length(file_name) > 50 then substr(file_name, 1, 50) || ''...'' else file_name end file_display_name,',
-'       apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID'', p_values => to_char(file_id)) open_url,',
+'       apex_page.get_url(p_page => 137, p_items => ''P137_FILE_ID,P137_SOURCE_PAGE,P137_SOURCE_MODULE'', p_values => to_char(file_id) || '',1,SHARED_BY_ME'') open_url,',
 '       nvl(file_format, regexp_substr(file_name, ''\.([^.]+)$'', 1, 1, null, 1)) type_label,',
 '       case',
 '           when lower(ltrim(nvl(nullif(file_format, ''''), regexp_substr(file_name, ''\.([^.]+)$'', 1, 1, null, 1)), ''.'')) in (''doc'', ''docx'', ''wps'') then ''ri-file-word-2-fill''',
@@ -2200,43 +2224,134 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>'p1OpenFavoriteGroupDialog('''');'
 );
-wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(910001000000000322)
-,p_name=>'P1_EDIT_GROUP'
-,p_event_sequence=>100
-,p_triggering_element_type=>'BUTTON'
-,p_triggering_button_id=>wwv_flow_imp.id(910001000000000315)
-,p_bind_type=>'bind'
-,p_execution_type=>'IMMEDIATE'
-,p_bind_event_type=>'click'
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(910001000000000329)
+,p_process_sequence=>4
+,p_process_point=>'ON_DEMAND'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'P1_FAVORITE_GROUP_TABS_DATA'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'declare',
+'    l_selected varchar2(100) := :P1_FAVORITE_GROUP_ID;',
+'begin',
+'    apex_json.initialize_clob_output;',
+'    apex_json.open_object;',
+'    apex_json.write(''code'', ''200'');',
+'    apex_json.open_array(''groups'');',
+'',
+'    for r in (',
+'        with all_groups as (',
+'            select cast(null as number) favorite_group_id,',
+unistr('                   ''\5168\90E8'' group_name,'),
+'                   0 sort_no',
+'              from dual',
+'            union all',
+'            select g.favorite_group_id,',
+'                   g.group_name,',
+'                   nvl(g.sort, 0) + 1 sort_no',
+'              from fmp_favorite_group g',
+'             where g.user_id = :MPF_USER_ID',
+'               and nvl(g.del_flag, 0) = 0',
+'        )',
+'        select nvl(to_char(favorite_group_id), '''') favorite_group_id,',
+'               group_name,',
+'               case',
+'                   when (favorite_group_id is null and l_selected is null)',
+'                     or to_char(favorite_group_id) = l_selected then ''Y''',
+'                   else ''N''',
+'               end active_flag,',
+'               sort_no',
+'          from all_groups',
+'         order by sort_no, favorite_group_id',
+'    ) loop',
+'        apex_json.open_object;',
+'        apex_json.write(''id'', r.favorite_group_id);',
+'        apex_json.write(''name'', r.group_name);',
+'        apex_json.write(''active'', r.active_flag);',
+'        apex_json.close_object;',
+'    end loop;',
+'',
+'    apex_json.close_array;',
+'    apex_json.close_object;',
+'    sys.htp.p(apex_json.get_clob_output);',
+'    apex_json.free_output;',
+'exception',
+'    when others then',
+'        begin',
+'            apex_json.free_output;',
+'        exception when others then null; end;',
+'        apex_json.initialize_clob_output;',
+'        apex_json.open_object;',
+'        apex_json.write(''code'', ''500'');',
+'        apex_json.write(''message'', sqlerrm);',
+'        apex_json.close_object;',
+'        sys.htp.p(apex_json.get_clob_output);',
+'        apex_json.free_output;',
+'end;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(910001000000000323)
-,p_event_id=>wwv_flow_imp.id(910001000000000322)
-,p_event_result=>'TRUE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_JAVASCRIPT_CODE'
-,p_attribute_01=>'p1OpenFavoriteGroupDialog(p1CurrentFavoriteGroupId());'
-);
-wwv_flow_imp_page.create_page_da_event(
- p_id=>wwv_flow_imp.id(910001000000000324)
-,p_name=>'P1_DELETE_GROUP'
-,p_event_sequence=>110
-,p_triggering_element_type=>'BUTTON'
-,p_triggering_button_id=>wwv_flow_imp.id(910001000000000316)
-,p_bind_type=>'bind'
-,p_execution_type=>'IMMEDIATE'
-,p_bind_event_type=>'click'
-);
-wwv_flow_imp_page.create_page_da_action(
- p_id=>wwv_flow_imp.id(910001000000000325)
-,p_event_id=>wwv_flow_imp.id(910001000000000324)
-,p_event_result=>'TRUE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_JAVASCRIPT_CODE'
-,p_attribute_01=>'p1DeleteFavoriteGroup();'
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(910001000000000328)
+,p_process_sequence=>5
+,p_process_point=>'ON_DEMAND'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'P1_FAVORITE_GROUP_DIALOG_URL'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'declare',
+'    l_group_id number := to_number(nullif(apex_application.g_x01, ''''));',
+'    l_count    number;',
+'    l_url      varchar2(4000);',
+'begin',
+'    apex_json.initialize_clob_output;',
+'',
+'    if l_group_id is null then',
+'        l_url := apex_page.get_url(p_page => 157);',
+'    else',
+'        select count(*)',
+'          into l_count',
+'          from fmp_favorite_group',
+'         where favorite_group_id = l_group_id',
+'           and user_id = :MPF_USER_ID',
+'           and nvl(del_flag, 0) = 0;',
+'',
+'        if l_count = 0 then',
+'            apex_json.open_object;',
+'            apex_json.write(''code'', ''403'');',
+'            apex_json.write(''message'', ''\65E0\6743\7EF4\62A4\8BE5\5173\6CE8\5206\7EC4'');',
+'            apex_json.close_object;',
+'            sys.htp.p(apex_json.get_clob_output);',
+'            apex_json.free_output;',
+'            return;',
+'        end if;',
+'',
+'        l_url := apex_page.get_url(',
+'                     p_page   => 157,',
+'                     p_items  => ''P157_FAVORITE_GROUP_ID'',',
+'                     p_values => l_group_id);',
+'    end if;',
+'',
+'    apex_json.open_object;',
+'    apex_json.write(''code'', ''200'');',
+'    apex_json.write(''url'', l_url);',
+'    apex_json.close_object;',
+'    sys.htp.p(apex_json.get_clob_output);',
+'    apex_json.free_output;',
+'exception',
+'    when others then',
+'        begin',
+'            apex_json.free_output;',
+'        exception when others then null; end;',
+'        apex_json.initialize_clob_output;',
+'        apex_json.open_object;',
+'        apex_json.write(''code'', ''500'');',
+'        apex_json.write(''message'', sqlerrm);',
+'        apex_json.close_object;',
+'        sys.htp.p(apex_json.get_clob_output);',
+'        apex_json.free_output;',
+'end;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
 wwv_flow_imp_page.create_page_process(
  p_id=>wwv_flow_imp.id(910001000000000326)
@@ -2267,13 +2382,13 @@ unistr('        apex_json.write(''message'', ''\672A\63A5\6536\5230\6587\4EF6\4F
 '        select count(*)',
 '          into l_exists',
 '          from fmp_favorite_file',
-'         where user_id = :DIAN_USER_ID',
+'         where user_id = :MPF_USER_ID',
 '           and file_id = l_file_id',
 '           and ((l_group_id is null and group_id is null) or group_id = l_group_id);',
 '',
 '        if l_exists = 0 then',
 '            insert into fmp_favorite_file (group_id, user_id, file_id, favorite_date)',
-'            values (l_group_id, :DIAN_USER_ID, l_file_id, sysdate);',
+'            values (l_group_id, :MPF_USER_ID, l_file_id, sysdate);',
 '        end if;',
 '',
 '        commit;',
@@ -2288,11 +2403,11 @@ unistr('        apex_json.write(''message'', case when l_exists = 0 then ''\5DF2
 '',
 '    if l_group_id is null then',
 '        delete from fmp_favorite_file',
-'         where user_id = :DIAN_USER_ID',
+'         where user_id = :MPF_USER_ID',
 '           and file_id = l_file_id;',
 '    else',
 '        delete from fmp_favorite_file',
-'         where user_id = :DIAN_USER_ID',
+'         where user_id = :MPF_USER_ID',
 '           and file_id = l_file_id',
 '           and group_id = l_group_id;',
 '    end if;',
@@ -2345,13 +2460,13 @@ unistr('        apex_json.write(''message'', ''\672A\9009\62E9\5173\6CE8\5206\7E
 '',
 '    delete from fmp_favorite_file',
 '     where group_id = l_group_id',
-'       and user_id = :DIAN_USER_ID;',
+'       and user_id = :MPF_USER_ID;',
 '',
 '    update fmp_favorite_group',
 '       set del_flag = 1,',
 '           update_date = sysdate',
 '     where favorite_group_id = l_group_id',
-'       and user_id = :DIAN_USER_ID',
+'       and user_id = :MPF_USER_ID',
 '       and nvl(del_flag, 0) = 0;',
 '',
 '    commit;',

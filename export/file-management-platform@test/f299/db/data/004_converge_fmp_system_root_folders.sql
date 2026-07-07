@@ -179,6 +179,19 @@ BEGIN
         END LOOP;
     END LOOP;
 
+    UPDATE fmp_system s
+       SET s.root_folder_file_id = (
+               SELECT MIN(f.file_id)
+                 FROM fmp_file f
+                WHERE f.system_id = s.system_id
+                  AND f.file_type = 'FOLDER'
+                  AND f.parent_folder_id IS NULL
+                  AND NVL(f.del_flag, 0) = 0
+           ),
+           s.update_date = SYSDATE
+     WHERE NVL(s.del_flag, 0) = 0
+       AND NVL(s.is_enable, 1) = 1;
+
     COMMIT;
 EXCEPTION
     WHEN OTHERS THEN

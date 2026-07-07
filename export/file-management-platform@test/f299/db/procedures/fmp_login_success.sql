@@ -6,6 +6,8 @@ AS
     v_ext_user_id   VARCHAR2(100);
     v_name          VARCHAR2(60);
     v_ding_user_id  VARCHAR2(256);
+    v_mpf_user_id   VARCHAR2(256);
+    v_basic_user_id NUMBER(20);
     v_union_id      VARCHAR2(256);
     v_job_number    VARCHAR2(20);
     v_page_username VARCHAR2(20)  := UPPER(TRIM(V('P9999_USERNAME')));
@@ -42,11 +44,13 @@ BEGIN
     );
 
     SELECT x.ding_user_id,
+           x.basic_user_id,
            SUBSTR(NVL(x.user_name, v_job_number), 1, 60),
            x.union_id,
            x.mobile,
            x.email
       INTO v_ding_user_id,
+           v_basic_user_id,
            v_name,
            v_union_id,
            v_mobile_raw,
@@ -94,6 +98,7 @@ BEGIN
                     WHERE rn = 1
                  )
             SELECT TO_CHAR(bd.user_id) AS ding_user_id,
+                   bu.user_id AS basic_user_id,
                    COALESCE(NULLIF(TRIM(TO_CHAR(bu.name)), ''), NULLIF(TRIM(TO_CHAR(bd.name)), ''), v_job_number) AS user_name,
                    COALESCE(NULLIF(TRIM(TO_CHAR(bd.union_id)), ''), NULLIF(TRIM(TO_CHAR(bu.union_id)), '')) AS union_id,
                    COALESCE(NULLIF(TRIM(TO_CHAR(bd.mobile)), ''), NULLIF(TRIM(TO_CHAR(bu.mobile)), '')) AS mobile,
@@ -310,10 +315,12 @@ BEGIN
        SET last_system_id = NVL(last_system_id, v_system_id)
      WHERE user_id = v_user_id;
 
+    v_mpf_user_id := COALESCE(TO_CHAR(v_basic_user_id), TO_CHAR(v_user_id));
+
     apex_custom_auth.set_user(v_name);
     apex_util.set_session_state('USER_TENANT', v_tenant_id);
     apex_util.set_session_state('USER_ID', v_user_id);
-    apex_util.set_session_state('MPF_USER_ID', TO_CHAR(v_user_id));
+    apex_util.set_session_state('MPF_USER_ID', v_mpf_user_id);
     apex_util.set_session_state('DIAN_USER_ID', NVL(v_ding_user_id, TO_CHAR(v_user_id)));
     apex_util.set_session_state('USER_NAME', v_name);
     apex_util.set_session_state('USER_JOB_NUMBER', v_job_number);
