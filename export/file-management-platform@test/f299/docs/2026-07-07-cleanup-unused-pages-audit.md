@@ -9,7 +9,7 @@
 ## Execution Plan
 - Impacted Pages (AI Proposed): Candidate delete pages pending confirmation: P3,P8,P100,P102,P103,P104,P121,P122,P123,P124,P125,P126,P127,P131,P132,P139,P140,P141,P142,P143,P144,P145,P146,P147,P148,P150,P151,P152,P153,P154,P220,P221,P226,P230,P901,P902,P903,P904; keep P0,P1,P133,P134,P135,P136,P137,P149,P155,P156,P157,P227,P9999
 - Impacted DB Objects (AI Proposed): None
-- Confirmed Pages: 保留 P0,P1,P133,P134,P135,P136,P137,P149,P155,P156,P157,P221,P227,P9999；删除 P3,P8,P100,P102,P103,P104,P121,P122,P123,P124,P125,P126,P127,P131,P132,P139,P140,P141,P142,P143,P144,P145,P146,P147,P148,P150,P151,P152,P153,P154,P220,P226,P230,P901,P902,P903,P904
+- Confirmed Pages: 保留 P0,P1,P133,P134,P135,P136,P137,P149,P155,P156,P157,P227,P9999；删除 P3,P8,P100,P102,P103,P104,P121,P122,P123,P124,P125,P126,P127,P131,P132,P139,P140,P141,P142,P143,P144,P145,P146,P147,P148,P150,P151,P152,P153,P154,P220,P221,P226,P230,P901,P902,P903,P904
 - Confirmed DB Objects: None
 - Planned Steps:
   1. Confirm the keep/delete classification below.
@@ -87,7 +87,6 @@
 - `P153` 推送人员名单表单
 - `P154` 文件迁移
 - `P220` 系统设置
-- `P221` 页面管理
 - `P226` 基础信息配置
 - `P230` 操作日志
 - `P901` 问题反馈列表
@@ -102,21 +101,33 @@
 
 ## Implementation Log
 - Changes Made:
+  - 2026-07-07：按最终确认范围删除 `P221`，不再尝试保留或恢复该页。
 - Updated Files:
 - Updated DB Objects:
 - Updated Page Docs:
 - Updated Browser Specs:
 
 - Import page 137 into file-management-platform@test/f299: success
+- Import app file-management-platform@test/f299 to file-management-platform@test/f299: failure
+- Import page 221 into file-management-platform@test/f299: failure
 ## Verification
 - Connectivity Check: `feature-start` quick checks passed.
-- DB / APEX Check: Read-only source audit only; no deploy performed.
+- DB / APEX Check:
+  - Runtime page set query confirmed `app 299` now only retains `P0,P1,P133,P134,P135,P136,P137,P149,P155,P156,P157,P227,P9999`.
+  - Runtime query confirmed `P221` count is `0`.
 - Deploy Result:
+  - Updated breadcrumb shared component was re-imported to runtime after removing `P221`.
 - Browser Smoke:
+  - `tools/browser_smoke_apex.sh file-management-platform@test 299` passed.
+  - Evidence: `.omx/results/20260707T064050Z-863-2f8a757a`
 - Browser Functional:
+  - Repo baseline `tools/browser_functional_apex.sh file-management-platform@test 299 --label f299-cleanup-post-p221-removal` failed at login because the configured runtime test account is invalid, not because of page cleanup.
+  - Evidence: `.omx/results/20260707T064050Z-872-1ce5d557`
+  - Direct Chrome session verification against an already logged-in runtime session passed for `P1`, `P133`, `P149`, and `P227`; left navigation shows only `首页 / 文件库 / 回收站 / 管理后台`.
+  - No new page-level console errors were observed; only repeated existing warning `HTML lang different from language set in init.` remained.
 - Evidence Paths:
   - `output/page-cleanup-audit.json`
-- Manual Verification Entry: Read-only audit only. No pages deleted yet.
+- Manual Verification Entry: 2026-07-07 已通过运行时查询与 Chrome 登录态页面验证确认清理结果生效。
 
 ## Current Status
 - Status: CONFIRM
@@ -136,5 +147,61 @@
 - Status: IMPLEMENTING
 - Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=IN_PROGRESS
 - Open Issues: None
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=IN_PROGRESS
+- Open Issues: None
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=IN_PROGRESS
+- Open Issues: None
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=IN_PROGRESS
+- Open Issues: None
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: DONE
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PASSED, verification=PASSED, delivery=PASSED
+- Open Issues:
+- Next Action: None.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=FAILED
+- Open Issues: delivery
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=FAILED
+- Open Issues: delivery
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=FAILED
+- Open Issues: delivery
+- Next Action: Continue implementation and verification until DONE.
+- Resume Notes: Authoritative state: ai-context.json
+
+## Current Status
+- Status: IMPLEMENTING
+- Current Step: connectivity=PASSED, scope_confirmation=PASSED, implementation=PENDING, verification=PENDING, delivery=FAILED
+- Open Issues: delivery
 - Next Action: Continue implementation and verification until DONE.
 - Resume Notes: Authoritative state: ai-context.json
